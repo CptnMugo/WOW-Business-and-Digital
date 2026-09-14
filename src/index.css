@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@layer base {
+  html, body {
+    font-family: "Aptos", "Aptos Display", "Aptos Regular", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Aptos Display", "Aptos Bold", "Aptos", "Segoe UI", sans-serif;
+  }
+}
