@@ -39,12 +39,12 @@ const PAYMENT_TIERS: PaymentTier[] = [
     id: 'pm-early-offer',
     name: 'Career Accelerator: Full Settlement (10% Early Offer)',
     category: 'Accelerator',
-    description: 'Full upfront tuition settlement by 31 October for the 12-week Project Management Career Accelerator intake, saving £100.',
+    description: 'Full upfront tuition settlement by 31 October for the six-month Project Management Career Accelerator, saving £100.',
     priceGbp: 900,
     billingPeriod: 'One-off full tuition (Save £100 by 31 Oct)',
     popular: true,
     features: [
-      'Full 12-week intensive PM delivery curriculum',
+      'Six-month practical PM development programme',
       'Live UK client work simulation & portfolio evidence',
       '1-on-1 interview mentoring & CV transformation',
       'Post-completion placement support & references',
@@ -71,12 +71,12 @@ const PAYMENT_TIERS: PaymentTier[] = [
     id: 'pm-deposit',
     name: 'Career Accelerator: Registration Deposit',
     category: 'Accelerator',
-    description: 'Reserve and guarantee your seat for the upcoming Career Accelerator intake cohort.',
+    description: 'Pay a £50 deposit towards the Career Accelerator, subject to place confirmation and programme terms.',
     priceGbp: 50,
     billingPeriod: 'Deposit reservation (Credited to tuition)',
     features: [
-      'Secures cohort placement immediately before close',
-      'Instant access to pre-course starter pack & syllabus',
+      'Registration and place confirmation follow review of your application',
+      'Programme details provided after confirmation',
       '100% credited against your overall tuition balance'
     ],
     recommendedFor: 'Candidates locking in place before intake deadline'

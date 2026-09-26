@@ -142,6 +142,8 @@ export interface ContactSectionProps {
 export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<EnquiryCategory | null>(initialCategory || null);
   const [submitted, setSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
 
   const formRef = useRef<HTMLDivElement>(null);
@@ -319,7 +321,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedCategoryId === 'training') {
       if (!form3.declaration1 || !form3.declaration2 || !form3.declaration3 || !form3.declaration4 || !form3.declaration5 || !form3.declaration6 || !form3.declaration7) {
@@ -331,8 +333,24 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
       alert("Please check the required Privacy Notice acknowledgement before submitting.");
       return;
     }
-    setSubmitted(true);
-    window.scrollTo({ top: 120, behavior: 'smooth' });
+    if (!selectedCategoryId || submitting) return;
+    setSubmitting(true);
+    setSubmissionError('');
+    try {
+      const details = selectedCategoryId === 'general' ? form7 : selectedCategoryId === 'business-consultancy' ? form1 : selectedCategoryId === 'staffing' ? form2 : selectedCategoryId === 'training' ? form3 : selectedCategoryId === 'ai-solutions' ? form4 : selectedCategoryId === 'career-coaching' ? form5 : form6;
+      const response = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ category: selectedCategoryId, contact: commonFields, details })
+      });
+      if (!response.ok) throw new Error('Your enquiry could not be saved. Please try again or email us directly.');
+      setSubmitted(true);
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    } catch (error) {
+      setSubmissionError(error instanceof Error ? error.message : 'Your enquiry could not be sent.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -1662,12 +1680,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
 
               {/* SUBMIT BUTTON */}
               <div className="pt-2">
+                {submissionError && <p role="alert" className="text-sm text-red-700 mb-3">{submissionError}</p>}
                 <button
                   type="submit"
+                  disabled={submitting}
                   className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-black text-sm py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group"
                 >
                   <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  <span>{selectedCategory.primaryBtnText}</span>
+                  <span>{submitting ? 'Sending…' : selectedCategory.primaryBtnText}</span>
                 </button>
               </div>
 

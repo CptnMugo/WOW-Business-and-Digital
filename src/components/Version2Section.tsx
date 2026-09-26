@@ -86,13 +86,13 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
           <div className="space-y-6 animate-in fade-in duration-300">
             <div className="text-center max-w-4xl mx-auto space-y-3 pt-1">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight">
-                What do you need help with?
+                Business transformation, programme delivery and digital consultancy
               </h1>
               <p className="text-lg sm:text-xl font-bold text-slate-800 max-w-2xl mx-auto leading-snug">
-                Practical consultancy, staffing, training and AI solutions built on real business experience.
+                Practical support for organisations and people, built on real delivery experience.
               </p>
               <p className="text-xs sm:text-sm text-slate-600 max-w-3xl mx-auto leading-relaxed pt-1">
-                Transforming Organisations. Empowering People. Building Intelligent Solutions. To empower people and organisations to achieve sustainable growth through business transformation, digital innovation, artificial intelligence and professional development.
+                Transforming Organisations. Empowering People. Building Intelligent Solutions.
               </p>
             </div>
 
@@ -360,13 +360,13 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
                 </div>
                 <div className="space-y-1">
                   <span className="text-[11px] font-extrabold uppercase tracking-widest text-blue-700">
-                    Project Management Career accelerator
+                    Project Management Career Accelerator
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-                    Find out about the training and work experience program
+                    Build practical project management experience
                   </h2>
                   <p className="text-xs sm:text-sm text-slate-600 max-w-xl font-medium">
-                    Starting in October 2026, 10% Early bird discount
+                    Six months of practical training, work experience and one-to-one coaching. Next intake planned for 2 November 2026.
                   </p>
                 </div>
               </div>
@@ -379,18 +379,8 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
                   }}
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer active:scale-95"
                 >
-                  <span>More information</span>
+                  <span>Explore the Programme</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => {
-                    setActiveTab('pm-registration');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-sm transition-all flex items-center gap-2 cursor-pointer active:scale-95"
-                >
-                  <span>Register and Pay</span>
-                  <ArrowRight className="w-4 h-4 text-blue-600" />
                 </button>
               </div>
 
@@ -398,7 +388,7 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
 
             {/* DIRECT ENQUIRY LINK FOOTNOTE */}
             <div className="text-center text-xs text-slate-500 font-medium pt-2">
-              Every service area links directly to its own tailored enquiry form.
+              Every service area links to its own tailored enquiry form. We also work with partners on opportunities in Zimbabwe and internationally.
             </div>
 
           </div>
@@ -670,4 +660,3 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
     </div>
   );
 };
-

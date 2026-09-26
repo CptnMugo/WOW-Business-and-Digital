@@ -744,33 +744,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
       <div className="pt-2">
         {dualActionButtons ? (
           <div className="space-y-3">
-            <div className="grid sm:grid-cols-2 gap-3.5">
-              {/* BUTTON 1: FREE TESTER */}
-              <button
-                type="button"
-                id="btn-free-tester"
-                onClick={onFreeTester}
-                className="w-full bg-white hover:bg-emerald-50/80 text-slate-900 font-bold text-sm p-4 rounded-2xl shadow-sm hover:shadow-md transition-all flex items-center justify-between gap-3 border-2 border-emerald-500 active:scale-[0.99] cursor-pointer group"
-              >
-                <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-300">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-700" />
-                  </div>
-                  <div>
-                    <div className="font-extrabold text-sm text-slate-900 group-hover:text-emerald-700 transition-colors flex items-center gap-1.5">
-                      <span>Free Tester</span>
-                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-300">
-                        No Payment
-                      </span>
-                    </div>
-                    <div className="text-[11px] text-slate-500 font-normal mt-0.5">
-                      Save details &amp; submit • No payment
-                    </div>
-                  </div>
-                </div>
-                <Send className="w-4 h-4 text-emerald-600 group-hover:translate-x-1 transition-transform shrink-0" />
-              </button>
-
+            <div className="grid gap-3.5">
               {/* BUTTON 2: SUBMIT AND PAY */}
               <button
                 type="button"
@@ -799,7 +773,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             </div>
 
             <p className="text-center text-[11px] text-slate-500">
-              Select <strong>Free Tester</strong> to test the registration workflow with zero obligation, or <strong>Submit and Pay</strong> to complete registration and choose your tuition settlement option.
+              Submit your registration, then select your tuition payment option.
             </p>
           </div>
         ) : (

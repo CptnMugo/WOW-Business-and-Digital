@@ -4,6 +4,7 @@ import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import Stripe from "stripe";
 import dotenv from "dotenv";
+import fs from "fs";
 import {
   getAllRegistrations,
   processRegistrationSubmission,
@@ -28,6 +29,30 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+
+const ENQUIRY_CATEGORIES = new Set(['general', 'business-consultancy', 'staffing', 'training', 'ai-solutions', 'career-coaching', 'partnership']);
+const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char] || char));
+
+app.post('/api/enquiries', async (req, res) => {
+  const { category, contact, details } = req.body || {};
+  if (!ENQUIRY_CATEGORIES.has(category) || !contact || typeof contact.firstName !== 'string' || !contact.firstName.trim() || typeof contact.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email) || contact.privacyAcknowledged !== true || !details || typeof details !== 'object') {
+    res.status(400).json({ error: 'Please complete the required contact and privacy fields.' });
+    return;
+  }
+  const record = { id: `WBD-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, receivedAt: new Date().toISOString(), category, contact, details };
+  try {
+    fs.mkdirSync('data', { recursive: true });
+    fs.appendFileSync('data/enquiries.jsonl', JSON.stringify(record) + '\n', { mode: 0o600 });
+    const staff = process.env.ENQUIRIES_EMAIL || process.env.ADMISSIONS_EMAIL || 'wowdigital@wowbusinessanddigital.com';
+    const summary = JSON.stringify(record, null, 2);
+    const staffMail = await sendOutboundEmail(staff, `WBD ${category} enquiry ${record.id}`, `<pre>${escapeHtml(summary)}</pre>`, summary);
+    const customerMail = await sendOutboundEmail(contact.email, `We received your enquiry (${record.id})`, `<p>Thank you for contacting WOW Business & Digital. We have received your enquiry and will respond after reviewing it.</p><p>Reference: ${record.id}</p>`, `Thank you for contacting WOW Business & Digital. We have received your enquiry. Reference: ${record.id}`);
+    res.status(201).json({ success: true, reference: record.id, staffEmailSent: staffMail.success && staffMail.method !== 'simulated-preview', acknowledgementSent: customerMail.success && customerMail.method !== 'simulated-preview' });
+  } catch (error) {
+    console.error('Enquiry processing failed:', error);
+    res.status(500).json({ error: 'The enquiry could not be recorded.' });
+  }
+});
 
 // Initialize Stripe Client lazily
 let stripeClient: Stripe | null = null;
@@ -214,28 +239,9 @@ app.post("/api/stripe/create-checkout-session", async (req, res) => {
       return;
     }
 
-    // Graceful preview/simulation mode when API key is not yet set
-    const mockSessionId = `cs_stripe_sim_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
-    const mockPaymentIntent = `pi_stripe_sim_${Math.random().toString(36).substring(2, 10)}`;
-    const reference = `WOW-STRIPE-${Math.floor(100000 + Math.random() * 900000)}`;
-
-    res.json({
-      sessionId: mockSessionId,
-      url: null,
-      isLive: false,
-      paymentIntentId: mockPaymentIntent,
-      reference,
-      status: "succeeded",
-      amount: parsedAmount,
-      currency: curr.toUpperCase(),
-      title,
-      customerName: customerName || "Valued Client",
-      customerEmail: customerEmail || "client@company.com",
-      clientCompany: clientCompany || "Client Organisation",
-      invoiceReference: invoiceReference || "DIRECT-GATEWAY",
-      paidAt: new Date().toISOString(),
-      message: "Payment authorized via Stripe Gateway (Development Simulator).",
-    });
+    // Never report a simulated payment as successful to a visitor.
+    res.status(503).json({ error: 'Online payments are temporarily unavailable. Please contact WOW Business & Digital.' });
+    return;
   } catch (error: any) {
     console.error("Stripe Checkout Error:", error);
     res.status(500).json({
@@ -288,6 +294,10 @@ app.post("/api/registrations/submit", async (req, res) => {
 
 // Retrieve all registrations for admissions review & export
 app.get("/api/registrations", (req, res) => {
+  if (!process.env.ADMISSIONS_ADMIN_TOKEN || req.headers.authorization !== `Bearer ${process.env.ADMISSIONS_ADMIN_TOKEN}`) {
+    res.status(403).json({ error: 'Admissions access required' });
+    return;
+  }
   try {
     const list = getAllRegistrations();
     res.json({
@@ -307,6 +317,10 @@ app.get("/api/registrations", (req, res) => {
 
 // Test Email Dispatch via Resend API or SMTP
 app.post("/api/registrations/test-email", async (req, res) => {
+  if (!process.env.ADMISSIONS_ADMIN_TOKEN || req.headers.authorization !== `Bearer ${process.env.ADMISSIONS_ADMIN_TOKEN}`) {
+    res.status(403).json({ error: 'Admissions access required' });
+    return;
+  }
   try {
     const { recipientEmail, fromAddress: customFrom } = req.body;
     const targetEmail = recipientEmail?.trim() || process.env.ADMISSIONS_EMAIL || "admissions@wowdigital.co.uk";
@@ -350,6 +364,10 @@ app.post("/api/registrations/test-email", async (req, res) => {
 
 // Update runtime sender (From) email
 app.post("/api/admissions/update-sender", (req, res) => {
+  if (!process.env.ADMISSIONS_ADMIN_TOKEN || req.headers.authorization !== `Bearer ${process.env.ADMISSIONS_ADMIN_TOKEN}`) {
+    res.status(403).json({ error: 'Admissions access required' });
+    return;
+  }
   try {
     const { fromAddress } = req.body;
     if (fromAddress && typeof fromAddress === 'string') {
