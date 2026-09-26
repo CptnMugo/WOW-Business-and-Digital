@@ -22,13 +22,13 @@ export const CaseStudiesSection: React.FC<CaseStudiesProps> = ({ setActiveTab })
       <div className="text-center space-y-4 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-100 border border-sky-300 text-blue-700 text-xs font-bold">
           <Award className="w-3.5 h-3.5 text-blue-600" />
-          <span>Proven Impact & Case Studies</span>
+          <span>Relevant Experience</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-          Real-World Transformations Across Healthcare, Government & NGOs
+          Experience behind our approach
         </h1>
         <p className="text-slate-600 text-base leading-relaxed">
-          Discover how WOW Consulting and WOW AI Solutions deliver measurable ROI, accelerated timelines, and audit-proof governance for our clients.
+          Anonymised examples of experience held by our team. These describe work in previous roles and do not imply that WOW contracted directly with those organisations.
         </p>
       </div>
 
@@ -77,7 +77,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesProps> = ({ setActiveTab })
                 </div>
 
                 <div className="pt-2">
-                  <strong className="text-slate-900 block font-bold mb-0.5">WOW Solution Delivered:</strong>
+                  <strong className="text-slate-900 block font-bold mb-0.5">Relevant experience:</strong>
                   <p className="text-slate-600 leading-relaxed">{cs.solution}</p>
                 </div>
               </div>
@@ -85,7 +85,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesProps> = ({ setActiveTab })
               {/* Impact Metrics Chip List */}
               <div className="pt-4 border-t border-slate-100 space-y-2">
                 <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" /> Quantifiable Impact:
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" /> Areas of experience:
                 </div>
                 <div className="space-y-1.5">
                   {cs.impactMetrics.map((metric, idx) => (

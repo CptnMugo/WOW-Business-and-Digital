@@ -201,42 +201,10 @@ export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveT
             </div>
 
             <p className="text-xs text-slate-600">
-              Submit your project details to schedule a strategy call with a WOW Consulting Senior Director.
+              Use the consultancy enquiry form to describe your project and preferred next steps.
             </p>
 
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              alert(`Thank you! Your inquiry for ${selectedServiceForInquiry} has been received. Our team will contact you within 24 hours.`);
-              setSelectedServiceForInquiry(null);
-            }} className="space-y-3">
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Full Name</label>
-                <input required type="text" placeholder="John Doe" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900" />
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Work Email</label>
-                <input required type="email" placeholder="john@organisation.com" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900" />
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Organisation & Sector</label>
-                <input required type="text" placeholder="e.g. Ministry of Health / Private SME" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900" />
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Brief Description of Need</label>
-                <textarea rows={3} placeholder="Describe project scope, timeline, or key challenges..." className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900"></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-md"
-              >
-                <Send className="w-4 h-4" />
-                <span>Submit Consulting Inquiry</span>
-              </button>
-            </form>
+            <button type="button" onClick={() => { setSelectedServiceForInquiry(null); setActiveTab('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl">Continue to Contact Us</button>
           </div>
         </div>
       )}

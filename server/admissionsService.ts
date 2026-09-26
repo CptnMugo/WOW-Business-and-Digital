@@ -631,10 +631,10 @@ export async function sendOutboundEmail(
   }
 
   // 3. Graceful Simulation / Local Queue Mode
-  // If no external keys are configured yet, simulate successful delivery so users can test & preview without crashing
+  // Preview records are not email deliveries.
   console.log(`[Email Service - Preview Mode] Outbound email recorded for ${to}: "${subject}"`);
   return {
-    success: true,
+    success: false,
     method: 'simulated-preview',
   };
 }

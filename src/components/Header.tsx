@@ -327,7 +327,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     : currentOption.navInactive
                 }`}
               >
-                <span>Programs</span>
+                <span>Career Accelerator Programme</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${programsDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
@@ -357,11 +357,11 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="font-extrabold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 flex items-center justify-between">
-                            <span>Project Management Career accelerator</span>
+                            <span>Project Management Career Accelerator</span>
                             <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-blue-600 shrink-0 ml-1" />
                           </div>
                           <div className="text-[11px] text-slate-600 line-clamp-2 mt-0.5 leading-snug">
-                            6-Month Practical Programme • Real Projects • Learn, Work, Earn!
+                              Six months • Practical training • Work experience • Coaching
                           </div>
                           <div className="flex items-center gap-2 mt-2">
                             <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-100/80 px-2 py-0.5 rounded-md">
@@ -420,7 +420,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   : currentOption.navInactive
               }`}
             >
-              Contact
+              Contact Us
             </button>
 
             {/* 5. ABOUT */}
@@ -436,7 +436,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   : currentOption.navInactive
               }`}
             >
-              About
+              About &amp; Experience
             </button>
 
           </nav>
@@ -518,7 +518,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 className="w-full p-3 text-left font-extrabold text-sm text-blue-700 flex items-center justify-between bg-slate-100/80"
               >
                 <div className="flex items-center gap-2">
-                  <span>2. Programs</span>
+                  <span>2. Career Accelerator Programme</span>
                   <span className="text-[10px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-bold">New</span>
                 </div>
                 <ChevronDown className={`w-4 h-4 transition-transform ${mobileProgramsOpen ? 'rotate-180' : ''}`} />
@@ -533,10 +533,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     <div>
                       <div className="text-blue-800 font-extrabold flex items-center gap-1.5">
                         <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
-                        <span>Project Management Career accelerator</span>
+                        <span>Project Management Career Accelerator</span>
                       </div>
                       <div className="text-[11px] text-slate-500 font-normal mt-0.5">
-                        6-Month Programme • Real Deliverables • Learn, Work, Earn!
+                        Six months • Practical training • Work experience • Coaching
                       </div>
                     </div>
                     <ChevronRight className="w-3.5 h-3.5 text-blue-600 mt-1 shrink-0" />
@@ -576,7 +576,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               onClick={() => handleNavClick('about')}
               className="w-full text-left p-3 rounded-2xl text-sm font-extrabold flex items-center justify-between border bg-slate-50 text-slate-900 border-slate-200 hover:bg-slate-100"
             >
-              <span>5. About WOW</span>
+              <span>5. About &amp; Experience</span>
               <ChevronRight className="w-4 h-4 text-slate-400" />
             </button>
           </div>

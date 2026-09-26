@@ -48,14 +48,14 @@ const INITIAL_FORM_DATA: TrainingFormData = {
   paymentPreference: 'Pay in full (£900 - 10% Early Settlement Discount by 31 Oct)',
   howDidYouHear: 'Website',
   promoCode: 'WOW-EARLY-OFFER',
-  declaration1: true,
-  declaration2: true,
-  declaration3: true,
-  declaration4: true,
-  declaration5: true,
-  declaration6: true,
-  declaration7: true,
-  privacyAcknowledged: true,
+  declaration1: false,
+  declaration2: false,
+  declaration3: false,
+  declaration4: false,
+  declaration5: false,
+  declaration6: false,
+  declaration7: false,
+  privacyAcknowledged: false,
   marketingConsent: false,
 };
 
@@ -117,12 +117,16 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
       errorRef.current?.scrollIntoView({ behavior: 'smooth' });
       return false;
     }
+    if (![formData.declaration1, formData.declaration2, formData.declaration3, formData.declaration4, formData.declaration5, formData.declaration6, formData.declaration7].every(Boolean)) {
+      setValidationError('Please confirm all required declarations before submitting.');
+      return false;
+    }
     setValidationError(null);
     return true;
   };
 
   // 1. FREE TESTER: Save details, submit with no payment
-  const handleFreeTester = () => {
+  const handleFreeTester = async () => {
     if (!validateForm()) return;
 
     const ref = `TESTER-${Math.floor(100000 + Math.random() * 900000)}`;
@@ -139,13 +143,15 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
     try {
       localStorage.setItem('wow_pm_registration_submitted', JSON.stringify(submission));
       // Dispatch to Admissions Backend (Option 2: Email alert & Option 3: Google Sheets Sync)
-      fetch('/api/registrations/submit', {
+      const response = await fetch('/api/registrations/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submission)
-      }).catch(err => console.warn('Admissions sync notification warning:', err));
-    } catch {
-      // ignore
+      });
+      if (!response.ok) throw new Error('Registration could not be saved. Please try again.');
+    } catch (error) {
+      setValidationError(error instanceof Error ? error.message : 'Registration could not be saved.');
+      return;
     }
 
     setFreeTesterSubmitted(true);
@@ -153,7 +159,7 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
   };
 
   // 2. SUBMIT AND PAY: Save details, go to payment page
-  const handleSubmitAndPay = () => {
+  const handleSubmitAndPay = async () => {
     if (!validateForm()) return;
 
     const ref = `WOW-PM-${Math.floor(100000 + Math.random() * 900000)}`;
@@ -183,13 +189,15 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
       localStorage.setItem('wow_payment_client_email', formData.email || '');
 
       // Dispatch to Admissions Backend (Option 2: Email alert & Option 3: Google Sheets Sync)
-      fetch('/api/registrations/submit', {
+      const response = await fetch('/api/registrations/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submission)
-      }).catch(err => console.warn('Admissions sync notification warning:', err));
-    } catch {
-      // ignore
+      });
+      if (!response.ok) throw new Error('Registration could not be saved. Please try again.');
+    } catch (error) {
+      setValidationError(error instanceof Error ? error.message : 'Registration could not be saved.');
+      return;
     }
 
     // Navigate to payments page
@@ -216,7 +224,7 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
 
           <div className="flex items-center gap-3">
             <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-              October 2026 Intake
+              Planned start: 2 November 2026
             </span>
           </div>
         </div>
@@ -233,7 +241,7 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
           </h1>
 
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
-            Please complete the registration fields below. All course structure and curriculum details are detailed on the Course Information page. Choose <strong>Free Tester</strong> to test submission without fee, or <strong>Submit and Pay</strong> to complete your enrolment via our secure payments portal.
+            Please complete the registration fields below. All course structure and curriculum details are detailed on the Course Information page. Submit your registration details before choosing a payment option. Your place is subject to confirmation.
           </p>
 
           <div className="flex flex-wrap items-center gap-2.5 pt-2 text-xs text-slate-700">

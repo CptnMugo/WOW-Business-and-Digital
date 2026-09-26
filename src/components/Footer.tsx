@@ -45,12 +45,13 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
             <div className="pt-2 text-xs flex flex-col gap-2 text-slate-700">
               <div className="flex items-center gap-2">
                 <Globe className="w-4 h-4 shrink-0 text-blue-600" />
-                <span>Serving organisations across Africa and internationally</span>
+                <span>Internationally connected, with developing work in Zimbabwe</span>
               </div>
+              <p className="text-xs text-slate-600">For Zimbabwe related programmes or partnerships, use the partnership or general enquiry form and describe your location and requirement. Local forms can be added as each service is ready.</p>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 shrink-0 text-blue-600" />
-                <a href="mailto:wowdigital@wowbusinessanddigital.com" className="hover:text-blue-700 hover:underline transition-all">
-                  wowdigital@wowbusinessanddigital.com
+                <a href={`mailto:${BRAND_INFO.email}`} className="hover:text-blue-700 hover:underline transition-all">
+                  {BRAND_INFO.email}
                 </a>
               </div>
               <div className="flex items-center gap-2">
@@ -138,12 +139,12 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
             <ul className="space-y-2.5 text-xs text-slate-600">
               <li>
                 <button onClick={() => handleNav('about')} className="hover:text-blue-600 hover:underline transition-all">
-                  About Us & Vision
+                  About &amp; Experience
                 </button>
               </li>
               <li>
                 <button onClick={() => handleNav('case-studies')} className="hover:text-blue-600 hover:underline transition-all">
-                  Client Success Stories
+                  Experience Examples
                 </button>
               </li>
               <li>
@@ -158,7 +159,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
               </li>
               <li>
                 <button onClick={() => handleNav('contact')} className="hover:text-blue-600 hover:underline transition-all">
-                  Contact & Bookings
+                  Contact Us
                 </button>
               </li>
             </ul>

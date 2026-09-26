@@ -74,7 +74,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-700 font-medium leading-relaxed max-w-3xl">
-              Practical training. Real client projects. Career-ready skills. Learn by doing on actual deliverables, backed by one-to-one executive coaching, STAR interview preparation, and verified workplace references.
+              Practical training, supervised project work and career support over six months. Develop real deliverables, build communication skills and receive one-to-one coaching. References depend on genuine participation and performance.
             </p>
           </div>
 
@@ -252,7 +252,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                 3. Earn
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Convert your practical experience into high-value job offers. Gain executive presence, STAR interview mastery, and verified UK references.
+                Build confidence in interviews through practical experience, STAR preparation and coaching. References can reflect work you actually complete.
               </p>
               <ul className="space-y-2 pt-2 border-t border-slate-100 text-xs text-slate-700">
                 <li className="flex items-center gap-2">
@@ -689,7 +689,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               <span>Do I get real work experience to put on my CV?</span>
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Yes. You will work on real client initiatives, create genuine project deliverables (PIDs, RAID logs, steering decks), and be able to claim verified UK project management experience.
+              You will create practical project deliverables such as plans, RAID logs and presentations. Client work depends on suitable opportunities and supervision; any reference will describe the work you actually complete.
             </p>
           </div>
 

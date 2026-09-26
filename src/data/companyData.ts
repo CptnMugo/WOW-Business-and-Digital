@@ -2,12 +2,12 @@ import { ServiceItem, AssistantProduct, AcademyProgram, ToolkitProduct, CaseStud
 
 export const BRAND_INFO = {
   name: "WOW Business & Digital Limited",
-  shortName: "WOW",
+  shortName: "WBD",
   email: "wowdigital@wowbusinessanddigital.com",
   phone: "+44 121 296 9549",
   tagline: "Transforming Organisations. Empowering People. Building Intelligent Solutions.",
   positioning: "Transforming Organisations. Empowering People. Building Intelligent Solutions.",
-  subtext: "A business built on real consultancy, coaching and growth experience, combining business transformation, staffing, training and specialised AI solutions across business sectors.",
+  subtext: "Business transformation, programme delivery and digital consultancy, with practical staffing, training and AI solutions.",
   vision: "To empower people and organisations to achieve sustainable growth through business transformation, digital innovation, artificial intelligence and professional development.",
   purpose: "WOW Business & Digital helps organisations improve performance through practical consulting, digital innovation and intelligent solutions. We work alongside clients to strengthen delivery, develop people and support sustainable growth.",
   personality: [
@@ -66,7 +66,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "operational-readiness",
     title: "Operational Readiness",
-    description: "Ensuring teams, processes, and infrastructure are 100% prepared to adopt new technology deployments without business disruption.",
+    description: "Helping teams, processes and infrastructure prepare for technology deployment and manage disruption during change.",
     iconName: "ShieldCheck",
     category: "core",
     tags: ["Adoption", "Go-Live", "Risk Mitigation"]
@@ -378,42 +378,21 @@ export const TOOLKITS: ToolkitProduct[] = [
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    id: "healthcare-pmo-recovery",
-    title: "Healthcare Digital Transformation & PMO Setup",
-    clientSector: "Healthcare & Health Social Care",
-    challenge: "A regional health trust faced severe delays in deploying a new electronic patient record system due to fragmented governance and lack of standardized PMO controls.",
-    solution: "WOW Consulting established an agile PMO framework, instituted weekly RAID reviews, and led change management across 1,200 clinical staff members.",
-    impactMetrics: [
-      "Project brought back on schedule in 6 weeks",
-      "99.4% user adoption rate at go-live",
-      "Zero critical hypercare incidents"
-    ],
+    id: "healthcare-transformation-experience",
+    title: "Healthcare digital adoption and programme delivery",
+    clientSector: "Healthcare & Health and Social Care",
+    challenge: "Complex digital change requires clinical and operational teams to understand the impact on their work and prepare for adoption.",
+    solution: "Experience within the WOW team includes electronic patient record adoption, readiness assessments, stakeholder engagement, change networks and integrated programme planning. This is practitioner experience, not a claim that WOW held the client contract.",
+    impactMetrics: ["Readiness and adoption planning", "Stakeholder engagement", "Integrated delivery controls"],
     division: "Consulting"
   },
   {
-    id: "ngo-ai-grant-reporting",
-    title: "Automated Grant Impact Reporting for International NGO",
-    clientSector: "Charities & International Organisations",
-    challenge: "Field teams in 4 countries spent over 30 hours per month compiling manual donor reports, reducing time spent on direct community aid.",
-    solution: "Deployed custom WOW NGO Assistant trained on donor reporting guidelines, enabling field workers to generate compliant impact briefs from raw field notes.",
-    impactMetrics: [
-      "80% reduction in donor reporting overhead",
-      "100% compliance score across 12 donor audits",
-      "Real-time impact dashboard for board members"
-    ],
-    division: "AI Solutions"
-  },
-  {
-    id: "government-digital-readiness",
-    title: "Government Agency Digital & AI Readiness Strategy",
-    clientSector: "Government",
-    challenge: "A public sector department required a comprehensive digital transformation roadmap to modernize citizen services while satisfying strict data governance regulations.",
-    solution: "Conducted a department-wide Digital Readiness Assessment, designed a target operating model, and facilitated leadership AI training via WOW Academy.",
-    impactMetrics: [
-      "Clear 3-year Digital & AI Roadmap approved by Board",
-      "120 senior civil servants upskilled in AI governance",
-      "Estimated £1.4M operational savings identified"
-    ],
+    id: "multi-site-digital-delivery",
+    title: "Multi-site digital transformation experience",
+    clientSector: "Health and Social Care",
+    challenge: "Introducing digital care systems across multiple sites calls for coordinated planning, staff engagement and practical support.",
+    solution: "Experience within the WOW team includes planning digital care and medicines management rollouts across care settings, coordinating workstreams and supporting local implementation. Client engagements predate WOW delivery.",
+    impactMetrics: ["Multi-site delivery planning", "Frontline engagement", "Change and governance support"],
     division: "Consulting"
   }
 ];

@@ -127,37 +127,10 @@ export const AcademySection: React.FC<AcademySectionProps> = ({ setActiveTab }) 
             </div>
 
             <p className="text-xs text-slate-600">
-              Submit your details to receive the syllabus brochure and enrollment dates for WOW Academy.
+              Use the training enquiry form to ask about the programme, syllabus and dates.
             </p>
 
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              alert(`Thank you! Your enrollment inquiry for ${selectedProgram} has been received. Our WOW Academy coordinator will send you the syllabus.`);
-              setSelectedProgram(null);
-            }} className="space-y-3">
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Full Name</label>
-                <input required type="text" placeholder="Jane Smith" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900" />
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Email Address</label>
-                <input required type="email" placeholder="jane@example.com" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900" />
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Current Role / Career Goal</label>
-                <input required type="text" placeholder="e.g. Junior PM / Graduate looking for PMO placement" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900" />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
-              >
-                <Send className="w-4 h-4" />
-                <span>Request Syllabus & Programme Dates</span>
-              </button>
-            </form>
+            <button type="button" onClick={() => { setSelectedProgram(null); setActiveTab('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl">Continue to Contact Us</button>
           </div>
         </div>
       )}

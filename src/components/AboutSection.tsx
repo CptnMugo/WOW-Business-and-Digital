@@ -18,12 +18,20 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
           <span>About WOW Business and Digital Ltd</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-          Empowering Organisations & Communities Through Intelligent Leadership
+          About WOW Business &amp; Digital
         </h1>
         <p className="text-slate-600 text-base leading-relaxed">
-          {BRAND_INFO.positioning}
+          We bring practical experience in business transformation, programme delivery, digital change and professional development to each opportunity.
         </p>
       </div>
+
+      <section className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-sm space-y-5">
+        <h2 className="text-2xl font-extrabold text-slate-900">Our background and experience</h2>
+        <p className="text-sm leading-relaxed text-slate-700">WOW Business &amp; Digital combines consultancy and delivery experience with digital solutions, staffing and training. Our work is grounded in understanding organisations, engaging the people affected by change and turning plans into practical delivery.</p>
+        <p className="text-sm leading-relaxed text-slate-700">Programme and project lead Rennie Mudzi brings experience across healthcare, health and social care and wider public service transformation. Her work has included digital care systems, electronic patient records, operational readiness, integrated planning, governance and stakeholder engagement. Previous roles inform our approach; they are not presented as contracts awarded to WOW.</p>
+        <p className="text-sm leading-relaxed text-slate-700">We are developing partnerships and opportunities in Zimbabwe alongside our broader consultancy and digital work. Specific local services and forms will be added as they are ready.</p>
+        <button onClick={() => setActiveTab('case-studies')} className="text-blue-700 font-bold text-sm underline cursor-pointer">Explore experience examples</button>
+      </section>
 
       {/* VISION & PURPOSE CARDS */}
       <div className="grid md:grid-cols-2 gap-8">
@@ -85,9 +93,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
       {/* REGIONAL FOOTPRINT */}
       <div className="bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50 rounded-3xl p-8 sm:p-12 border border-sky-200 space-y-6 text-center">
         <div className="max-w-2xl mx-auto space-y-3">
-          <h2 className="text-2xl font-bold text-slate-900">Serving African & International Markets</h2>
+          <h2 className="text-2xl font-bold text-slate-900">International connections</h2>
           <p className="text-xs text-slate-600 leading-relaxed">
-            From London to Harare, Nairobi, and Johannesburg, WOW Business and Digital Ltd partners with local and international stakeholders to build scalable infrastructure, upskill workforce talent, and launch localized AI solutions.
+            Our developing Zimbabwe work creates opportunities for relevant partnerships, local programmes and practical digital solutions. Contact us to discuss a specific opportunity.
           </p>
           <div className="pt-4 flex justify-center gap-4">
             <button

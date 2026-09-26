@@ -20,7 +20,6 @@ import { InsightsSection } from './components/InsightsSection';
 import { ContactSection, EnquiryCategory } from './components/ContactSection';
 import { PaymentsSection } from './components/PaymentsSection';
 import { Version2Section } from './components/Version2Section';
-import { WelcomeMat } from './components/WelcomeMat';
 import { ProjectManagementCareerAcceleratorSection } from './components/ProjectManagementCareerAcceleratorSection';
 import { ProjectManagementRegistrationPage } from './components/ProjectManagementRegistrationPage';
 
@@ -103,8 +102,6 @@ export default function App() {
         setActiveTab={setActiveTab} 
       />
 
-      {/* Interactive Welcome Mat */}
-      <WelcomeMat onClaimOffer={handleNavigateToContact} />
     </div>
   );
 }
