@@ -21,7 +21,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
           About WOW Business &amp; Digital
         </h1>
         <p className="text-slate-600 text-base leading-relaxed">
-          We bring practical experience in business transformation, programme delivery, digital change and professional development to each opportunity.
+          We lead transformation, service redesign and programme delivery, drawing on specialist associates to meet each client's needs.
         </p>
       </div>
 
@@ -29,8 +29,16 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
         <h2 className="text-2xl font-extrabold text-slate-900">Our background and experience</h2>
         <p className="text-sm leading-relaxed text-slate-700">WOW Business &amp; Digital combines consultancy and delivery experience with digital solutions, staffing and training. Our work is grounded in understanding organisations, engaging the people affected by change and turning plans into practical delivery.</p>
         <p className="text-sm leading-relaxed text-slate-700">Programme and project lead Rennie Mudzi brings experience across healthcare, health and social care and wider public service transformation. Her work has included digital care systems, electronic patient records, operational readiness, integrated planning, governance and stakeholder engagement. Previous roles inform our approach; they are not presented as contracts awarded to WOW.</p>
+        <p className="text-sm leading-relaxed text-slate-700">For broader commissions, we shape a multidisciplinary team around the brief. Depending on the work, associates may contribute expertise in technology and AI, finance and commercial strategy, procurement, people and HR, communications and other business functions. WOW leads the programme and coordinates the specialists, with roles, availability and responsibilities agreed for each engagement.</p>
         <p className="text-sm leading-relaxed text-slate-700">We are developing partnerships and opportunities in Zimbabwe alongside our broader consultancy and digital work. Specific local services and forms will be added as they are ready.</p>
         <button onClick={() => setActiveTab('case-studies')} className="text-blue-700 font-bold text-sm underline cursor-pointer">Explore experience examples</button>
+      </section>
+
+      <section className="bg-sky-50 rounded-3xl p-8 sm:p-10 border border-sky-200 space-y-5">
+        <h2 className="text-2xl font-extrabold text-slate-900">One coordinated team for complex change</h2>
+        <p className="text-sm leading-relaxed text-slate-700">We start with the service challenge, agree the outcomes and assemble the right mix of delivery and functional expertise. Together with client teams, we redesign processes and digital workflows, introduce new ways of working, strengthen capability and track the benefits beyond implementation.</p>
+        <p className="text-sm leading-relaxed text-slate-700">This approach supports a defined project, an interim leadership need or a wider tender requiring several disciplines. Each proposal sets out the people, responsibilities, deliverables and governance for that particular commission.</p>
+        <button onClick={() => setActiveTab('contact')} className="text-blue-700 font-bold text-sm underline cursor-pointer">Discuss a programme or tender</button>
       </section>
 
       {/* VISION & PURPOSE CARDS */}

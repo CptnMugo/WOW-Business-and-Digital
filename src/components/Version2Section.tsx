@@ -86,13 +86,16 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
           <div className="space-y-6 animate-in fade-in duration-300">
             <div className="text-center max-w-4xl mx-auto space-y-3 pt-1">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight">
-                Business transformation, programme delivery and digital consultancy
+                Transformation, service redesign and programme delivery
               </h1>
               <p className="text-lg sm:text-xl font-bold text-slate-800 max-w-2xl mx-auto leading-snug">
-                Practical support for organisations and people, built on real delivery experience.
+                Senior-led delivery, supported by specialist associates across business and digital disciplines.
               </p>
               <p className="text-xs sm:text-sm text-slate-600 max-w-3xl mx-auto leading-relaxed pt-1">
                 Transforming Organisations. Empowering People. Building Intelligent Solutions.
+              </p>
+              <p className="text-xs sm:text-sm text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                From programme leadership and digital adoption to finance, procurement, people and communications, we shape the team around your programme.
               </p>
             </div>
 
@@ -561,6 +564,9 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
                 <h2 className="text-2xl font-black text-slate-900">Business Consultancy & Growth</h2>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                   Practical support to review challenges, clarify priorities, improve operations and create realistic growth plans. Areas may include business consultancy, coaching, operational improvement, transformation, governance, programme delivery and benefits realisation.
+                </p>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  We lead the programme and bring in relevant associates across technology and AI, finance and commercial strategy, procurement, people and HR, and communications according to the scope.
                 </p>
                 <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-2">
                   <h4 className="font-bold text-slate-900">Key Offerings:</h4>
