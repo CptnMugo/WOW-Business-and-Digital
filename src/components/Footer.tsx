@@ -15,7 +15,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
   };
 
   return (
-    <footer className="bg-gradient-to-r from-[#F0F9FF] via-[#E0F2FE] to-[#BAE6FD] border-t border-sky-200 text-slate-800 transition-all duration-300 relative overflow-hidden">
+    <footer className="wbd-site-footer bg-[#081D3D] border-t-4 border-[#B87918] text-white transition-all duration-300 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           
@@ -23,7 +23,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
           <div className="lg:col-span-2 space-y-6">
             <button 
               onClick={() => handleNav('home')} 
-              className="text-left focus:outline-none group shrink-0 transition-opacity hover:opacity-90 flex items-center"
+              className="text-left focus:outline-none group shrink-0 transition-opacity hover:opacity-90 flex items-center bg-white rounded-xl p-2 w-fit"
               aria-label="WOW Business and Digital Homepage"
             >
               <Logo 

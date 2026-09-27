@@ -28,16 +28,16 @@ export interface BannerOption {
 export const BANNER_OPTIONS: BannerOption[] = [
   {
     id: 'crisp-ice',
-    name: 'Crisp Ice Light Blue (Light Mode)',
+    name: 'WOW Ivory and Navy',
     category: 'blue',
-    desc: 'Soft ice-blue canvas (#F0F9FF) with crisp typography and sky accents',
-    briefSource: 'Official Crisp Ice Light Blue Brand Canvas',
-    badgeHex: '#BAE6FD',
-    headerClass: 'bg-gradient-to-r from-[#F0F9FF] via-[#E0F2FE] to-[#BAE6FD] border-b border-sky-200 text-slate-800 shadow-sm',
+    desc: 'Warm ivory canvas with deep navy typography and royal blue accents',
+    briefSource: 'WOW Transformation that works banner',
+    badgeHex: '#FFF9F0',
+    headerClass: 'bg-[#FFF9F0]/95 border-b border-[#DED7CB] text-[#081D3D] shadow-sm',
     isLight: true,
-    navActiveBg: 'bg-blue-600 text-white shadow-sm font-bold',
-    navInactive: 'text-slate-700 hover:text-slate-900 hover:bg-sky-200/60',
-    buttonClass: 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm'
+    navActiveBg: 'bg-[#081D3D] text-white shadow-sm font-bold',
+    navInactive: 'text-[#081D3D] hover:text-[#0755C9] hover:bg-[#EAF1F5]',
+    buttonClass: 'bg-[#0755C9] hover:bg-[#0646AA] text-white shadow-sm'
   },
   {
     id: 'growth-emerald',

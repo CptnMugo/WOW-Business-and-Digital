@@ -7,9 +7,9 @@ export const BRAND_INFO = {
   phone: "+44 121 296 9549",
   tagline: "Transforming Organisations. Empowering People. Building Intelligent Solutions.",
   positioning: "Transforming Organisations. Empowering People. Building Intelligent Solutions.",
-  subtext: "Business transformation, programme delivery and digital consultancy, with practical staffing, training and AI solutions.",
+  subtext: "Transformation, service redesign and programme delivery, supported by multidisciplinary expertise tailored to each engagement.",
   vision: "To empower people and organisations to achieve sustainable growth through business transformation, digital innovation, artificial intelligence and professional development.",
-  purpose: "WOW Business & Digital helps organisations improve performance through practical consulting, digital innovation and intelligent solutions. We work alongside clients to strengthen delivery, develop people and support sustainable growth.",
+  purpose: "WOW Business & Digital helps organisations improve how they operate, deliver services and implement change. We lead delivery and bring together relevant specialist expertise to strengthen capability and achieve sustainable outcomes.",
   personality: [
     "Professional",
     "Practical",

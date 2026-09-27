@@ -27,12 +27,26 @@ export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveT
           <span>WOW Consulting Division</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-          Enterprise Transformation, PMO Governance & Advisory
+          Transformation, service redesign and programme delivery
         </h1>
         <p className="text-slate-600 text-base leading-relaxed">
-          We help complex organisations de-risk major digital investments, institute audit-proof PMO controls, and drive high-adoption operational change.
+          WOW leads complex change from strategy through implementation, bringing together the delivery and specialist expertise each programme requires.
         </p>
       </div>
+
+      <section className="bg-[#081D3D] rounded-3xl p-8 sm:p-10 border border-[#B87918] shadow-sm space-y-5">
+        <h2 className="text-2xl font-extrabold text-white">Multidisciplinary delivery, led as one programme</h2>
+        <p className="text-sm leading-relaxed text-[#DBE4EC]">Our programme and transformation leadership provides the structure, governance and accountability. According to the commission, we can work with associates in technology and AI, finance and commercial strategy, procurement, people and HR, communications and other business functions. We agree the team and responsibilities with each client.</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {['Programme and change leadership', 'Technology and digital adoption', 'Finance and commercial strategy', 'Procurement and supplier engagement', 'People, HR and organisational change', 'Communications and stakeholder engagement'].map((capability) => (
+            <div key={capability} className="flex items-start gap-2 rounded-xl bg-white/10 border border-white/20 p-3 text-sm font-semibold text-white">
+              <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[#F0C474]" />{capability}
+            </div>
+          ))}
+        </div>
+        <p className="text-sm leading-relaxed text-[#DBE4EC]">We map the service and workflows, plan implementation with client teams and measure adoption and outcomes. For tendered work, our response identifies the proposed specialists, their roles and how the team will be governed.</p>
+        <button onClick={() => setActiveTab('contact')} className="bg-[#B87918] hover:bg-[#925D0B] text-white font-bold text-sm px-6 py-3 rounded-xl cursor-pointer">Discuss a multidisciplinary commission</button>
+      </section>
 
       {/* FILTER BUTTONS */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
