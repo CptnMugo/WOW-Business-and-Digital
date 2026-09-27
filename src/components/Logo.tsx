@@ -53,8 +53,8 @@ export const Logo: React.FC<LogoProps> = ({
           <linearGradient id={bubbleGradId} x1="20%" y1="0%" x2="80%" y2="100%">
             <stop offset="0%" stopColor="#00C8FF" />
             <stop offset="35%" stopColor="#0066FF" />
-            <stop offset="70%" stopColor="#3700E0" />
-            <stop offset="100%" stopColor="#5E00FF" />
+            <stop offset="70%" stopColor="#0755C9" />
+            <stop offset="100%" stopColor="#081D3D" />
           </linearGradient>
 
           {/* Equalizer Soundwave Gradient */}
@@ -125,8 +125,8 @@ export const Logo: React.FC<LogoProps> = ({
         <linearGradient id={bubbleGradId} x1="20%" y1="0%" x2="80%" y2="100%">
           <stop offset="0%" stopColor="#00C8FF" />
           <stop offset="35%" stopColor="#0066FF" />
-          <stop offset="70%" stopColor="#3700E0" />
-          <stop offset="100%" stopColor="#5E00FF" />
+          <stop offset="70%" stopColor="#0755C9" />
+          <stop offset="100%" stopColor="#081D3D" />
         </linearGradient>
 
         {/* Equalizer Soundwave Gradient */}
@@ -145,7 +145,7 @@ export const Logo: React.FC<LogoProps> = ({
         <linearGradient id={wowTextGradId} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#00A0FF" />
           <stop offset="45%" stopColor="#0066FF" />
-          <stop offset="100%" stopColor="#003EDB" />
+          <stop offset="100%" stopColor="#081D3D" />
         </linearGradient>
       </defs>
 

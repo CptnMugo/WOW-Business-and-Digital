@@ -43,12 +43,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
 
       {/* VISION & PURPOSE CARDS */}
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="bg-gradient-to-br from-emerald-50 via-teal-50/50 to-white text-slate-900 rounded-3xl p-8 border-2 border-emerald-200/80 shadow-sm space-y-4 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#E8F3F4] via-[#F3F9F8] to-white text-[#081D3D] rounded-3xl p-8 border-2 border-[#B9D9DF] shadow-sm space-y-4 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl"></div>
           <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-md shadow-emerald-600/20">
             <Target className="w-6 h-6 text-white" />
           </div>
-          <h2 className="text-2xl font-extrabold text-emerald-950">Our Vision</h2>
+          <h2 className="text-2xl font-extrabold text-[#081D3D]">Our Vision</h2>
           <p className="text-slate-700 text-sm leading-relaxed font-medium">
             "{BRAND_INFO.vision}"
           </p>
@@ -99,7 +99,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
       </div>
 
       {/* REGIONAL FOOTPRINT */}
-      <div className="bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50 rounded-3xl p-8 sm:p-12 border border-sky-200 space-y-6 text-center">
+      <div className="bg-gradient-to-r from-[#FFF4DE] via-[#FFF9F0] to-[#EAF3F6] rounded-3xl p-8 sm:p-12 border border-[#E8CF9F] space-y-6 text-center">
         <div className="max-w-2xl mx-auto space-y-3">
           <h2 className="text-2xl font-bold text-slate-900">International connections</h2>
           <p className="text-xs text-slate-600 leading-relaxed">
