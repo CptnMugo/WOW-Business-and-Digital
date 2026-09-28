@@ -31,7 +31,7 @@ export const BANNER_OPTIONS: BannerOption[] = [
     name: 'WOW Ivory and Navy',
     category: 'blue',
     desc: 'Warm ivory canvas with deep navy typography and royal blue accents',
-    briefSource: 'WOW Transformation that works banner',
+    briefSource: 'WBD Evidence | Transformation | Impact brand pack',
     badgeHex: '#FFF9F0',
     headerClass: 'bg-[#FFF9F0]/95 border-b border-[#DED7CB] text-[#081D3D] shadow-sm',
     isLight: true,
