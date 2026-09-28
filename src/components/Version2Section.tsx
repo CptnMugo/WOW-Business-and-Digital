@@ -26,10 +26,10 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
         <div className="wbd-hero-glow" aria-hidden="true" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="wbd-hero-copy">
-            <p className="wbd-eyebrow">TRANSFORMATION · INNOVATION · GROWTH</p>
-            <h1 id="wbd-home-title">Transformation <span>that works.</span></h1>
-            <p className="wbd-hero-subtitle">People. Systems. Services. <strong>Better outcomes.</strong></p>
-            <p className="wbd-hero-description">WOW Business & Digital leads transformation, service redesign and programme delivery. We combine hands-on leadership with specialist associates across business and digital disciplines to help organisations move from plans to lasting change.</p>
+            <p className="wbd-eyebrow">WOW BUSINESS & DIGITAL</p>
+            <h1 id="wbd-home-title">Evidence. Transformation. <span>Impact.</span></h1>
+            <p className="wbd-hero-subtitle">Understand the need. Deliver practical change. <strong>Show what improves.</strong></p>
+            <p className="wbd-hero-description">We use evidence, insight and engagement to define the challenge, then lead service redesign and programme delivery across people, systems and technology. Senior leadership and specialist associates help turn change into measurable, sustainable outcomes.</p>
             <div className="wbd-hero-actions">
               <button onClick={() => navigate('consulting')} className="wbd-button wbd-button-primary">Explore our approach <ArrowRight size={18} /></button>
               <button onClick={() => contact('business-consultancy')} className="wbd-button wbd-button-secondary">Discuss a project</button>
