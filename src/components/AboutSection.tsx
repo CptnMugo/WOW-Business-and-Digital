@@ -30,7 +30,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
         <p className="text-sm leading-relaxed text-slate-700">WOW Business &amp; Digital combines consultancy and delivery experience with digital solutions, staffing and training. Our work is grounded in understanding organisations, engaging the people affected by change and turning plans into practical delivery.</p>
         <p className="text-sm leading-relaxed text-slate-700">Programme and project lead Rennie Mudzi brings experience across healthcare, health and social care and wider public service transformation. Her work has included digital care systems, electronic patient records, operational readiness, integrated planning, governance and stakeholder engagement. Previous roles inform our approach; they are not presented as contracts awarded to WOW.</p>
         <p className="text-sm leading-relaxed text-slate-700">For broader commissions, we shape a multidisciplinary team around the brief. Depending on the work, associates may contribute expertise in technology and AI, finance and commercial strategy, procurement, people and HR, communications and other business functions. WOW leads the programme and coordinates the specialists, with roles, availability and responsibilities agreed for each engagement.</p>
-        <p className="text-sm leading-relaxed text-slate-700">We are developing partnerships and opportunities in Zimbabwe alongside our broader consultancy and digital work. Specific local services and forms will be added as they are ready.</p>
+        <p className="text-sm leading-relaxed text-slate-700">Our international work includes developing partnerships and programmes in Zimbabwe. We shape each engagement around local needs, partners and delivery requirements.</p>
         <button onClick={() => setActiveTab('case-studies')} className="text-blue-700 font-bold text-sm underline cursor-pointer">Explore experience examples</button>
       </section>
 
@@ -43,12 +43,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
 
       {/* VISION & PURPOSE CARDS */}
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="bg-gradient-to-br from-[#E8F3F4] via-[#F3F9F8] to-white text-[#081D3D] rounded-3xl p-8 border-2 border-[#B9D9DF] shadow-sm space-y-4 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#E8F3F4] via-[#F3F9F8] to-white text-[#0b2d5b] rounded-3xl p-8 border-2 border-[#B9D9DF] shadow-sm space-y-4 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl"></div>
           <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-md shadow-emerald-600/20">
             <Target className="w-6 h-6 text-white" />
           </div>
-          <h2 className="text-2xl font-extrabold text-[#081D3D]">Our Vision</h2>
+          <h2 className="text-2xl font-extrabold text-[#0b2d5b]">Our Vision</h2>
           <p className="text-slate-700 text-sm leading-relaxed font-medium">
             "{BRAND_INFO.vision}"
           </p>
@@ -68,7 +68,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
           </p>
           <div className="pt-4 border-t border-slate-100 flex items-center gap-2 text-xs text-slate-700 font-semibold">
             <Shield className="w-4 h-4 text-blue-600" />
-            <span>Evidence-Based & Audit-Proof Delivery</span>
+            <span>Evidence-led delivery and clear governance</span>
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
       <div className="space-y-6">
         <div className="text-center space-y-2">
           <div className="text-xs font-bold uppercase tracking-widest text-blue-600">Guiding Ethos</div>
-          <h2 className="text-3xl font-black text-slate-900">Brand Personality & Core Values</h2>
+          <h2 className="text-3xl font-black text-slate-900">How we work</h2>
           <p className="text-slate-600 text-xs max-w-xl mx-auto">
             Our values guide every consulting engagement, AI model training pipeline, and academy programme.
           </p>
@@ -91,7 +91,14 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
               </div>
               <h3 className="font-bold text-slate-900 text-base">{val}</h3>
               <p className="text-xs text-slate-500">
-                Upholding strict standard of excellence in every deliverable and client interaction.
+                {[
+                  'Bring relevant experience and take responsibility for the quality of our work.',
+                  'Design changes that people can use in day-to-day delivery.',
+                  'Communicate clearly, follow through and be open about progress.',
+                  'Use research, data and stakeholder insight to understand the need.',
+                  'Apply technology where it makes a real difference to services and workflows.',
+                  'Listen carefully and work alongside the people affected by change.'
+                ][idx]}
               </p>
             </div>
           ))}
@@ -99,7 +106,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
       </div>
 
       {/* REGIONAL FOOTPRINT */}
-      <div className="bg-gradient-to-r from-[#FFF4DE] via-[#FFF9F0] to-[#EAF3F6] rounded-3xl p-8 sm:p-12 border border-[#E8CF9F] space-y-6 text-center">
+      <div className="bg-gradient-to-r from-[#FFF4DE] via-[#f8f4ed] to-[#EAF3F6] rounded-3xl p-8 sm:p-12 border border-[#E8CF9F] space-y-6 text-center">
         <div className="max-w-2xl mx-auto space-y-3">
           <h2 className="text-2xl font-bold text-slate-900">International connections</h2>
           <p className="text-xs text-slate-600 leading-relaxed">
