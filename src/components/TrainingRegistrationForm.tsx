@@ -50,8 +50,6 @@ interface TrainingRegistrationFormProps {
   formData: TrainingFormData;
   setFormData: React.Dispatch<React.SetStateAction<TrainingFormData>>;
   onSubmit: (e: React.FormEvent) => void;
-  uploadedFileName: string | null;
-  onFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   dualActionButtons?: boolean;
   onFreeTester?: () => void;
   onSubmitAndPay?: () => void;
@@ -89,8 +87,6 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
   formData,
   setFormData,
   onSubmit,
-  uploadedFileName,
-  onFileUpload,
   dualActionButtons,
   onFreeTester,
   onSubmitAndPay
@@ -545,7 +541,10 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
                 Pay in full (£900 - 10% Early Settlement Discount by 31 Oct)
               </option>
               <option value="Pay in two instalments (1st £500 by 31 Oct • 2nd £500 by 30 Nov)">
-                Pay in two instalments (1st £500 by 31 Oct • 2nd £500 by 30 Nov)
+                Pay in two instalments (1st £500 by 31 Oct 2026 • 2nd £500 by 30 Nov 2026)
+              </option>
+              <option value="£50 registration deposit after acceptance">
+                £50 registration deposit after acceptance (credited against tuition)
               </option>
               <option value="Discuss employer sponsorship / bespoke arrangement">
                 Discuss employer sponsorship / bespoke arrangement
@@ -554,33 +553,9 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </div>
         </div>
 
-        {/* CV / SUPPORTING DOCUMENTS */}
-        <div>
-          <label className="text-xs font-bold text-slate-800 block mb-1">
-            Upload Current CV / Supporting Profile <span className="text-slate-400 font-normal">(Optional - PDF, DOCX up to 10MB)</span>
-          </label>
-          <div className="border-2 border-dashed border-slate-200 hover:border-blue-500 rounded-2xl p-4 text-center cursor-pointer bg-slate-50 hover:bg-blue-50/20 transition-all">
-            <input
-              type="file"
-              id="training-cv-upload"
-              onChange={onFileUpload}
-              className="hidden"
-              accept=".pdf,.doc,.docx,.png,.jpg"
-            />
-            <label htmlFor="training-cv-upload" className="cursor-pointer space-y-1 block">
-              <Upload className="w-5 h-5 text-blue-600 mx-auto" />
-              {uploadedFileName ? (
-                <span className="text-xs font-bold text-emerald-700 block">
-                  Attached: {uploadedFileName} ✓
-                </span>
-              ) : (
-                <span className="text-xs font-semibold text-slate-600 block">
-                  Click to upload your CV, certificate, or project portfolio
-                </span>
-              )}
-            </label>
-          </div>
-        </div>
+        <p className="text-xs text-slate-600 bg-slate-50 border border-slate-200 rounded-xl p-4">
+          If we need your CV or portfolio, we will request it after reviewing your application. Files are not submitted with this form.
+        </p>
       </div>
 
       {/* ======================================================== */}
@@ -636,7 +611,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               className="mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
             />
             <span className="text-slate-800 font-medium">
-              I understand that the £50 administration fee is non-refundable once my place has been accepted and reserved.
+              I understand that the £50 registration deposit is non-refundable once my place has been accepted and reserved, and that it will be credited in full against my tuition fee if I continue onto the programme.
             </span>
           </label>
 
@@ -708,7 +683,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <span>Privacy Note:</span>
           </p>
           <p>
-            We will use the information you provide to evaluate your suitability, reserve your place, and manage your onboarding. Please do not include sensitive personal, health, or financial information that is not required. See our <a href="#privacy" className="text-blue-700 font-bold underline">Privacy Notice</a> for full details.
+            We will use the information you provide to review your application and manage any agreed next steps. Please do not include sensitive personal, health, or financial information that is not required. For questions about how your information is handled, email <a href="mailto:wowdigital@wowbusinessanddigital.com" className="text-blue-700 font-bold underline">wowdigital@wowbusinessanddigital.com</a>.
           </p>
         </div>
 
@@ -722,7 +697,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             className="mt-0.5 rounded text-blue-600 focus:ring-blue-500 h-4 w-4 border-slate-300"
           />
           <label htmlFor="training-privacy-checkbox" className="text-xs font-bold text-slate-900 cursor-pointer">
-            I have read the Privacy Notice and understand how my information will be used to process my registration. <span className="text-rose-500">*</span>
+            I understand that my information will be used to review my application and contact me about the programme. <span className="text-rose-500">*</span>
           </label>
         </div>
 
