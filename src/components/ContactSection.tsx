@@ -33,7 +33,7 @@ const CATEGORIES: CategoryOption[] = [
     title: 'General Enquiry',
     tagline: 'Media, supplier, feedback & general queries',
     badge: 'Form 1',
-    routingQueue: 'General Enquiries Queue',
+    routingQueue: 'General enquiry',
     icon: Mail,
     primaryBtnText: 'Send General Enquiry',
     isBusinessFacing: false,
@@ -48,7 +48,7 @@ const CATEGORIES: CategoryOption[] = [
     title: 'Business Consultancy & Growth',
     tagline: 'Strategy, PMO, operational improvement & transformation',
     badge: 'Form 2',
-    routingQueue: 'Business Consultancy & Growth Queue',
+    routingQueue: 'Business consultancy',
     icon: Building2,
     primaryBtnText: 'Request Business Support',
     isBusinessFacing: true,
@@ -63,7 +63,7 @@ const CATEGORIES: CategoryOption[] = [
     title: 'Staffing Request',
     tagline: 'Flexible PMO, project, BA & delivery professionals',
     badge: 'Form 3',
-    routingQueue: 'Staffing Queue',
+    routingQueue: 'Specialist support',
     icon: UserCheck,
     primaryBtnText: 'Request Staffing Support',
     isBusinessFacing: true,
@@ -78,7 +78,7 @@ const CATEGORIES: CategoryOption[] = [
     title: 'Skills, Training & Professional Development',
     tagline: 'Individual courses, team training & graduate development',
     badge: 'Form 4',
-    routingQueue: 'Training & Academy Queue',
+    routingQueue: 'Career Accelerator',
     icon: GraduationCap,
     primaryBtnText: 'Enquire About Training',
     isBusinessFacing: false,
@@ -93,7 +93,7 @@ const CATEGORIES: CategoryOption[] = [
     title: 'AI & Digital Solutions',
     tagline: 'AI assistants, workflow automation & reporting tools',
     badge: 'Form 5',
-    routingQueue: 'AI & Digital Solutions Queue',
+    routingQueue: 'Digital and AI',
     icon: Sparkles,
     primaryBtnText: 'Discuss AI Requirement',
     isBusinessFacing: true,
@@ -108,7 +108,7 @@ const CATEGORIES: CategoryOption[] = [
     title: 'Career Coaching & Development',
     tagline: '1-on-1 coaching, CV review, interview prep & direction',
     badge: 'Form 6',
-    routingQueue: 'Career Coaching Queue',
+    routingQueue: 'Career coaching',
     icon: Briefcase,
     primaryBtnText: 'Contact a Career Coach',
     isBusinessFacing: false,
@@ -123,7 +123,7 @@ const CATEGORIES: CategoryOption[] = [
     title: 'Partnership Enquiry',
     tagline: 'Technology, delivery, research, funding & reseller alliances',
     badge: 'Form 7',
-    routingQueue: 'Partnerships Queue',
+    routingQueue: 'Partnerships',
     icon: Globe,
     primaryBtnText: 'Discuss Partnership',
     isBusinessFacing: true,
@@ -144,7 +144,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
   const [submitted, setSubmitted] = useState(false);
   const [submissionError, setSubmissionError] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+  const [emailDeliveryWarning, setEmailDeliveryWarning] = useState(false);
 
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -242,7 +242,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
     packageSelection: 'WOW Career Accelerator 6-Month Programme (£1,000)',
     paymentPreference: 'Pay in full (£900 - 10% Early Settlement Discount by 31 Oct)',
     howDidYouHear: 'Search engine',
-    promoCode: 'WOW-EARLY-OFFER',
+    promoCode: '',
     claimedIncentive: true,
     // Section 10: 7 Mandatory Form Declarations
     declaration1: true,
@@ -315,11 +315,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
     }
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setUploadedFileName(e.target.files[0].name);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -329,8 +324,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
         return;
       }
     }
-    if (!commonFields.privacyAcknowledged) {
-      alert("Please check the required Privacy Notice acknowledgement before submitting.");
+    if (!(selectedCategoryId === 'training' ? form3.privacyAcknowledged : commonFields.privacyAcknowledged)) {
+      alert("Please confirm how your information will be used before submitting.");
       return;
     }
     if (!selectedCategoryId || submitting) return;
@@ -338,12 +333,21 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
     setSubmissionError('');
     try {
       const details = selectedCategoryId === 'general' ? form7 : selectedCategoryId === 'business-consultancy' ? form1 : selectedCategoryId === 'staffing' ? form2 : selectedCategoryId === 'training' ? form3 : selectedCategoryId === 'ai-solutions' ? form4 : selectedCategoryId === 'career-coaching' ? form5 : form6;
+      const contact = selectedCategoryId === 'training' ? {
+        firstName: form3.fullName.trim().split(/\s+/)[0] || '',
+        surname: form3.fullName.trim().split(/\s+/).slice(1).join(' '),
+        email: form3.email,
+        telephone: form3.mobileWhatsapp,
+        privacyAcknowledged: form3.privacyAcknowledged,
+      } : commonFields;
       const response = await fetch('/api/enquiries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ category: selectedCategoryId, contact: commonFields, details })
+        body: JSON.stringify({ category: selectedCategoryId, contact, details })
       });
       if (!response.ok) throw new Error('Your enquiry could not be saved. Please try again or email us directly.');
+      const result = await response.json();
+      setEmailDeliveryWarning(!result.staffEmailSent || !result.acknowledgementSent);
       setSubmitted(true);
       window.scrollTo({ top: 120, behavior: 'smooth' });
     } catch (error) {
@@ -382,7 +386,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
             How Can We Help Your Organisation?
           </h1>
           <p className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed max-w-2xl mx-auto">
-            Select the category that best describes your requirement. Our dynamic enquiry form will route your request directly to the dedicated specialist team.
+            Select the category that best describes your requirement. Our dynamic enquiry form will route your request directly to the appropriate person.
           </p>
         </div>
 
@@ -397,7 +401,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
               <a href="mailto:wowdigital@wowbusinessanddigital.com" className="text-xs font-bold text-blue-600 hover:underline break-all block">
                 wowdigital@wowbusinessanddigital.com
               </a>
-              <p className="text-[10px] text-slate-500 mt-0.5">Monitored by Corporate Advisory Desk</p>
+              <p className="text-[10px] text-slate-500 mt-0.5">We review messages and respond as soon as possible</p>
             </div>
           </div>
 
@@ -419,7 +423,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
               <Globe className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-[11px] uppercase font-black tracking-wider text-slate-400 mb-0.5">Global Enquiries</h3>
+              <h3 className="text-[11px] uppercase font-black tracking-wider text-slate-400 mb-0.5">International enquiries</h3>
               <p className="text-xs font-bold text-slate-900">UK & International Operations</p>
               <p className="text-[10px] text-slate-500 mt-0.5">Direct Advisory & Strategic Delivery</p>
             </div>
@@ -548,9 +552,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
               <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-700 font-medium leading-relaxed text-left space-y-2">
                 <p className="font-extrabold text-slate-900 flex items-center gap-1.5 text-sm">
                   <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  <span>On-screen Confirmation & Automated Acknowledgement</span>
+                  <span>Enquiry confirmation</span>
                 </p>
                 <p>{selectedCategory.confirmationMessage}</p>
+                {emailDeliveryWarning && <p className="font-semibold">Your enquiry was recorded, but email delivery could not be confirmed. Please email wowdigital@wowbusinessanddigital.com with your enquiry reference if it is urgent.</p>}
               </div>
 
               <div className="p-4 bg-blue-50 rounded-2xl border border-blue-200 text-[11px] text-slate-700 text-left space-y-1">
@@ -564,7 +569,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
                     <p>• Payment Preference: {form3.paymentPreference}</p>
                   </>
                 )}
-                <p>• Assigned Queue: <span className="font-bold">{selectedCategory.routingQueue}</span></p>
+                <p>• Enquiry type: <span className="font-bold">{selectedCategory.routingQueue}</span></p>
               </div>
 
               <button
@@ -595,7 +600,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
                 </div>
 
                 <div className="text-right text-[11px]">
-                  <span className="text-slate-400 block font-semibold">Routing Queue:</span>
+                  <span className="text-slate-400 block font-semibold">Enquiry type:</span>
                   <span className="font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-block mt-0.5">
                     {selectedCategory.routingQueue}
                   </span>
@@ -606,8 +611,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
                 formData={form3}
                 setFormData={setForm3}
                 onSubmit={handleSubmit}
-                uploadedFileName={uploadedFileName}
-                onFileUpload={handleFileUpload}
               />
             </div>
           ) : (
@@ -631,7 +634,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
                 </div>
 
                 <div className="text-right text-[11px]">
-                  <span className="text-slate-400 block font-semibold">Routing Queue:</span>
+                  <span className="text-slate-400 block font-semibold">Enquiry type:</span>
                   <span className="font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200 inline-block mt-0.5">
                     {selectedCategory.routingQueue}
                   </span>
@@ -1606,33 +1609,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
                   </div>
                 )}
 
-                {/* OPTIONAL FILE UPLOAD COMPONENT (COMMON ACROSS FORMS) */}
-                <div className="pt-2">
-                  <label className="text-xs font-bold text-slate-800 block mb-1">
-                    Supporting Documents / Brief <span className="text-slate-400 font-normal">(Optional - PDF, DOCX up to 10MB)</span>
-                  </label>
-                  <div className="border-2 border-dashed border-slate-200 hover:border-blue-500 rounded-2xl p-4 text-center cursor-pointer bg-slate-50 hover:bg-blue-50/20 transition-all">
-                    <input
-                      type="file"
-                      id="supporting-doc-upload"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                      accept=".pdf,.doc,.docx,.png,.jpg"
-                    />
-                    <label htmlFor="supporting-doc-upload" className="cursor-pointer space-y-1 block">
-                      <Upload className="w-5 h-5 text-blue-600 mx-auto" />
-                      {uploadedFileName ? (
-                        <span className="text-xs font-bold text-emerald-700 block">
-                          Attached: {uploadedFileName} ✓
-                        </span>
-                      ) : (
-                        <span className="text-xs font-semibold text-slate-600 block">
-                          Click to attach brief, specification, or CV document
-                        </span>
-                      )}
-                    </label>
-                  </div>
-                </div>
+                <p className="pt-2 text-xs text-slate-600">
+                  If supporting documents are needed, we will ask for them after reviewing your enquiry. Files are not submitted with this form.
+                </p>
 
               </div>
 
@@ -1644,7 +1623,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
                     <span>Privacy Note:</span>
                   </p>
                   <p>
-                    We will use the information you provide to respond to your enquiry and manage any agreed next steps. Please do not include sensitive personal, commercial, health, financial or confidential information unless it is necessary and you are authorised to share it. See our <a href="#privacy" className="text-blue-700 font-bold underline">Privacy Notice</a> for further information.
+                    We will use the information you provide to respond to your enquiry and manage any agreed next steps. Please do not include sensitive personal, commercial, health, financial or confidential information unless it is necessary and you are authorised to share it. For questions about how your information is handled, email <a href="mailto:wowdigital@wowbusinessanddigital.com" className="text-blue-700 font-bold underline">wowdigital@wowbusinessanddigital.com</a>.
                   </p>
                 </div>
 
@@ -1659,7 +1638,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
                     className="mt-0.5 rounded text-blue-600 focus:ring-blue-500 h-4 w-4 border-slate-300"
                   />
                   <label htmlFor="privacy-ack-checkbox" className="text-xs font-bold text-slate-900 cursor-pointer">
-                    I have read the Privacy Notice and understand how my information will be used to respond to this enquiry. <span className="text-rose-500">*</span>
+                    I understand that my information will be used to respond to this enquiry. <span className="text-rose-500">*</span>
                   </label>
                 </div>
 
