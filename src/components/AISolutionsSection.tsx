@@ -59,7 +59,7 @@ export const AISolutionsSection: React.FC<AISolutionsProps> = ({ setActiveTab })
             <p className="text-xs text-slate-500">Available for immediate enterprise and organisation deployment</p>
           </div>
           <span className="bg-emerald-500/10 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Live & Ready
+            <span className="w-2 h-2 rounded-full bg-amber-500"></span> Pilot demonstration
           </span>
         </div>
 
