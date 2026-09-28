@@ -18,7 +18,7 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ setActiveTab }) => {
   return (
     <div className="space-y-20 pb-16">
       {/* HERO SECTION - Crisp Ice Light Blue */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#F0F9FF] via-[#E0F2FE] to-white text-slate-900 pt-16 pb-24 border-b border-sky-200">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#F8F4ED] via-[#E9F5F5] to-white text-slate-900 pt-16 pb-24 border-b border-sky-200">
         {/* Subtle Background Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none opacity-40">
           <div className="absolute top-10 left-1/4 w-96 h-96 bg-sky-300/40 rounded-full blur-[100px]"></div>
