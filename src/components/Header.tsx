@@ -32,12 +32,12 @@ export const BANNER_OPTIONS: BannerOption[] = [
     category: 'blue',
     desc: 'Warm ivory canvas with deep navy typography and royal blue accents',
     briefSource: 'WBD Evidence | Transformation | Impact brand pack',
-    badgeHex: '#FFF9F0',
-    headerClass: 'bg-[#FFF9F0]/95 border-b border-[#DED7CB] text-[#081D3D] shadow-sm',
+    badgeHex: '#f8f4ed',
+    headerClass: 'bg-[#f8f4ed]/95 border-b border-[#DED7CB] text-[#0b2d5b] shadow-sm',
     isLight: true,
-    navActiveBg: 'bg-[#081D3D] text-white shadow-sm font-bold',
-    navInactive: 'text-[#081D3D] hover:text-[#0755C9] hover:bg-[#EAF1F5]',
-    buttonClass: 'bg-[#0755C9] hover:bg-[#0646AA] text-white shadow-sm'
+    navActiveBg: 'bg-[#0b2d5b] text-white shadow-sm font-bold',
+    navInactive: 'text-[#0b2d5b] hover:text-[#1e63f3] hover:bg-[#EAF1F5]',
+    buttonClass: 'bg-[#1e63f3] hover:bg-[#0646AA] text-white shadow-sm'
   },
   {
     id: 'growth-emerald',
