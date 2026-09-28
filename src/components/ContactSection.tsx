@@ -367,7 +367,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
           <path d="M-100 200 C300 400 600 100 1000 300 C1300 450 1500 200 1600 100 V900 H-100 Z" fill="url(#contact-bg-wave)" opacity="0.6" />
           <defs>
             <linearGradient id="contact-bg-wave" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#E0F2FE" />
+              <stop offset="0%" stopColor="#E9F5F5" />
               <stop offset="100%" stopColor="#F8FAFC" />
             </linearGradient>
           </defs>
