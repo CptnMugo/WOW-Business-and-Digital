@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowRight, BriefcaseBusiness, CheckCircle2, GraduationCap, Globe2, Sparkles } from 'lucide-react';
 import { NavTab } from '../types';
 import { EnquiryCategory } from './ContactSection';
-import brandBanner from '../assets/images/wbd-banner.webp';
 
 interface Version2Props {
   setActiveTab: (tab: NavTab) => void;
@@ -36,9 +35,6 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
               <button onClick={() => contact('business-consultancy')} className="wbd-button wbd-button-secondary">Discuss a project</button>
             </div>
           </div>
-          <figure className="wbd-banner-frame">
-            <img src={brandBanner} alt="WOW Business and Digital banner presenting transformation that works through strategy, service redesign, programme delivery, digital enablement and people capability" />
-          </figure>
         </div>
       </section>
 
@@ -52,7 +48,7 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
             <button key={pillar.number} onClick={() => navigate(pillar.tab)} className={`wbd-pillar ${pillar.className}`}>
               <span className="wbd-pillar-number">{pillar.number} / 05</span>
               <span className="wbd-pillar-body"><strong>{pillar.title}</strong><span>{pillar.summary}</span></span>
-              <ArrowRight size={20} aria-hidden="true" />
+              <span className="wbd-pillar-link">Explore this service <ArrowRight size={18} aria-hidden="true" /></span>
             </button>
           ))}
         </div>
