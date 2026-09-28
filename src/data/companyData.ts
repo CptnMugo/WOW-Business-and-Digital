@@ -5,10 +5,10 @@ export const BRAND_INFO = {
   shortName: "WBD",
   email: "wowdigital@wowbusinessanddigital.com",
   phone: "+44 121 296 9549",
-  tagline: "Transforming Organisations. Empowering People. Building Intelligent Solutions.",
-  positioning: "Transforming Organisations. Empowering People. Building Intelligent Solutions.",
+  tagline: "Evidence. Transformation. Impact.",
+  positioning: "Evidence-led transformation, practical delivery and measurable impact.",
   subtext: "Transformation, service redesign and programme delivery, supported by multidisciplinary expertise tailored to each engagement.",
-  vision: "To empower people and organisations to achieve sustainable growth through business transformation, digital innovation, artificial intelligence and professional development.",
+  vision: "We work across people, services, systems and technology to make change sustainable.",
   purpose: "WOW Business & Digital helps organisations improve how they operate, deliver services and implement change. We lead delivery and bring together relevant specialist expertise to strengthen capability and achieve sustainable outcomes.",
   personality: [
     "Professional",
@@ -98,7 +98,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "governance",
     title: "Governance & Assurance",
-    description: "Designing audit-proof governance frameworks, steering group structures, and compliance checkpoints for enterprise programmes.",
+    description: "Designing clear governance frameworks, steering group structures and assurance checkpoints for complex programmes.",
     iconName: "Award",
     category: "core",
     tags: ["Compliance", "Steering", "Assurance"]
