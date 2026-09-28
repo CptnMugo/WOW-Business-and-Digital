@@ -46,7 +46,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
       {/* ======================================================== */}
       {/* HERO SECTION */}
       {/* ======================================================== */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#F0F9FF] via-[#E0F2FE] to-white text-slate-900 pt-12 pb-20 border-b border-sky-200">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#F8F4ED] via-[#E9F5F5] to-white text-slate-900 pt-12 pb-20 border-b border-sky-200">
         {/* Ambient background glows */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-sky-300/25 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl pointer-events-none" />
