@@ -324,7 +324,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
         {/* HEADER HERO WITH STRIPE BRANDING */}
         {/* ======================================================== */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#635BFF]/10 border border-[#635BFF]/30 text-[#1E63F3] text-xs font-bold uppercase tracking-wider shadow-2xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1E63F3]/10 border border-[#1E63F3]/30 text-[#1E63F3] text-xs font-bold uppercase tracking-wider shadow-2xs">
             <span className="font-extrabold flex items-center gap-1.5">
               <Lock className="w-3.5 h-3.5" />
               Powered by Stripe Payment Gateway
@@ -466,7 +466,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                   onClick={() => setActiveChannel('stripe')}
                   className={`flex-1 py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2.5 cursor-pointer ${
                     activeChannel === 'stripe'
-                      ? 'bg-[#635BFF] text-white shadow-sm'
+                      ? 'bg-[#1E63F3] text-white shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
@@ -538,12 +538,12 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                               onClick={() => setSelectedTier(tier.id)}
                               className={`cursor-pointer rounded-2xl p-4.5 border transition-all duration-200 relative flex flex-col justify-between ${
                                 isSelected
-                                  ? 'bg-blue-50/60 border-[#635BFF] ring-2 ring-[#635BFF] shadow-md'
+                                  ? 'bg-blue-50/60 border-[#1E63F3] ring-2 ring-[#1E63F3] shadow-md'
                                   : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-sm'
                               }`}
                             >
                               {tier.popular && (
-                                <span className="absolute -top-2.5 right-4 bg-gradient-to-r from-[#635BFF] to-indigo-600 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">
+                                <span className="absolute -top-2.5 right-4 bg-gradient-to-r from-[#1E63F3] to-indigo-600 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">
                                   Recommended
                                 </span>
                               )}
@@ -554,7 +554,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                                     {tier.category}
                                   </span>
                                   {isSelected ? (
-                                    <div className="w-5 h-5 rounded-full bg-[#635BFF] text-white flex items-center justify-center shadow-xs">
+                                    <div className="w-5 h-5 rounded-full bg-[#1E63F3] text-white flex items-center justify-center shadow-xs">
                                       <Check className="w-3.5 h-3.5" />
                                     </div>
                                   ) : (
