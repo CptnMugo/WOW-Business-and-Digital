@@ -47,7 +47,7 @@ const INITIAL_FORM_DATA: TrainingFormData = {
   packageSelection: 'WOW Career Accelerator 6-Month Programme (£1,000)',
   paymentPreference: 'Pay in full (£900 - 10% Early Settlement Discount by 31 Oct)',
   howDidYouHear: 'Website',
-  promoCode: 'WOW-EARLY-OFFER',
+  promoCode: '',
   declaration1: false,
   declaration2: false,
   declaration3: false,
@@ -74,7 +74,6 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
     return INITIAL_FORM_DATA;
   });
 
-  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
   const [freeTesterSubmitted, setFreeTesterSubmitted] = useState(false);
   const [testerReference, setTesterReference] = useState('');
@@ -89,12 +88,6 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
     }
   }, [formData]);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setUploadedFileName(file.name);
-    }
-  };
 
   const validateForm = (): boolean => {
     if (!formData.fullName.trim()) {
@@ -113,7 +106,7 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
       return false;
     }
     if (!formData.privacyAcknowledged) {
-      setValidationError('Please acknowledge the Privacy Notice declaration before submitting.');
+      setValidationError('Please confirm how your information will be used before submitting.');
       errorRef.current?.scrollIntoView({ behavior: 'smooth' });
       return false;
     }
@@ -230,7 +223,7 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
         </div>
 
         {/* HEADER HERO BANNER */}
-        <div className="bg-gradient-to-br from-[#F0F9FF] via-[#E0F2FE] to-[#BAE6FD]/40 text-slate-900 border border-sky-200 p-6 sm:p-8 rounded-3xl shadow-md relative overflow-hidden space-y-3">
+        <div className="bg-gradient-to-br from-[#F8F4ED] via-[#E9F5F5] to-[#DCE9F4]/40 text-slate-900 border border-sky-200 p-6 sm:p-8 rounded-3xl shadow-md relative overflow-hidden space-y-3">
           <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-blue-700">
             <GraduationCap className="w-4 h-4 text-blue-600" />
             <span>Official Application &amp; Registration</span>
@@ -248,14 +241,6 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
             <div className="flex items-center gap-1 bg-white/90 border border-sky-200 px-2.5 py-1 rounded-lg shadow-2xs">
               <Clock className="w-3.5 h-3.5 text-blue-600" />
               <span>Takes ~3 minutes</span>
-            </div>
-            <div className="flex items-center gap-1 bg-white/90 border border-sky-200 px-2.5 py-1 rounded-lg shadow-2xs">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>GDPR &amp; DPA 2018 Compliant</span>
-            </div>
-            <div className="flex items-center gap-1 bg-white/90 border border-sky-200 px-2.5 py-1 rounded-lg shadow-2xs">
-              <Award className="w-3.5 h-3.5 text-amber-600" />
-              <span>10% Early Discount Code: WOW-EARLY-OFFER</span>
             </div>
           </div>
         </div>
@@ -288,13 +273,13 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
               </div>
               <div className="space-y-1">
                 <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300">
-                  Free Tester Submission Successful
+                  Application Submitted
                 </span>
                 <h2 className="text-xl sm:text-2xl font-black text-emerald-950">
-                  Application Details Saved — No Payment Required
+                  Application received
                 </h2>
                 <p className="text-xs sm:text-sm text-emerald-900 leading-relaxed">
-                  Thank you! Your registration details have been securely recorded under Free Tester status. No payment or fee has been charged.
+                  Thank you. Your application has been received. No payment was taken. We will contact you about next steps.
                 </p>
               </div>
             </div>
@@ -317,7 +302,7 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
               <div className="flex items-center justify-between">
                 <span className="text-slate-500">Payment Status:</span>
                 <span className="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                  Waived / Free Tester Mode (£0.00)
+                  No payment taken
                 </span>
               </div>
             </div>
@@ -372,8 +357,6 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
               e.preventDefault();
               handleSubmitAndPay();
             }}
-            uploadedFileName={uploadedFileName}
-            onFileUpload={handleFileUpload}
             dualActionButtons={true}
             onFreeTester={handleFreeTester}
             onSubmitAndPay={handleSubmitAndPay}
