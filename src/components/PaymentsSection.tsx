@@ -71,9 +71,9 @@ const PAYMENT_TIERS: PaymentTier[] = [
     id: 'pm-deposit',
     name: 'Career Accelerator: Registration Deposit',
     category: 'Accelerator',
-    description: 'Pay a £50 deposit towards the Career Accelerator, subject to place confirmation and programme terms.',
+    description: '£50 registration deposit. Secures your place once your application is accepted. Non-refundable, but credited in full against your tuition fee when you continue onto the programme.',
     priceGbp: 50,
-    billingPeriod: 'Deposit reservation (Credited to tuition)',
+    billingPeriod: 'Registration deposit (credited to tuition)',
     features: [
       'Registration and place confirmation follow review of your application',
       'Programme details provided after confirmation',
@@ -178,12 +178,6 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
   const [clientCountry, setClientCountry] = useState('United Kingdom');
   const [notes, setNotes] = useState('');
 
-  // Card Simulation Details for the Stripe Elements style Card field
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvc, setCardCvc] = useState('');
-  const [cardBrand, setCardBrand] = useState<'visa' | 'mastercard' | 'amex' | 'generic'>('generic');
-  const [saveCard, setSaveCard] = useState(true);
 
   // States
   const [isProcessing, setIsProcessing] = useState(false);
@@ -204,7 +198,6 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
     isLive: boolean;
   } | null>(null);
 
-  const [copiedBank, setCopiedBank] = useState(false);
 
   // Pre-select package if redirected from registration or accelerator
   useEffect(() => {
@@ -237,24 +230,6 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
         localStorage.removeItem('wow_payment_client_email');
       }
 
-      // Check URL query parameters for Stripe redirection
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('payment') === 'success') {
-        const sessionId = urlParams.get('session_id') || 'cs_live_session_confirmed';
-        setPaymentResult({
-          reference: `STRIPE-${sessionId.slice(-8).toUpperCase()}`,
-          sessionId,
-          amount: 900,
-          currency: 'GBP',
-          itemTitle: 'WOW Career Accelerator Intake Enrolment',
-          clientName: 'Verified Client',
-          clientEmail: 'billing@client.com',
-          clientCompany: 'Organisation',
-          date: new Date().toISOString(),
-          status: 'succeeded',
-          isLive: true
-        });
-      }
     } catch {
       // Ignore
     }
@@ -273,37 +248,14 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
     ? (parseFloat(customAmount) || 0)
     : activeTierObj.priceGbp;
 
-  // Card Number formatter & detector
-  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value.replace(/\D/g, '').substring(0, 16);
-    // Detect brand
-    if (val.startsWith('4')) {
-      setCardBrand('visa');
-    } else if (/^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[0-1]|2720)/.test(val)) {
-      setCardBrand('mastercard');
-    } else if (/^3[47]/.test(val)) {
-      setCardBrand('amex');
-    } else {
-      setCardBrand('generic');
-    }
-    // Format with spaces
-    const parts = val.match(/.{1,4}/g);
-    setCardNumber(parts ? parts.join(' ') : val);
-  };
-
-  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value.replace(/\D/g, '').substring(0, 4);
-    if (val.length >= 3) {
-      setCardExpiry(`${val.substring(0, 2)}/${val.substring(2, 4)}`);
-    } else {
-      setCardExpiry(val);
-    }
-  };
-
   // Stripe Checkout Submission
   const handleStripeCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+    if (!gatewayStatus?.configured) {
+      setErrorMessage('Online checkout is unavailable in this preview. Please contact us to arrange payment.');
+      return;
+    }
 
     if (currentPayableAmount <= 0) {
       setErrorMessage('Please specify or select a valid payment amount.');
@@ -355,37 +307,13 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
         return;
       }
 
-      // Otherwise in preview/development simulation mode, render the confirmed Stripe receipt
-      setTimeout(() => {
-        setIsProcessing(false);
-        setPaymentResult({
-          reference: data.reference || `STRIPE-WOW-${Math.floor(100000 + Math.random() * 900000)}`,
-          sessionId: data.sessionId,
-          paymentIntentId: data.paymentIntentId,
-          amount: currentPayableAmount,
-          currency,
-          itemTitle,
-          clientName: clientName || 'Valued Client',
-          clientEmail: clientEmail,
-          clientCompany: clientCompany || 'Client Enterprise',
-          date: new Date().toISOString(),
-          status: 'succeeded',
-          isLive: Boolean(data.isLive)
-        });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 900);
+      throw new Error('Checkout did not return a Stripe payment page. Please contact us.');
 
     } catch (err: any) {
       console.error('Stripe error:', err);
       setIsProcessing(false);
       setErrorMessage(err.message || 'An error occurred connecting to the Stripe payment gateway.');
     }
-  };
-
-  const handleCopyBACS = () => {
-    navigator.clipboard.writeText('Account: WOW Business & Digital Limited, Sort: 20-04-12, Account: 83920194, Bank: Barclays Bank London');
-    setCopiedBank(true);
-    setTimeout(() => setCopiedBank(false), 3000);
   };
 
   return (
@@ -396,7 +324,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
         {/* HEADER HERO WITH STRIPE BRANDING */}
         {/* ======================================================== */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#635BFF]/10 border border-[#635BFF]/30 text-[#635BFF] text-xs font-bold uppercase tracking-wider shadow-2xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#635BFF]/10 border border-[#635BFF]/30 text-[#1E63F3] text-xs font-bold uppercase tracking-wider shadow-2xs">
             <span className="font-extrabold flex items-center gap-1.5">
               <Lock className="w-3.5 h-3.5" />
               Powered by Stripe Payment Gateway
@@ -408,22 +336,22 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
           </h1>
 
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-            Settle invoices, book strategic consultancy, deploy AI assistant licenses, or enroll in professional programmes via Stripe’s bank-grade encrypted checkout.
+            Review programme payment options and invoice enquiries. Card payments are processed by Stripe when checkout is available.
           </p>
 
           {/* Trust Badges & Supported Cards */}
           <div className="pt-2 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-semibold text-slate-500">
             <span className="flex items-center gap-1.5 text-emerald-700">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              PCI-DSS Level 1 Certified
+              Payments processed by Stripe
             </span>
             <span className="flex items-center gap-1.5 text-slate-700">
               <Lock className="w-3.5 h-3.5 text-slate-500" />
-              256-bit TLS Encryption
+              We do not see or store your card details
             </span>
             <span className="flex items-center gap-1.5 text-blue-700">
               <Globe className="w-3.5 h-3.5 text-blue-600" />
-              3D Secure 2.0 (SCA Compliant)
+              Ask us about invoice payment
             </span>
           </div>
         </div>
@@ -443,7 +371,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                 </div>
                 <h2 className="text-2xl font-black text-slate-900">Payment Succeeded</h2>
                 <p className="text-xs text-slate-600 max-w-md mx-auto mt-1">
-                  An automated receipt and tax invoice have been dispatched to <strong className="text-slate-900">{paymentResult.clientEmail}</strong>.
+                  Check your Stripe receipt at <strong className="text-slate-900">{paymentResult.clientEmail}</strong>.
                 </p>
               </div>
             </div>
@@ -485,7 +413,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
 
               <div className="flex items-center justify-between">
                 <span className="text-slate-500">Payment Channel</span>
-                <div className="flex items-center gap-1 font-bold text-[#635BFF]">
+                <div className="flex items-center gap-1 font-bold text-[#1E63F3]">
                   <CreditCard className="w-3.5 h-3.5" />
                   <span>Stripe Gateway Checkout</span>
                 </div>
@@ -685,7 +613,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                             placeholder="e.g. WOW-INV-2026-08"
                             value={invoiceReference}
                             onChange={(e) => setInvoiceReference(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-[#635BFF] focus:outline-none"
+                            className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-[#1E63F3] focus:outline-none"
                           />
                         </div>
 
@@ -705,7 +633,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                               value={customAmount}
                               onChange={(e) => setCustomAmount(e.target.value)}
                               required
-                              className="w-full bg-slate-50 border border-slate-300 rounded-xl pl-8 pr-3.5 py-2.5 text-xs text-slate-900 font-bold focus:ring-2 focus:ring-[#635BFF] focus:outline-none"
+                              className="w-full bg-slate-50 border border-slate-300 rounded-xl pl-8 pr-3.5 py-2.5 text-xs text-slate-900 font-bold focus:ring-2 focus:ring-[#1E63F3] focus:outline-none"
                             />
                           </div>
                         </div>
@@ -720,47 +648,13 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                     <div className="flex items-center gap-2">
                       <Building2 className="w-5 h-5 text-slate-800" />
                       <div>
-                        <h3 className="font-bold text-sm text-slate-900">Direct UK Standard BACS Bank Transfer</h3>
-                        <p className="text-xs text-slate-500">Zero card processing fees for domestic and international BACS wires.</p>
+                        <h3 className="font-bold text-sm text-slate-900">UK bank transfer by invoice</h3>
+                        <p className="text-xs text-slate-500">Bank details are provided on an invoice after the payment arrangement is agreed.</p>
                       </div>
                     </div>
-                    <span className="text-[11px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">
-                      Zero Fees
-                    </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
-                      <span className="text-[10px] uppercase font-bold text-slate-400">Account Name</span>
-                      <p className="font-bold text-slate-900">WOW Business &amp; Digital Limited</p>
-                    </div>
-                    <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
-                      <span className="text-[10px] uppercase font-bold text-slate-400">Bank &amp; Location</span>
-                      <p className="font-bold text-slate-900">Barclays Bank UK / London</p>
-                    </div>
-                    <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
-                      <span className="text-[10px] uppercase font-bold text-slate-400">Sort Code</span>
-                      <p className="font-bold text-slate-900 font-mono">20-04-12</p>
-                    </div>
-                    <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
-                      <span className="text-[10px] uppercase font-bold text-slate-400">Account Number</span>
-                      <p className="font-bold text-slate-900 font-mono">83920194</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-1">
-                    <span className="text-[11px] text-slate-500">
-                      Use your invoice number or company name as the transfer reference.
-                    </span>
-                    <button
-                      type="button"
-                      onClick={handleCopyBACS}
-                      className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
-                    >
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>{copiedBank ? 'Copied Details!' : 'Copy Bank Details'}</span>
-                    </button>
-                  </div>
+                  <p className="text-xs text-slate-600">Contact us for an invoice and the correct payment reference.</p>
                 </div>
               )}
 
@@ -772,8 +666,8 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                       <ShieldCheck className="w-5 h-5 text-emerald-400" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm">Stripe Buyer &amp; Business Protection</h4>
-                      <p className="text-[11px] text-slate-300">Guaranteed secure transactions with instantaneous VAT receipt generation.</p>
+                      <h4 className="font-bold text-sm">Card payments through Stripe</h4>
+                      <p className="text-[11px] text-slate-300">WOW does not see or store your card details.</p>
                     </div>
                   </div>
                   <div className="hidden sm:block text-white opacity-90">
@@ -802,12 +696,12 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                 {/* Stripe Header Ribbon */}
                 <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                   <div className="space-y-0.5">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#635BFF]">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#1E63F3]">
                       Direct Checkout
                     </span>
                     <h3 className="font-black text-lg text-slate-900">Stripe Payment Gateway</h3>
                   </div>
-                  <div className="text-[#635BFF] flex items-center gap-1.5">
+                  <div className="text-[#1E63F3] flex items-center gap-1.5">
                     <StripeLogo className="h-5" />
                   </div>
                 </div>
@@ -854,7 +748,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                         placeholder="e.g. Tendai Mashingaidze"
                         value={clientName}
                         onChange={(e) => setClientName(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-[#635BFF] focus:outline-none"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-[#1E63F3] focus:outline-none"
                       />
                     </div>
 
@@ -868,7 +762,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                         placeholder="billing@company.com"
                         value={clientEmail}
                         onChange={(e) => setClientEmail(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-[#635BFF] focus:outline-none"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-[#1E63F3] focus:outline-none"
                       />
                     </div>
 
@@ -882,7 +776,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                           placeholder="e.g. Horizon Ltd"
                           value={clientCompany}
                           onChange={(e) => setClientCompany(e.target.value)}
-                          className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-[#635BFF] focus:outline-none"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-[#1E63F3] focus:outline-none"
                         />
                       </div>
                       <div>
@@ -892,7 +786,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                         <select
                           value={clientCountry}
                           onChange={(e) => setClientCountry(e.target.value)}
-                          className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-[#635BFF] focus:outline-none font-medium"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:ring-2 focus:ring-[#1E63F3] focus:outline-none font-medium"
                         >
                           <option value="United Kingdom">United Kingdom</option>
                           <option value="United States">United States</option>
@@ -909,72 +803,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                     </div>
                   </div>
 
-                  {/* Stripe Card Field */}
-                  <div className="space-y-3 pt-2 border-t border-slate-100">
-                    <div className="flex items-center justify-between">
-                      <label className="block text-xs font-bold text-slate-800">
-                        Card Details (via Stripe)
-                      </label>
-                      <div className="flex items-center gap-1.5">
-                        <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${
-                          cardBrand === 'visa' ? 'bg-blue-100 text-blue-800' :
-                          cardBrand === 'mastercard' ? 'bg-amber-100 text-amber-800' :
-                          cardBrand === 'amex' ? 'bg-teal-100 text-teal-800' :
-                          'bg-slate-100 text-slate-500'
-                        }`}>
-                          {cardBrand !== 'generic' ? cardBrand : 'Cards Accepted'}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Card Number Input with Brand Logo */}
-                    <div className="relative">
-                      <input
-                        type="text"
-                        maxLength={19}
-                        placeholder="•••• •••• •••• ••••"
-                        value={cardNumber}
-                        onChange={handleCardNumberChange}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-slate-900 font-mono tracking-wider focus:ring-2 focus:ring-[#635BFF] focus:outline-none"
-                      />
-                      <CreditCard className="w-4 h-4 text-slate-400 absolute right-3.5 top-3" />
-                    </div>
-
-                    {/* Expiry & CVC Grid */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <input
-                          type="text"
-                          maxLength={5}
-                          placeholder="MM / YY"
-                          value={cardExpiry}
-                          onChange={handleExpiryChange}
-                          className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 font-mono focus:ring-2 focus:ring-[#635BFF] focus:outline-none"
-                        />
-                      </div>
-                      <div>
-                        <input
-                          type="password"
-                          maxLength={4}
-                          placeholder="CVC / CVV"
-                          value={cardCvc}
-                          onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, '').substring(0, 4))}
-                          className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 font-mono focus:ring-2 focus:ring-[#635BFF] focus:outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Save with Link Checkbox */}
-                    <label className="flex items-center gap-2 text-[11px] text-slate-600 pt-1 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={saveCard}
-                        onChange={(e) => setSaveCard(e.target.checked)}
-                        className="rounded border-slate-300 text-[#635BFF] focus:ring-[#635BFF]"
-                      />
-                      <span>Secure 1-click checkout with Link by Stripe</span>
-                    </label>
-                  </div>
+                  <p className="text-xs text-slate-600 rounded-xl bg-[#F8F4ED] border border-[#D4A24C]/40 p-3">Card details are entered only on Stripe’s hosted checkout page after you continue.</p>
 
                   {/* Notes Field */}
                   <div>
@@ -986,15 +815,15 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                       placeholder="Specify project start dates or requirements..."
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:ring-2 focus:ring-[#635BFF] focus:outline-none resize-none"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:ring-2 focus:ring-[#1E63F3] focus:outline-none resize-none"
                     />
                   </div>
 
                   {/* Stripe Submit Button */}
                   <button
                     type="submit"
-                    disabled={isProcessing}
-                    className="w-full bg-[#635BFF] hover:bg-[#5349e4] text-white font-black text-sm py-4 px-4 rounded-xl shadow-lg hover:shadow-[#635BFF]/30 transition-all flex items-center justify-center gap-2 active:scale-98 disabled:opacity-75 cursor-pointer mt-3"
+                    disabled={isProcessing || !gatewayStatus?.configured}
+                    className="w-full bg-[#1E63F3] hover:bg-[#0B2D5B] text-white font-black text-sm py-4 px-4 rounded-xl shadow-lg hover:shadow-[#1E63F3]/30 transition-all flex items-center justify-center gap-2 active:scale-98 disabled:opacity-75 cursor-pointer mt-3"
                   >
                     {isProcessing ? (
                       <>
@@ -1005,7 +834,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                       <>
                         <Lock className="w-4 h-4" />
                         <span>
-                          Pay £{currentPayableAmount.toLocaleString()} via Stripe
+                          {gatewayStatus?.configured ? `Continue to Stripe — £${currentPayableAmount.toLocaleString()}` : "Online checkout unavailable in preview"}
                         </span>
                       </>
                     )}
@@ -1014,7 +843,7 @@ export const PaymentsSection: React.FC<{ setActiveTab: (tab: NavTab) => void }> 
                   {/* Security Footer Note */}
                   <div className="text-[10px] text-slate-400 text-center flex items-center justify-center gap-1.5 pt-1">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Protected by Stripe end-to-end tokenisation. Card data never stored on server.</span>
+                    <span>Payment details are entered on Stripe’s hosted checkout page.</span>
                   </div>
 
                 </form>
