@@ -34,7 +34,7 @@ export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveT
         </p>
       </div>
 
-      <section className="bg-[#081D3D] rounded-3xl p-8 sm:p-10 border border-[#B87918] shadow-sm space-y-5">
+      <section className="bg-[#0b2d5b] rounded-3xl p-8 sm:p-10 border border-[#d4a24c] shadow-sm space-y-5">
         <h2 className="text-2xl font-extrabold text-white">Multidisciplinary delivery, led as one programme</h2>
         <p className="text-sm leading-relaxed text-[#DBE4EC]">Our programme and transformation leadership provides the structure, governance and accountability. According to the commission, we can work with associates in technology and AI, finance and commercial strategy, procurement, people and HR, communications and other business functions. We agree the team and responsibilities with each client.</p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -45,7 +45,7 @@ export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveT
           ))}
         </div>
         <p className="text-sm leading-relaxed text-[#DBE4EC]">We map the service and workflows, plan implementation with client teams and measure adoption and outcomes. For tendered work, our response identifies the proposed specialists, their roles and how the team will be governed.</p>
-        <button onClick={() => setActiveTab('contact')} className="bg-[#B87918] hover:bg-[#925D0B] text-white font-bold text-sm px-6 py-3 rounded-xl cursor-pointer">Discuss a multidisciplinary commission</button>
+        <button onClick={() => setActiveTab('contact')} className="bg-[#d4a24c] hover:bg-[#925D0B] text-white font-bold text-sm px-6 py-3 rounded-xl cursor-pointer">Discuss a multidisciplinary commission</button>
       </section>
 
       {/* FILTER BUTTONS */}
