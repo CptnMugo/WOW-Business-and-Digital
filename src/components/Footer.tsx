@@ -15,7 +15,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
   };
 
   return (
-    <footer className="wbd-site-footer bg-[#081D3D] border-t-4 border-[#B87918] text-white transition-all duration-300 relative overflow-hidden">
+    <footer className="wbd-site-footer bg-[#0b2d5b] border-t-4 border-[#d4a24c] text-white transition-all duration-300 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           
@@ -47,7 +47,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
                 <Globe className="w-4 h-4 shrink-0 text-blue-600" />
                 <span>Internationally connected, with developing work in Zimbabwe</span>
               </div>
-              <p className="text-xs text-slate-600">For Zimbabwe related programmes or partnerships, use the partnership or general enquiry form and describe your location and requirement. Local forms can be added as each service is ready.</p>
+              <p className="text-xs text-slate-600">For programmes or partnerships in Zimbabwe, use the partnership or general enquiry form and tell us about your location and requirement.</p>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 shrink-0 text-blue-600" />
                 <a href={`mailto:${BRAND_INFO.email}`} className="hover:text-blue-700 hover:underline transition-all">
@@ -171,11 +171,11 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
         <div className="mt-12 pt-8 border-t border-sky-200 text-slate-500 flex flex-col sm:flex-row items-center justify-between text-xs gap-4">
           <p>© {new Date().getFullYear()} WOW Business and Digital Ltd. All rights reserved.</p>
           <div className="flex gap-6 font-medium text-slate-600">
+            <span>Evidence</span>
+            <span>•</span>
             <span>Transformation</span>
             <span>•</span>
-            <span>Innovation</span>
-            <span>•</span>
-            <span>Growth</span>
+            <span>Impact</span>
           </div>
         </div>
       </div>
