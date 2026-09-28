@@ -340,7 +340,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </div>
               <h3 className="font-bold text-slate-900 text-base">Career Changers &amp; Pivoters</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Professionals currently working in retail, education, healthcare, banking, or administration who want to pivot into high-paying project management.
+                Professionals in retail, education, healthcare, banking or administration who want to move into project management.
               </p>
             </div>
 
@@ -470,7 +470,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
       {/* SECTION: TRANSPARENT FEES & 10% DISCOUNT CARD */}
       {/* ======================================================== */}
       <section id="fees-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-[#F0F9FF] via-white to-[#E0F2FE] text-slate-900 rounded-3xl p-8 sm:p-12 border border-sky-200 shadow-xl relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#F8F4ED] via-white to-[#E9F5F5] text-slate-900 rounded-3xl p-8 sm:p-12 border border-sky-200 shadow-xl relative overflow-hidden">
           
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             
@@ -478,7 +478,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 text-amber-800 text-xs font-black border border-amber-300 shadow-2xs">
                 <Percent className="w-3.5 h-3.5" />
-                <span>Special Early Offer Code: WOW-EARLY-OFFER</span>
+                <span>Early settlement option</span>
               </div>
 
               <div className="space-y-3">
@@ -487,7 +487,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                   Flexible Payment Pathways
                 </h2>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  We believe in fair, accessible tuition for high-impact professional transformation. Secure your seat with a holding deposit, or save 10% with our early settlement option.
+                  We believe in fair, accessible tuition for high-impact professional transformation. The £50 registration deposit is credited against tuition if your application is accepted and you continue. An early settlement rate is also available.
                 </p>
               </div>
 
@@ -532,7 +532,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                       <span>Reservation Holding Deposit</span>
                     </div>
                     <p className="text-xs text-slate-600">
-                      £50 holding deposit reserves your place immediately. Fully deducted from final balance.
+                      £50 registration deposit. Secures your place once your application is accepted. Non-refundable, but credited in full against your tuition fee when you continue onto the programme.
                     </p>
                   </div>
                   <div className="text-right shrink-0">
@@ -560,10 +560,10 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               <div className="p-4 rounded-2xl bg-sky-50 border border-sky-100 space-y-2 text-xs text-slate-700">
                 <div className="font-bold text-blue-700 flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-blue-600" />
-                  <span>Enrolment Guarantee</span>
+                  <span>Application review</span>
                 </div>
                 <p>
-                  Applications are reviewed within 24 hours. Once accepted, you receive your welcome onboarding pack and programme schedule.
+                  We will review your application and contact you about the next steps, programme schedule and payment options.
                 </p>
               </div>
 
@@ -612,7 +612,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                 Ready to Apply? Complete Registration
               </h2>
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                We have placed the complete application fields on a clean, dedicated page so you can register with full focus. Choose <strong>Free Tester</strong> to submit without fee, or <strong>Submit and Pay</strong> to secure your enrolment directly.
+                Complete the dedicated application form to tell us about your goals and preferred payment route. Your place is subject to review and confirmation.
               </p>
             </div>
 
@@ -620,20 +620,20 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-1.5">
                 <div className="font-extrabold text-slate-900 flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>Option 1: Free Tester</span>
+                  <span>Apply for the programme</span>
                 </div>
                 <p className="text-slate-600">
-                  Save and submit your registration details immediately with no upfront payment or card entry required.
+                  Submit your details for review. No payment is taken when you complete the application form.
                 </p>
               </div>
 
               <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-1.5">
                 <div className="font-extrabold text-slate-900 flex items-center gap-1.5">
                   <CreditCard className="w-4 h-4 text-blue-600" />
-                  <span>Option 2: Submit and Pay</span>
+                  <span>Choose a payment preference</span>
                 </div>
                 <p className="text-slate-600">
-                  Save your registration and proceed to select your payment option (£900 early settlement, £500 split, or £50 deposit).
+                  Tell us whether you prefer full payment, instalments or the £50 registration deposit after acceptance.
                 </p>
               </div>
             </div>
@@ -699,7 +699,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               <span>How does the 10% Early Settlement Discount work?</span>
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Pay your tuition in full by 31 October with promo code <strong>WOW-EARLY-OFFER</strong> to pay £900 instead of £1,000. You can also opt for a £500 + £500 split payment.
+              The early settlement price is £900 if paid in full by 31 October 2026. You can also discuss a £500 + £500 instalment plan.
             </p>
           </div>
 
