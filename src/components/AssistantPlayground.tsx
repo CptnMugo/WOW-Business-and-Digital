@@ -317,7 +317,7 @@ REQUIREMENTS:
                 WOW AI Assistant
               </h1>
               <p className="text-xs text-slate-600">
-                Practical Business Intelligence • Server-Side Gemini Engine • WB-002 v3.0 Compliant
+                Explore practical ways to support business decisions and workflows
               </p>
             </div>
           </div>
@@ -495,7 +495,7 @@ REQUIREMENTS:
               <div className="flex items-center gap-3 bg-blue-50 border border-blue-200 p-4 rounded-2xl">
                 <ShieldCheck className="w-6 h-6 text-blue-600 shrink-0" />
                 <div className="text-xs text-blue-900 leading-relaxed">
-                  <strong>Data Isolation Guarantee (WA-007):</strong> Each workflow instance operates within an isolated project account. Private client, farm, school, or grant information remains strictly confidential and is never shared across other user accounts.
+                  <strong>Use this demonstration thoughtfully:</strong> Please do not enter confidential, personal or sensitive information. Contact us to discuss how a tailored assistant would handle your organisation’s data.
                 </div>
               </div>
 
