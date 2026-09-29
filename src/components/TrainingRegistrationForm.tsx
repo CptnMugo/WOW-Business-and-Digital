@@ -722,9 +722,8 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <div className="grid gap-3.5">
               {/* BUTTON 2: SUBMIT AND PAY */}
               <button
-                type="button"
+                type="submit"
                 id="btn-submit-and-pay"
-                onClick={onSubmitAndPay}
                 className="w-full bg-gradient-to-r from-navy-600 via-navy-600 to-navy-700 hover:from-navy-500 hover:to-navy-600 text-white font-bold text-sm p-4 rounded-2xl shadow-lg hover:shadow-navy-500/30 transition-all flex items-center justify-between gap-3 active:scale-[0.99] cursor-pointer group"
               >
                 <div className="flex items-center gap-3 text-left">
