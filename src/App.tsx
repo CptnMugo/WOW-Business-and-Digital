@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { AssociateRegistration } from './components/AssociateRegistration';
 import { NavTab } from './types';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -28,6 +29,7 @@ export default function App() {
     if (typeof window !== 'undefined' && window.location.search.includes('payment=')) {
       return 'payments';
     }
+    if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('page') === 'associates') return 'associates';
     return 'home';
   });
   const [contactCategory, setContactCategory] = useState<EnquiryCategory | undefined>(undefined);
@@ -70,6 +72,7 @@ export default function App() {
         ) : (
           <>
             {isServicesTab && <ServicesSection activeTab={activeTab} setActiveTab={setActiveTab} />}
+            {activeTab === 'associates' && <AssociateRegistration />}
             {activeTab === 'about' && <AboutSection setActiveTab={setActiveTab} />}
             {activeTab === 'contact' && <ContactSection initialCategory={contactCategory} />}
             {activeTab === 'payments' && <PaymentsSection setActiveTab={setActiveTab} />}
