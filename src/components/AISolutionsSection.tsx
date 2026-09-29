@@ -31,13 +31,13 @@ export const AISolutionsSection: React.FC<AISolutionsProps> = ({ setActiveTab })
       <div className="text-center space-y-4 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-100 border border-sky-300 text-blue-700 text-xs font-bold">
           <Cpu className="w-3.5 h-3.5" />
-          <span>WOW AI Solutions Division</span>
+          <span>DIGITAL ADOPTION & PRACTICAL AI</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-          Intelligent Domain AI Assistants for Enterprise & Field Operations
+          Start with the workflow. Choose technology that helps.
         </h1>
         <p className="text-slate-600 text-base leading-relaxed">
-          We build purpose-driven AI products that automate governance, grant reporting, farm management, academic administration, and business analytics.
+          We help organisations understand where digital tools and carefully governed AI can improve work, then support the people and processes needed to use them well. The examples below are demonstrations to explore, not deployed client products.
         </p>
         <div className="pt-2 flex justify-center">
           <button
@@ -45,7 +45,7 @@ export const AISolutionsSection: React.FC<AISolutionsProps> = ({ setActiveTab })
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md transition-colors flex items-center gap-2 cursor-pointer"
           >
             <Sparkles className="w-4 h-4 text-white" />
-            <span>Launch Interactive WOW AI Playground</span>
+            <span>Explore the AI demonstration</span>
             <ArrowRight className="w-3.5 h-3.5 text-white" />
           </button>
         </div>
@@ -55,8 +55,8 @@ export const AISolutionsSection: React.FC<AISolutionsProps> = ({ setActiveTab })
       <div className="space-y-6">
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">
           <div>
-            <h2 className="text-2xl font-black text-slate-900">Deployed AI Products</h2>
-            <p className="text-xs text-slate-500">Available for immediate enterprise and organisation deployment</p>
+            <h2 className="text-2xl font-black text-slate-900">Illustrative AI assistant concepts</h2>
+            <p className="text-xs text-slate-500">Examples for discussion and testing; scope and suitability depend on your organisation.</p>
           </div>
           <span className="bg-emerald-500/10 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
             <span className="w-2 h-2 rounded-full bg-amber-500"></span> Pilot demonstration
@@ -93,7 +93,7 @@ export const AISolutionsSection: React.FC<AISolutionsProps> = ({ setActiveTab })
                 </p>
 
                 <div className="space-y-1.5 pt-3 border-t border-slate-100">
-                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Key Capabilities:</div>
+                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Potential uses to explore:</div>
                   {prod.features.map((feat, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-xs text-slate-700">
                       <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
@@ -108,7 +108,7 @@ export const AISolutionsSection: React.FC<AISolutionsProps> = ({ setActiveTab })
                 className="mt-6 w-full bg-sky-50 hover:bg-blue-600 hover:text-white text-blue-700 font-bold text-xs py-2.5 rounded-xl border border-sky-200 transition-colors flex items-center justify-center gap-2 relative z-10 cursor-pointer"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span>Test {prod.name} Live</span>
+                <span>Explore demonstration</span>
               </button>
             </div>
           ))}
@@ -119,9 +119,9 @@ export const AISolutionsSection: React.FC<AISolutionsProps> = ({ setActiveTab })
       <div className="bg-sky-50/60 rounded-3xl p-8 sm:p-12 border border-sky-100 space-y-8">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <div className="text-xs font-bold uppercase tracking-widest text-blue-600">Product Pipeline</div>
-          <h2 className="text-3xl font-black text-slate-900">Future AI Roadmap</h2>
+          <h2 className="text-3xl font-black text-slate-900">Further ideas for exploration</h2>
           <p className="text-xs text-slate-600">
-            Upcoming breakthrough AI solutions currently in development for Southern Africa and global markets.
+            Other sector ideas can be explored with clients and partners when there is a clear need.
           </p>
         </div>
 
@@ -134,7 +134,7 @@ export const AISolutionsSection: React.FC<AISolutionsProps> = ({ setActiveTab })
               <h3 className="font-bold text-slate-900 text-base">{fut.name}</h3>
               <p className="text-xs text-slate-600">{fut.description}</p>
               <div className="pt-2 border-t border-slate-100 flex items-center gap-1 text-[10px] font-bold uppercase text-blue-600">
-                <Sparkles className="w-3 h-3" /> In Development
+                <Sparkles className="w-3 h-3" /> Concept
               </div>
             </div>
           ))}
