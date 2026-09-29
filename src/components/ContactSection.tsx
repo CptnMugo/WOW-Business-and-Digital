@@ -45,14 +45,14 @@ const CATEGORIES: CategoryOption[] = [
   },
   {
     id: 'business-consultancy',
-    title: 'Business Consultancy & Growth',
+    title: 'Transformation & Service Redesign',
     tagline: 'Strategy, PMO, operational improvement & transformation',
     badge: 'Form 2',
     routingQueue: 'Business consultancy',
     icon: Building2,
     primaryBtnText: 'Request Business Support',
     isBusinessFacing: true,
-    confirmationMessage: 'Thank you for contacting WOW Business & Digital. We have received your Business Consultancy & Growth enquiry and will review the information provided. A member of the team will contact you to discuss the requirement and appropriate next steps. Submitting this form does not confirm acceptance of work or availability.',
+    confirmationMessage: 'Thank you for contacting WOW Business & Digital. We have received your Transformation & Service Redesign enquiry and will review the information provided. A member of the team will contact you to discuss the requirement and appropriate next steps. Submitting this form does not confirm acceptance of work or availability.',
     gradientClass: 'from-blue-600 via-sky-600 to-cyan-500',
     borderClass: 'border-sky-300/40',
     iconBgClass: 'from-sky-400 to-blue-600',
@@ -60,14 +60,14 @@ const CATEGORIES: CategoryOption[] = [
   },
   {
     id: 'staffing',
-    title: 'Staffing Request',
+    title: 'Specialist Delivery Enquiry',
     tagline: 'Flexible PMO, project, BA & delivery professionals',
     badge: 'Form 3',
     routingQueue: 'Specialist support',
     icon: UserCheck,
-    primaryBtnText: 'Request Staffing Support',
+    primaryBtnText: 'Discuss Specialist Support',
     isBusinessFacing: true,
-    confirmationMessage: 'Thank you. We have received your staffing request. We will review the roles, timescale, working arrangement and expected outputs and will contact you to discuss availability and next steps. Submission does not confirm that a particular professional is available or that an engagement has been agreed.',
+    confirmationMessage: 'Thank you. We have received your specialist delivery enquiry. We will review the roles, timescale, working arrangement and expected outputs and will contact you to discuss availability and next steps. Submission does not confirm that a particular professional is available or that an engagement has been agreed.',
     gradientClass: 'from-emerald-600 via-teal-600 to-emerald-500',
     borderClass: 'border-emerald-300/40',
     iconBgClass: 'from-emerald-400 to-teal-600',
@@ -75,7 +75,7 @@ const CATEGORIES: CategoryOption[] = [
   },
   {
     id: 'training',
-    title: 'Skills, Training & Professional Development',
+    title: 'People & Capability Development',
     tagline: 'Individual courses, team training & graduate development',
     badge: 'Form 4',
     routingQueue: 'Career Accelerator',
@@ -90,7 +90,7 @@ const CATEGORIES: CategoryOption[] = [
   },
   {
     id: 'ai-solutions',
-    title: 'AI & Digital Solutions',
+    title: 'Digital Adoption & Practical AI',
     tagline: 'AI assistants, workflow automation & reporting tools',
     badge: 'Form 5',
     routingQueue: 'Digital and AI',
@@ -254,7 +254,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
     declaration7: true
   });
 
-  // Form 4: AI & Digital Solutions
+  // Form 4: Digital Adoption & Practical AI
   const [form4, setForm4] = useState({
     interestedIn: [] as string[],
     businessProblem: '',
@@ -393,7 +393,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
         {/* QUICK CONTACT HIGHLIGHT CARDS (MATCHING HOME PAGE GLOSSY THEME - NO DARK BLUE) */}
         <div className="grid md:grid-cols-3 gap-4">
           <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#38B6FF] via-[#0084FF] to-[#0052FF] text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0B2D5B] via-[#1E63F3] to-[#11B7E6] text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
               <Mail className="w-5 h-5" />
             </div>
             <div>
@@ -406,7 +406,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
           </div>
 
           <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#4EE376] via-[#00C853] to-[#00A859] text-white flex items-center justify-center shrink-0 shadow-md shadow-emerald-500/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0B2D5B] via-[#087EAE] to-[#11B7E6] text-white flex items-center justify-center shrink-0 shadow-md shadow-emerald-500/20">
               <Phone className="w-5 h-5" />
             </div>
             <div>
@@ -419,7 +419,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
           </div>
 
           <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#38B6FF] via-[#0084FF] to-[#0052FF] text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0B2D5B] via-[#1E63F3] to-[#11B7E6] text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
               <Globe className="w-5 h-5" />
             </div>
             <div>
@@ -531,7 +531,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
               </div>
               <h3 className="text-xl font-bold text-slate-900">Please Select an Enquiry Type Above</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Choose one of the 7 options above (Business Consultancy, Staffing, Training, AI Solutions, Career Coaching, Partnership, or General Enquiry) to load the corresponding required fields.
+                Choose one of the 7 options above (Business Consultancy, Specialist Delivery, People & Capability, Digital & AI, Career Coaching, Partnership, or General Enquiry) to load the corresponding required fields.
               </p>
             </div>
           ) : submitted ? (
