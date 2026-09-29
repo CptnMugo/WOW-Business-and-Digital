@@ -170,6 +170,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ activeTab, set
         </div>
       )}
 
+      {(activeTab === 'staffing' || activeTab === 'services') && <section className="rounded-2xl bg-white border border-navy-200 p-7 space-y-3">
+        <h2 className="text-2xl font-bold">Bring your expertise to the WBD associate network</h2>
+        <p>We welcome expressions of interest from experienced specialists who can contribute to multidisciplinary delivery.</p>
+        <a href="?page=associates" className="inline-block bg-navy-600 hover:bg-navy-700 text-white rounded-xl px-5 py-3 font-bold">Become an Associate</a>
+      </section>}
       {/* BOTTOM CONSULTATION CTA */}
       <div className="bg-gradient-to-r from-[#F8F4ED] via-white to-[#E9F5F5] text-slate-900 rounded-3xl p-8 sm:p-10 border border-navy-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">
