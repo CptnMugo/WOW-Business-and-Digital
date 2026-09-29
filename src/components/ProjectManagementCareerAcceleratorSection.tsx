@@ -46,17 +46,17 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
       {/* ======================================================== */}
       {/* HERO SECTION */}
       {/* ======================================================== */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#F8F4ED] via-[#E9F5F5] to-white text-slate-900 pt-12 pb-20 border-b border-sky-200">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#F8F4ED] via-[#E9F5F5] to-white text-slate-900 pt-12 pb-20 border-b border-navy-200">
         {/* Ambient background glows */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-sky-300/25 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-navy-300/25 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-navy-200/30 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
           
           {/* Breadcrumb / Category Tag */}
           <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200 shadow-2xs">
-              <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-50 text-navy-700 text-xs font-bold border border-navy-200 shadow-2xs">
+              <GraduationCap className="w-3.5 h-3.5 text-navy-600" />
               <span>WOW Academy • Professional Programs</span>
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-black border border-amber-300/80 shadow-2xs">
@@ -69,7 +69,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
           <div className="max-w-4xl space-y-4">
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-tight">
               Project Management <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-blue-600 via-sky-600 to-cyan-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-navy-600 via-navy-600 to-navy-600 bg-clip-text text-transparent">
                 Career Accelerator
               </span>
             </h1>
@@ -80,8 +80,8 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
 
           {/* Quick Spec Matrix */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl pt-2">
-            <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-sky-200 shadow-xs">
-              <div className="flex items-center gap-2 text-xs font-bold text-blue-700 mb-1">
+            <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-navy-200 shadow-xs">
+              <div className="flex items-center gap-2 text-xs font-bold text-navy-700 mb-1">
                 <Clock className="w-4 h-4" />
                 <span>Duration</span>
               </div>
@@ -89,8 +89,8 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               <div className="text-[11px] text-slate-600">Weekly sessions + live labs</div>
             </div>
 
-            <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-sky-200 shadow-xs">
-              <div className="flex items-center gap-2 text-xs font-bold text-blue-700 mb-1">
+            <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-navy-200 shadow-xs">
+              <div className="flex items-center gap-2 text-xs font-bold text-navy-700 mb-1">
                 <MapPin className="w-4 h-4" />
                 <span>Delivery Mode</span>
               </div>
@@ -98,8 +98,8 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               <div className="text-[11px] text-slate-600">Live Virtual + Birmingham Labs</div>
             </div>
 
-            <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-sky-200 shadow-xs">
-              <div className="flex items-center gap-2 text-xs font-bold text-blue-700 mb-1">
+            <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-navy-200 shadow-xs">
+              <div className="flex items-center gap-2 text-xs font-bold text-navy-700 mb-1">
                 <Briefcase className="w-4 h-4" />
                 <span>Real Experience</span>
               </div>
@@ -107,7 +107,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               <div className="text-[11px] text-slate-600">Genuine PM artefacts produced</div>
             </div>
 
-            <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-sky-200 shadow-xs">
+            <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-navy-200 shadow-xs">
               <div className="flex items-center gap-2 text-xs font-bold text-emerald-700 mb-1">
                 <Award className="w-4 h-4" />
                 <span>Special Tuition</span>
@@ -121,7 +121,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <button
               onClick={navigateToRegistration}
-              className="bg-blue-600 hover:bg-blue-500 text-white font-black text-sm px-6 py-3.5 rounded-xl transition-all shadow-md hover:shadow-blue-500/20 flex items-center gap-2 cursor-pointer group"
+              className="bg-navy-600 hover:bg-navy-500 text-white font-black text-sm px-6 py-3.5 rounded-xl transition-all shadow-md hover:shadow-navy-500/20 flex items-center gap-2 cursor-pointer group"
             >
               <span>Apply for Next Intake</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -132,17 +132,17 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                 const el = document.getElementById('fees-section');
                 el?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="bg-white hover:bg-sky-50 text-blue-700 font-bold text-sm px-5 py-3.5 rounded-xl border border-sky-200 shadow-2xs transition-colors flex items-center gap-2"
+              className="bg-white hover:bg-navy-50 text-navy-700 font-bold text-sm px-5 py-3.5 rounded-xl border border-navy-200 shadow-2xs transition-colors flex items-center gap-2"
             >
-              <CreditCard className="w-4 h-4 text-blue-600" />
+              <CreditCard className="w-4 h-4 text-navy-600" />
               <span>View Fees & Payment Plans</span>
             </button>
 
             <a
               href={`tel:${BRAND_INFO.phone}`}
-              className="text-xs font-bold text-slate-600 hover:text-blue-700 flex items-center gap-1.5 py-2 px-3 rounded-lg hover:bg-sky-50 transition-colors"
+              className="text-xs font-bold text-slate-600 hover:text-navy-700 flex items-center gap-1.5 py-2 px-3 rounded-lg hover:bg-navy-50 transition-colors"
             >
-              <PhoneCall className="w-3.5 h-3.5 text-blue-600" />
+              <PhoneCall className="w-3.5 h-3.5 text-navy-600" />
               <span>Questions? Call: {BRAND_INFO.phone}</span>
             </a>
           </div>
@@ -155,7 +155,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
       {/* ======================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-black uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-100 text-navy-700 text-xs font-black uppercase tracking-wider">
             <span>The Accelerator Philosophy</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
@@ -170,7 +170,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
           {/* Pillar 1: LEARN */}
           <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+              <div className="w-12 h-12 rounded-2xl bg-navy-50 text-navy-600 flex items-center justify-center font-black text-lg group-hover:bg-navy-600 group-hover:text-white transition-colors">
                 01
               </div>
               <h3 className="text-2xl font-black text-slate-900">
@@ -181,35 +181,35 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </p>
               <ul className="space-y-2 pt-2 border-t border-slate-100 text-xs text-slate-700">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-navy-600 shrink-0" />
                   <span>Agile, Scrum & Waterfall hybrid delivery</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-navy-600 shrink-0" />
                   <span>Project Initiation Documentation (PID)</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-navy-600 shrink-0" />
                   <span>Business Case creation & justification</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-navy-600 shrink-0" />
                   <span>Budget forecasting & cost control</span>
                 </li>
               </ul>
             </div>
-            <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] font-bold text-blue-600 uppercase tracking-wider">
+            <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] font-bold text-navy-600 uppercase tracking-wider">
               Methodology &amp; Standards
             </div>
           </div>
 
           {/* Pillar 2: WORK */}
-          <div className="bg-white rounded-3xl p-8 border border-blue-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-bl-xl">
+          <div className="bg-white rounded-3xl p-8 border border-navy-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-navy-600 text-white text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-bl-xl">
               Core Differentiator
             </div>
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center font-black text-lg group-hover:bg-sky-600 group-hover:text-white transition-colors">
+              <div className="w-12 h-12 rounded-2xl bg-navy-100 text-navy-700 flex items-center justify-center font-black text-lg group-hover:bg-navy-600 group-hover:text-white transition-colors">
                 02
               </div>
               <h3 className="text-2xl font-black text-slate-900">
@@ -220,24 +220,24 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </p>
               <ul className="space-y-2 pt-2 border-t border-slate-100 text-xs text-slate-700">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-navy-600 shrink-0" />
                   <span>Active RAID log management & mitigation</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-navy-600 shrink-0" />
                   <span>Steering committee presentation decks</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-navy-600 shrink-0" />
                   <span>Change request impact assessments</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-navy-600 shrink-0" />
                   <span>Stakeholder communication under pressure</span>
                 </li>
               </ul>
             </div>
-            <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] font-bold text-sky-700 uppercase tracking-wider">
+            <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] font-bold text-navy-700 uppercase tracking-wider">
               Real Workplace Immersion
             </div>
           </div>
@@ -284,9 +284,9 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
       {/* SECTION: WHO THE PROGRAMME IS FOR */}
       {/* ======================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 text-slate-900 rounded-3xl p-8 sm:p-12 border border-sky-200 space-y-8 shadow-sm">
+        <div className="bg-gradient-to-br from-navy-50 via-navy-50 to-navy-50 text-slate-900 rounded-3xl p-8 sm:p-12 border border-navy-200 space-y-8 shadow-sm">
           <div className="space-y-2 max-w-2xl">
-            <div className="text-xs font-black uppercase tracking-wider text-blue-700">Target Candidates</div>
+            <div className="text-xs font-black uppercase tracking-wider text-navy-700">Target Candidates</div>
             <h2 className="text-3xl font-black text-slate-900">Who This Accelerator Is Designed For</h2>
             <p className="text-xs sm:text-sm text-slate-600">
               We focus on candidates who have the drive, aptitude, and qualifications, but need workplace validation to break through the hiring barrier.
@@ -294,8 +294,8 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white border border-sky-100 p-6 rounded-2xl space-y-2 shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">
+            <div className="bg-white border border-navy-100 p-6 rounded-2xl space-y-2 shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-navy-100 text-navy-700 flex items-center justify-center font-bold text-xs">
                 A
               </div>
               <h3 className="font-bold text-slate-900 text-base">Qualified but Lacking Experience</h3>
@@ -304,8 +304,8 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </p>
             </div>
 
-            <div className="bg-white border border-sky-100 p-6 rounded-2xl space-y-2 shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-xs">
+            <div className="bg-white border border-navy-100 p-6 rounded-2xl space-y-2 shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-navy-100 text-navy-700 flex items-center justify-center font-bold text-xs">
                 B
               </div>
               <h3 className="font-bold text-slate-900 text-base">First-Time PM &amp; PMO Seekers</h3>
@@ -314,7 +314,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </p>
             </div>
 
-            <div className="bg-white border border-sky-100 p-6 rounded-2xl space-y-2 shadow-xs">
+            <div className="bg-white border border-navy-100 p-6 rounded-2xl space-y-2 shadow-xs">
               <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
                 C
               </div>
@@ -324,8 +324,8 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </p>
             </div>
 
-            <div className="bg-white border border-sky-100 p-6 rounded-2xl space-y-2 shadow-xs">
-              <div className="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-xs">
+            <div className="bg-white border border-navy-100 p-6 rounded-2xl space-y-2 shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-navy-100 text-navy-700 flex items-center justify-center font-bold text-xs">
                 D
               </div>
               <h3 className="font-bold text-slate-900 text-base">International PMs Entering UK</h3>
@@ -334,7 +334,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </p>
             </div>
 
-            <div className="bg-white border border-sky-100 p-6 rounded-2xl space-y-2 shadow-xs">
+            <div className="bg-white border border-navy-100 p-6 rounded-2xl space-y-2 shadow-xs">
               <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">
                 E
               </div>
@@ -344,9 +344,9 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </p>
             </div>
 
-            <div className="bg-white border border-sky-100 p-6 rounded-2xl space-y-2 flex flex-col justify-between shadow-xs">
+            <div className="bg-white border border-navy-100 p-6 rounded-2xl space-y-2 flex flex-col justify-between shadow-xs">
               <div>
-                <div className="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-xs">
+                <div className="w-8 h-8 rounded-lg bg-navy-100 text-navy-700 flex items-center justify-center font-bold text-xs">
                   F
                 </div>
                 <h3 className="font-bold text-slate-900 text-base">Corporate PMO Upskilling</h3>
@@ -356,7 +356,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </div>
               <button
                 onClick={navigateToRegistration}
-                className="mt-4 text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 cursor-pointer"
+                className="mt-4 text-xs font-bold text-navy-600 hover:text-navy-700 flex items-center gap-1 cursor-pointer"
               >
                 <span>Check Your Eligibility</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -385,7 +385,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
         <div className="grid md:grid-cols-3 gap-6">
           {/* Phase 1 */}
           <div className="bg-white rounded-3xl p-7 border border-slate-200 shadow-sm space-y-4">
-            <div className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-extrabold text-xs">
+            <div className="inline-block px-3 py-1 rounded-full bg-navy-100 text-navy-700 font-extrabold text-xs">
               Months 1 &amp; 2
             </div>
             <h3 className="text-xl font-black text-slate-900">
@@ -396,15 +396,15 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
             </p>
             <ul className="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-100">
               <li className="flex items-start gap-2">
-                <Check className="w-3.5 h-3.5 text-blue-600 mt-0.5 shrink-0" />
+                <Check className="w-3.5 h-3.5 text-navy-600 mt-0.5 shrink-0" />
                 <span>Project Initiation Documentation (PID) creation</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check className="w-3.5 h-3.5 text-blue-600 mt-0.5 shrink-0" />
+                <Check className="w-3.5 h-3.5 text-navy-600 mt-0.5 shrink-0" />
                 <span>Work Breakdown Structures (WBS) &amp; critical path</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check className="w-3.5 h-3.5 text-blue-600 mt-0.5 shrink-0" />
+                <Check className="w-3.5 h-3.5 text-navy-600 mt-0.5 shrink-0" />
                 <span>Stakeholder mapping &amp; engagement matrices</span>
               </li>
             </ul>
@@ -412,7 +412,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
 
           {/* Phase 2 */}
           <div className="bg-white rounded-3xl p-7 border border-slate-200 shadow-sm space-y-4">
-            <div className="inline-block px-3 py-1 rounded-full bg-sky-100 text-sky-700 font-extrabold text-xs">
+            <div className="inline-block px-3 py-1 rounded-full bg-navy-100 text-navy-700 font-extrabold text-xs">
               Months 3 &amp; 4
             </div>
             <h3 className="text-xl font-black text-slate-900">
@@ -423,15 +423,15 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
             </p>
             <ul className="space-y-2 text-xs text-slate-700 pt-2 border-t border-slate-100">
               <li className="flex items-start gap-2">
-                <Check className="w-3.5 h-3.5 text-sky-600 mt-0.5 shrink-0" />
+                <Check className="w-3.5 h-3.5 text-navy-600 mt-0.5 shrink-0" />
                 <span>Live dynamic RAID log facilitation</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check className="w-3.5 h-3.5 text-sky-600 mt-0.5 shrink-0" />
+                <Check className="w-3.5 h-3.5 text-navy-600 mt-0.5 shrink-0" />
                 <span>Change requests &amp; financial impact notes</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check className="w-3.5 h-3.5 text-sky-600 mt-0.5 shrink-0" />
+                <Check className="w-3.5 h-3.5 text-navy-600 mt-0.5 shrink-0" />
                 <span>Simulated steering committee defense sessions</span>
               </li>
             </ul>
@@ -470,7 +470,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
       {/* SECTION: TRANSPARENT FEES & 10% DISCOUNT CARD */}
       {/* ======================================================== */}
       <section id="fees-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-[#F8F4ED] via-white to-[#E9F5F5] text-slate-900 rounded-3xl p-8 sm:p-12 border border-sky-200 shadow-xl relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#F8F4ED] via-white to-[#E9F5F5] text-slate-900 rounded-3xl p-8 sm:p-12 border border-navy-200 shadow-xl relative overflow-hidden">
           
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             
@@ -493,7 +493,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
 
               {/* 3 Clear Options List */}
               <div className="space-y-3">
-                <div className="bg-white p-4 rounded-2xl border border-sky-200 shadow-xs flex items-start justify-between gap-4">
+                <div className="bg-white p-4 rounded-2xl border border-navy-200 shadow-xs flex items-start justify-between gap-4">
                   <div className="space-y-1">
                     <div className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-emerald-500" />
@@ -509,10 +509,10 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                   </div>
                 </div>
 
-                <div className="bg-white p-4 rounded-2xl border border-sky-200 shadow-xs flex items-start justify-between gap-4">
+                <div className="bg-white p-4 rounded-2xl border border-navy-200 shadow-xs flex items-start justify-between gap-4">
                   <div className="space-y-1">
                     <div className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-sky-500" />
+                      <span className="w-2 h-2 rounded-full bg-navy-500" />
                       <span>2-Stage Installment Plan</span>
                     </div>
                     <p className="text-xs text-slate-600">
@@ -520,12 +520,12 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                     </p>
                   </div>
                   <div className="text-right shrink-0">
-                    <div className="text-2xl font-black text-blue-600">2 × £500</div>
+                    <div className="text-2xl font-black text-navy-600">2 × £500</div>
                     <div className="text-[10px] text-slate-500">Split payment</div>
                   </div>
                 </div>
 
-                <div className="bg-white p-4 rounded-2xl border border-sky-200 shadow-xs flex items-start justify-between gap-4">
+                <div className="bg-white p-4 rounded-2xl border border-navy-200 shadow-xs flex items-start justify-between gap-4">
                   <div className="space-y-1">
                     <div className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-amber-500" />
@@ -548,18 +548,18 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
             </div>
 
             {/* Right: Instant Action Box */}
-            <div className="lg:col-span-5 bg-white text-slate-900 p-6 sm:p-8 rounded-3xl shadow-xl space-y-6 border border-sky-100">
+            <div className="lg:col-span-5 bg-white text-slate-900 p-6 sm:p-8 rounded-3xl shadow-xl space-y-6 border border-navy-100">
               <div className="space-y-2 text-center">
-                <span className="text-xs font-black uppercase tracking-wider text-blue-600">Programme Enrolment</span>
+                <span className="text-xs font-black uppercase tracking-wider text-navy-600">Programme Enrolment</span>
                 <h3 className="text-2xl font-black text-slate-900">Ready to Accelerate?</h3>
                 <p className="text-xs text-slate-600">
                   Fill out the 5-step registration form to secure your place in the upcoming intake.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-sky-50 border border-sky-100 space-y-2 text-xs text-slate-700">
-                <div className="font-bold text-blue-700 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-blue-600" />
+              <div className="p-4 rounded-2xl bg-navy-50 border border-navy-100 space-y-2 text-xs text-slate-700">
+                <div className="font-bold text-navy-700 flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-navy-600" />
                   <span>Application review</span>
                 </div>
                 <p>
@@ -570,7 +570,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               <div className="space-y-2.5">
                 <button
                   onClick={navigateToRegistration}
-                  className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black text-sm py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full bg-navy-600 hover:bg-navy-500 text-white font-black text-sm py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Complete Application</span>
                   <ArrowRight className="w-4 h-4" />
@@ -580,7 +580,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                   onClick={() => setActiveTab('payments')}
                   className="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs py-3 rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <CreditCard className="w-3.5 h-3.5 text-blue-600" />
+                  <CreditCard className="w-3.5 h-3.5 text-navy-600" />
                   <span>Go to Payment Portal (Cards &amp; BACS)</span>
                 </button>
               </div>
@@ -599,11 +599,11 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
       {/* SECTION: REGISTRATION PORTAL CALL-TO-ACTION (FORM 4) */}
       {/* ======================================================== */}
       <section ref={applicationFormRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-white via-sky-50/40 to-blue-50/70 rounded-3xl p-8 sm:p-12 border-2 border-blue-200 shadow-xl relative overflow-hidden">
+        <div className="bg-gradient-to-br from-white via-navy-50/40 to-navy-50/70 rounded-3xl p-8 sm:p-12 border-2 border-navy-200 shadow-xl relative overflow-hidden">
           <div className="max-w-3xl space-y-6 relative z-10">
             
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-black uppercase tracking-wider border border-blue-200">
-              <FileText className="w-3.5 h-3.5 text-blue-600" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-100 text-navy-800 text-xs font-black uppercase tracking-wider border border-navy-200">
+              <FileText className="w-3.5 h-3.5 text-navy-600" />
               <span>Dedicated Registration Page</span>
             </div>
 
@@ -629,7 +629,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
 
               <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-1.5">
                 <div className="font-extrabold text-slate-900 flex items-center gap-1.5">
-                  <CreditCard className="w-4 h-4 text-blue-600" />
+                  <CreditCard className="w-4 h-4 text-navy-600" />
                   <span>Choose a payment preference</span>
                 </div>
                 <p className="text-slate-600">
@@ -641,7 +641,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
                 onClick={navigateToRegistration}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-black text-sm px-8 py-4 rounded-xl shadow-lg hover:shadow-blue-500/30 transition-all flex items-center gap-2.5 cursor-pointer active:scale-95 group"
+                className="bg-navy-600 hover:bg-navy-700 text-white font-black text-sm px-8 py-4 rounded-xl shadow-lg hover:shadow-navy-500/30 transition-all flex items-center gap-2.5 cursor-pointer active:scale-95 group"
               >
                 <span>Open Registration Page</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -654,7 +654,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                 }}
                 className="bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 font-bold text-sm px-6 py-4 rounded-xl shadow-sm transition-all flex items-center gap-2 cursor-pointer active:scale-95"
               >
-                <CreditCard className="w-4 h-4 text-blue-600" />
+                <CreditCard className="w-4 h-4 text-navy-600" />
                 <span>Go to Payments Portal</span>
               </button>
             </div>
@@ -675,7 +675,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-2 shadow-2xs">
             <h4 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-blue-600 shrink-0" />
+              <HelpCircle className="w-4 h-4 text-navy-600 shrink-0" />
               <span>Can I participate while working full time?</span>
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
@@ -685,7 +685,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-2 shadow-2xs">
             <h4 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-blue-600 shrink-0" />
+              <HelpCircle className="w-4 h-4 text-navy-600 shrink-0" />
               <span>Do I get real work experience to put on my CV?</span>
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
@@ -695,7 +695,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-2 shadow-2xs">
             <h4 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-blue-600 shrink-0" />
+              <HelpCircle className="w-4 h-4 text-navy-600 shrink-0" />
               <span>How does the 10% Early Settlement Discount work?</span>
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
@@ -705,7 +705,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-2 shadow-2xs">
             <h4 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-blue-600 shrink-0" />
+              <HelpCircle className="w-4 h-4 text-navy-600 shrink-0" />
               <span>What if I live outside Birmingham?</span>
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
