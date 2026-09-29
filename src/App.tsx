@@ -47,7 +47,7 @@ export default function App() {
   ].includes(activeTab);
 
   return (
-    <div className="min-h-screen bg-[#f8f4ed] text-[#0b2d5b] font-sans antialiased flex flex-col justify-between selection:bg-[#1e63f3] selection:text-white">
+    <div className="min-h-screen bg-[#f8f4ed] text-[#0b2d5b] font-sans antialiased flex flex-col justify-between selection:bg-[#0B2D5B] selection:text-white">
       {/* Global Header */}
       <Header 
         activeTab={activeTab} 
