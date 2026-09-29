@@ -153,7 +153,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   return (
     <header className={`sticky top-0 z-50 backdrop-blur-md transition-colors duration-300 ${currentOption.headerClass}`} ref={dropdownRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 relative">
+        <div className="flex items-center justify-between h-[88px] sm:h-[112px] relative">
           {/* Top Banner Brand Link with Official Main Logo */}
           <div className="flex items-center gap-3 sm:gap-4 relative z-30">
             <button 
@@ -161,16 +161,13 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               className="text-left focus:outline-none group shrink-0 transition-transform duration-200 hover:scale-[1.02] flex items-center relative py-1"
               aria-label="WOW Business and Digital Limited Homepage"
             >
-              <Logo 
-                variant="horizontal" 
-                lightMode={false} 
-                className="h-10 sm:h-12 w-auto max-w-[210px] sm:max-w-[280px] md:max-w-none shrink-0" 
-              />
+              <span className="sm:hidden"><Logo variant="icon-only" className="w-[180px] h-auto" /></span>
+              <span className="hidden sm:block"><Logo variant="horizontal" className="w-[240px] h-auto" /></span>
             </button>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-2 font-medium text-xs">
+          <nav className="hidden xl:flex items-center gap-2 font-medium text-xs">
             
             {/* 1. SERVICES DROPDOWN */}
             <div 
@@ -393,7 +390,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           {/* Action CTA & Mobile Menu Button */}
           <div className="flex items-center gap-2.5">
             {/* Desktop Action CTA */}
-            <div className="hidden lg:flex items-center">
+            <div className="hidden xl:flex items-center">
               <button
                 onClick={() => handleNavClick('contact')}
                 className={`font-black text-xs px-4 py-2 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center gap-1.5 ${currentOption.buttonClass}`}
@@ -404,7 +401,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="lg:hidden flex items-center">
+            <div className="xl:hidden flex items-center">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-2 rounded-lg transition-colors text-slate-800 hover:bg-navy-100"
@@ -419,11 +416,11 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-4 shadow-2xl animate-in fade-in duration-200 text-slate-900">
+        <div className="xl:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-4 shadow-2xl animate-in fade-in duration-200 text-slate-900">
 
           {/* Mobile Logo Brand Preview */}
           <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200">
-            <Logo variant="horizontal" className="h-9 w-auto max-w-[220px]" />
+            <Logo variant="icon-only" className="w-[160px] h-auto" />
           </div>
 
           <div className="space-y-2">
