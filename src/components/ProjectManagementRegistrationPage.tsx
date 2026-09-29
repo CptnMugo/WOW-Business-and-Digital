@@ -209,7 +209,7 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
               setActiveTab('pm-career-accelerator');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="inline-flex items-center gap-2 text-xs font-bold text-blue-700 hover:text-blue-800 bg-white hover:bg-sky-50 px-3.5 py-2 rounded-xl border border-sky-200 shadow-2xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 text-xs font-bold text-navy-700 hover:text-navy-800 bg-white hover:bg-navy-50 px-3.5 py-2 rounded-xl border border-navy-200 shadow-2xs transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>← Back to Course Information</span>
@@ -223,9 +223,9 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
         </div>
 
         {/* HEADER HERO BANNER */}
-        <div className="bg-gradient-to-br from-[#F8F4ED] via-[#E9F5F5] to-[#DCE9F4]/40 text-slate-900 border border-sky-200 p-6 sm:p-8 rounded-3xl shadow-md relative overflow-hidden space-y-3">
-          <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-blue-700">
-            <GraduationCap className="w-4 h-4 text-blue-600" />
+        <div className="bg-gradient-to-br from-[#F8F4ED] via-[#E9F5F5] to-[#DCE9F4]/40 text-slate-900 border border-navy-200 p-6 sm:p-8 rounded-3xl shadow-md relative overflow-hidden space-y-3">
+          <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-navy-700">
+            <GraduationCap className="w-4 h-4 text-navy-600" />
             <span>Official Application &amp; Registration</span>
           </div>
 
@@ -238,8 +238,8 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
           </p>
 
           <div className="flex flex-wrap items-center gap-2.5 pt-2 text-xs text-slate-700">
-            <div className="flex items-center gap-1 bg-white/90 border border-sky-200 px-2.5 py-1 rounded-lg shadow-2xs">
-              <Clock className="w-3.5 h-3.5 text-blue-600" />
+            <div className="flex items-center gap-1 bg-white/90 border border-navy-200 px-2.5 py-1 rounded-lg shadow-2xs">
+              <Clock className="w-3.5 h-3.5 text-navy-600" />
               <span>Takes ~3 minutes</span>
             </div>
           </div>
@@ -342,7 +342,7 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
         <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm space-y-6">
           <div className="border-b border-slate-100 pb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <FileText className="w-5 h-5 text-blue-600" />
+              <FileText className="w-5 h-5 text-navy-600" />
               <h2 className="text-lg sm:text-xl font-black text-slate-900">
                 Applicant Information &amp; Preferences
               </h2>
@@ -367,11 +367,11 @@ export const ProjectManagementRegistrationPage: React.FC<ProjectManagementRegist
         <div className="text-center text-xs text-slate-500 space-y-1">
           <p>
             Questions regarding enrolment or special terms? Call our team on{' '}
-            <a href={`tel:${BRAND_INFO.phone}`} className="font-bold text-blue-700 underline">
+            <a href={`tel:${BRAND_INFO.phone}`} className="font-bold text-navy-700 underline">
               {BRAND_INFO.phone}
             </a>{' '}
             or email{' '}
-            <a href={`mailto:${BRAND_INFO.email}`} className="font-bold text-blue-700 underline">
+            <a href={`mailto:${BRAND_INFO.email}`} className="font-bold text-navy-700 underline">
               {BRAND_INFO.email}
             </a>
           </p>
