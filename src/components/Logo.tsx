@@ -1,5 +1,5 @@
 import React from 'react';
-import { compact, primaryHorizontal } from '../assets/wbdLogoData';
+import { compact, primaryHorizontal, primaryStacked } from '../assets/wbdLogoData';
 
 interface LogoProps {
   variant?: 'horizontal' | 'icon-only' | 'framed' | 'vertical';
@@ -17,7 +17,7 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'horizontal', className = 
   }[size];
 
   return <img
-    src={variant === 'icon-only' ? compact : primaryHorizontal}
+    src={variant === 'icon-only' ? compact : variant === 'vertical' || variant === 'framed' ? primaryStacked : primaryHorizontal}
     alt="WBD — WOW Business & Digital Limited. Evidence, Transformation, Impact."
     className={`block shrink-0 select-none object-contain rounded-md bg-white ${className}`}
     style={!className.includes('h-') && !className.includes('w-') ? { height, width: 'auto' } : undefined}
