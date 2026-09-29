@@ -27,9 +27,9 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
               aria-label="WOW Business and Digital Homepage"
             >
               <Logo 
-                variant="horizontal" 
+                variant="vertical" 
                 lightMode={false} 
-                className="h-12 sm:h-14 w-auto max-w-[280px]" 
+                className="w-[220px] h-auto" 
               />
             </button>
             <p className="text-sm leading-relaxed max-w-md text-slate-700">
