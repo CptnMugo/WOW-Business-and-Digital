@@ -30,13 +30,37 @@ const PORT = 3000;
 
 app.use(express.json());
 
-const ENQUIRY_CATEGORIES = new Set(['general', 'business-consultancy', 'staffing', 'training', 'ai-solutions', 'career-coaching', 'partnership']);
+const ENQUIRY_CATEGORIES = new Set(['general', 'business-consultancy', 'staffing', 'training', 'ai-solutions', 'career-coaching', 'partnership', 'associate']);
 const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char] || char));
+
+const requiredEnquiryDetails: Record<string, string[]> = {
+  general: ['subject', 'message'],
+  'business-consultancy': ['challenge', 'desiredOutcome'],
+  staffing: ['numberOfPeople', 'preferredStartDate', 'locationDetails', 'expectedOutputs'],
+  'ai-solutions': ['businessProblem', 'currentProcess', 'informationUsed'],
+  'career-coaching': ['targetRoleDirection', 'goalsToAchieve'],
+  partnership: ['organisationOverview', 'proposalDescription', 'problemAddressed', 'contributions'],
+};
+const validTraining = (data: any) => data &&
+  ['fullName', 'email', 'mobileWhatsapp', 'townCity', 'previousExperience', 'careerObjective', 'currentChallenge', 'successMeasure'].every(key => typeof data[key] === 'string' && data[key].trim()) &&
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) && data.privacyAcknowledged === true &&
+  [1, 2, 3, 4, 5, 6, 7].every(number => data['declaration' + number] === true);
 
 app.post('/api/enquiries', async (req, res) => {
   const { category, contact, details } = req.body || {};
   if (!ENQUIRY_CATEGORIES.has(category) || !contact || typeof contact.firstName !== 'string' || !contact.firstName.trim() || typeof contact.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email) || contact.privacyAcknowledged !== true || !details || typeof details !== 'object') {
     res.status(400).json({ error: 'Please complete the required contact and privacy fields.' });
+    return;
+  }
+  if (Array.isArray(details) || (requiredEnquiryDetails[category] || []).some(key => typeof details[key] !== 'string' || !details[key].trim()) || (category === 'training' && !validTraining(details))) {
+    res.status(400).json({ error: 'Please complete the required fields for this enquiry.' });
+    return;
+  }
+  if (category === 'associate' && (
+    !['location', 'expertise', 'sectors', 'availability', 'experience'].every(key => typeof details[key] === 'string' && details[key].trim()) ||
+    details.experience.trim().length < 20 || details.retainForOpportunities !== true
+  )) {
+    res.status(400).json({ error: 'Please complete your professional details and consent to being contacted about associate opportunities.' });
     return;
   }
   const record = { id: `WBD-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, receivedAt: new Date().toISOString(), category, contact, details };
@@ -260,9 +284,8 @@ app.post("/api/registrations/submit", async (req, res) => {
   try {
     const data: RegistrationData = req.body;
 
-    const hasName = (data.firstName && data.lastName) || (data as any).fullName;
-    if (!hasName || !data.email) {
-      res.status(400).json({ error: "Missing required delegate fields (name, email)" });
+    if (!validTraining(data)) {
+      res.status(400).json({ error: "Please complete the required application fields, declarations and privacy acknowledgement." });
       return;
     }
 

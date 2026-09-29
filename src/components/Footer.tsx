@@ -69,24 +69,25 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
               Core Services
             </h3>
             <ul className="space-y-2.5 text-xs text-slate-600">
+              <li><a href="?page=associates" className="hover:underline">Become an Associate</a></li>
               <li>
                 <button onClick={() => handleNav('business-consultancy')} className="hover:text-navy-600 hover:underline transition-all text-left">
-                  Business Consultancy & Growth
+                  Transformation & Service Redesign
                 </button>
               </li>
               <li>
                 <button onClick={() => handleNav('staffing')} className="hover:text-navy-600 hover:underline transition-all text-left">
-                  Staffing & Delivery
+                  Multidisciplinary Specialist Delivery
                 </button>
               </li>
               <li>
                 <button onClick={() => handleNav('training')} className="hover:text-navy-600 hover:underline transition-all text-left">
-                  Skills, Training & Professional Development
+                  People & Capability Development
                 </button>
               </li>
               <li>
                 <button onClick={() => handleNav('ai-solutions')} className="hover:text-navy-600 hover:underline transition-all text-left">
-                  AI Solutions & Assistants
+                  Digital Adoption & Practical AI
                 </button>
               </li>
               <li>

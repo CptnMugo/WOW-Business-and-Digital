@@ -1,6 +1,7 @@
 export type NavTab = 
   | 'home' 
   | 'services'
+  | 'associates'
   | 'business-consultancy'
   | 'staffing'
   | 'training'
