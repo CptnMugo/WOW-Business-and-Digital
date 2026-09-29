@@ -20,8 +20,8 @@ export const CaseStudiesSection: React.FC<CaseStudiesProps> = ({ setActiveTab })
       
       {/* HEADER HERO */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-100 border border-sky-300 text-blue-700 text-xs font-bold">
-          <Award className="w-3.5 h-3.5 text-blue-600" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-100 border border-navy-300 text-navy-700 text-xs font-bold">
+          <Award className="w-3.5 h-3.5 text-navy-600" />
           <span>Relevant Experience</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
@@ -40,8 +40,8 @@ export const CaseStudiesSection: React.FC<CaseStudiesProps> = ({ setActiveTab })
             onClick={() => setSelectedFilter(divName)}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               selectedFilter === divName
-                ? 'bg-blue-600 text-white shadow-xs'
-                : 'bg-sky-50 text-slate-700 hover:bg-sky-100 border border-sky-100'
+                ? 'bg-navy-600 text-white shadow-xs'
+                : 'bg-navy-50 text-slate-700 hover:bg-navy-100 border border-navy-100'
             }`}
           >
             {divName === 'All' ? 'All Case Studies' : divName}
@@ -54,11 +54,11 @@ export const CaseStudiesSection: React.FC<CaseStudiesProps> = ({ setActiveTab })
         {filteredCaseStudies.map((cs) => (
           <div
             key={cs.id}
-            className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-6 hover:border-blue-400"
+            className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-6 hover:border-navy-400"
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-sky-100 text-blue-700 border border-sky-200">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-navy-100 text-navy-700 border border-navy-200">
                   {cs.clientSector}
                 </span>
                 <span className="text-xs font-bold text-slate-400">
@@ -100,7 +100,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesProps> = ({ setActiveTab })
 
             <button
               onClick={() => setActiveTab('contact')}
-              className="w-full bg-sky-50 hover:bg-blue-600 hover:text-white text-blue-700 font-bold text-xs py-3 rounded-xl border border-sky-200 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full bg-navy-50 hover:bg-navy-600 hover:text-white text-navy-700 font-bold text-xs py-3 rounded-xl border border-navy-200 transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Request Similar Solution</span>
               <ArrowRight className="w-3.5 h-3.5" />
