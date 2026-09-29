@@ -15,8 +15,8 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ setActiveTab }
       
       {/* HEADER HERO */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-100 border border-sky-300 text-blue-700 text-xs font-bold">
-          <Box className="w-3.5 h-3.5 text-blue-600" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-100 border border-navy-300 text-navy-700 text-xs font-bold">
+          <Box className="w-3.5 h-3.5 text-navy-600" />
           <span>Products & Digital Toolkits</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
@@ -32,7 +32,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ setActiveTab }
         {TOOLKITS.map((toolkit) => (
           <div
             key={toolkit.id}
-            className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-6 group hover:border-blue-400"
+            className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-6 group hover:border-navy-400"
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -40,13 +40,13 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ setActiveTab }
                   {toolkit.category}
                 </span>
                 {toolkit.badge && (
-                  <span className="bg-blue-600 text-white text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full">
+                  <span className="bg-navy-600 text-white text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full">
                     {toolkit.badge}
                   </span>
                 )}
               </div>
 
-              <h2 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+              <h2 className="text-xl font-bold text-slate-900 group-hover:text-navy-600 transition-colors">
                 {toolkit.name}
               </h2>
 
@@ -58,7 +58,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ setActiveTab }
                 <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Includes:</div>
                 {toolkit.includes.map((inc, idx) => (
                   <div key={idx} className="flex items-start gap-1.5 text-xs text-slate-600">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-navy-500 shrink-0 mt-0.5" />
                     <span>{inc}</span>
                   </div>
                 ))}
@@ -72,7 +72,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ setActiveTab }
 
             <button
               onClick={() => setSelectedToolkit(toolkit)}
-              className="w-full bg-sky-50 hover:bg-blue-600 hover:text-white text-blue-700 font-bold text-xs py-3 rounded-xl border border-sky-200 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full bg-navy-50 hover:bg-navy-600 hover:text-white text-navy-700 font-bold text-xs py-3 rounded-xl border border-navy-200 transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Get Access / Download Pack</span>
@@ -88,7 +88,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ setActiveTab }
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h3 className="font-bold text-slate-900 text-lg">{selectedToolkit.name}</h3>
-                <p className="text-xs text-blue-600 font-semibold">{selectedToolkit.category} • {selectedToolkit.format}</p>
+                <p className="text-xs text-navy-600 font-semibold">{selectedToolkit.category} • {selectedToolkit.format}</p>
               </div>
               <button 
                 onClick={() => setSelectedToolkit(null)}
@@ -102,7 +102,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ setActiveTab }
               Ask us about toolkit availability and access through the contact form.
             </p>
 
-            <button type="button" onClick={() => { setSelectedToolkit(null); setActiveTab('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl">Continue to Contact Us</button>
+            <button type="button" onClick={() => { setSelectedToolkit(null); setActiveTab('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="w-full bg-navy-600 hover:bg-navy-700 text-white font-bold text-xs py-3 rounded-xl">Continue to Contact Us</button>
           </div>
         </div>
       )}

@@ -5,10 +5,10 @@ export const BRAND_INFO = {
   shortName: "WBD",
   email: "wowdigital@wowbusinessanddigital.com",
   phone: "+44 121 296 9549",
-  tagline: "Transforming Organisations. Empowering People. Building Intelligent Solutions.",
-  positioning: "Transforming Organisations. Empowering People. Building Intelligent Solutions.",
+  tagline: "Evidence. Transformation. Impact.",
+  positioning: "Evidence-led transformation, practical delivery and measurable impact.",
   subtext: "Transformation, service redesign and programme delivery, supported by multidisciplinary expertise tailored to each engagement.",
-  vision: "To empower people and organisations to achieve sustainable growth through business transformation, digital innovation, artificial intelligence and professional development.",
+  vision: "We work across people, services, systems and technology to make change sustainable.",
   purpose: "WOW Business & Digital helps organisations improve how they operate, deliver services and implement change. We lead delivery and bring together relevant specialist expertise to strengthen capability and achieve sustainable outcomes.",
   personality: [
     "Professional",
@@ -34,7 +34,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "programme-management",
     title: "Programme Management",
-    description: "Aligning complex multi-project portfolios with strategic business objectives, ensuring seamless cross-functional delivery and stakeholder alignment.",
+    description: "Leading connected workstreams with clear priorities, ownership and stakeholder engagement.",
     iconName: "Briefcase",
     category: "core",
     tags: ["Strategy", "Governance", "Cross-Functional"]
@@ -42,7 +42,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "project-management",
     title: "Project Management",
-    description: "End-to-end execution of critical digital and organisational initiatives using Agile, Waterfall, and hybrid methodologies.",
+    description: "Planning and delivering defined organisational and digital change with methods suited to the work.",
     iconName: "CheckSquare",
     category: "core",
     tags: ["Delivery", "Agile", "Risk Control"]
@@ -50,7 +50,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "pmo",
     title: "PMO Setup & Governance",
-    description: "Establishing robust Project Management Offices (PMOs) that standardize reporting, RAID logs, resource management, and executive assurance.",
+    description: "Setting up proportionate planning, reporting, risk and decision-making arrangements.",
     iconName: "Sliders",
     category: "core",
     tags: ["PMO", "Frameworks", "KPI Tracking"]
@@ -58,7 +58,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "digital-transformation",
     title: "Digital Transformation",
-    description: "Re-architecting legacy operational models with modern digital infrastructure, workflow automation, and cloud adoption.",
+    description: "Redesigning workflows and supporting adoption of suitable digital tools, automation and new ways of working.",
     iconName: "Cpu",
     category: "core",
     tags: ["Cloud", "Automation", "Innovation"]
@@ -74,7 +74,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "change-management",
     title: "Change Management",
-    description: "Structured change frameworks (Prosci / ADKAR aligned) to drive stakeholder engagement, cultural transition, and user adoption.",
+    description: "Engaging people early, understanding impacts and supporting teams to adopt and sustain change.",
     iconName: "Users",
     category: "core",
     tags: ["People", "Culture", "Adoption"]
@@ -82,7 +82,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "business-analysis",
     title: "Business Analysis",
-    description: "Rigorous requirement gathering, process mapping, gap analysis, and target operating model design.",
+    description: "Understanding user needs, mapping current work and designing practical future processes and operating arrangements.",
     iconName: "FileSearch",
     category: "core",
     tags: ["Requirements", "Process Mapping", "Optimization"]
@@ -90,7 +90,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "benefits-realisation",
     title: "Benefits Realisation",
-    description: "Tracking, measuring, and optimizing ROI on digital investments to ensure tangible value delivery past go-live.",
+    description: "Defining useful measures, tracking outcomes and helping teams embed benefits beyond implementation.",
     iconName: "TrendingUp",
     category: "core",
     tags: ["ROI", "Value", "Metrics"]
@@ -98,7 +98,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "governance",
     title: "Governance & Assurance",
-    description: "Designing audit-proof governance frameworks, steering group structures, and compliance checkpoints for enterprise programmes.",
+    description: "Designing clear governance frameworks, steering group structures and assurance checkpoints for complex programmes.",
     iconName: "Award",
     category: "core",
     tags: ["Compliance", "Steering", "Assurance"]
@@ -106,7 +106,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "portfolio-management",
     title: "Portfolio Management",
-    description: "Prioritizing capital and operational investments across project pipelines to maximize strategic impact and mitigate capacity bottlenecks.",
+    description: "Helping leaders prioritise work, understand capacity and connect investment decisions to intended outcomes.",
     iconName: "PieChart",
     category: "core",
     tags: ["Prioritization", "Resource Allocation", "Pipeline"]
@@ -114,7 +114,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "process-improvement",
     title: "Business Process Improvement",
-    description: "Eliminating operational friction points through Lean Six Sigma principles and automated digital workflows.",
+    description: "Finding friction in everyday work and redesigning processes and digital workflows with users.",
     iconName: "RefreshCw",
     category: "additional",
     tags: ["Lean", "Workflow", "Efficiency"]
@@ -122,7 +122,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "digital-readiness",
     title: "Digital & AI Readiness Assessments",
-    description: "Evaluating organisational maturity, data pipelines, and workforce skills prior to embarking on AI integration.",
+    description: "Assessing needs, information, skills and governance before choosing technology or AI use cases.",
     iconName: "BarChart2",
     category: "additional",
     tags: ["AI Audit", "Maturity", "Strategy"]
@@ -130,7 +130,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "project-recovery",
     title: "Project Recovery",
-    description: "Rapid diagnostic and turnaround for troubled or delayed high-stakes projects to get them back on budget and schedule.",
+    description: "Reviewing delivery barriers, options and ownership, then agreeing a realistic recovery plan.",
     iconName: "Zap",
     category: "additional",
     tags: ["Turnaround", "Rescue", "Assurance"]
@@ -138,7 +138,7 @@ export const CONSULTING_SERVICES: ServiceItem[] = [
   {
     id: "executive-dashboards",
     title: "Executive Dashboards",
-    description: "Creating real-time PowerBI/Tableau executive command centers for immediate visibility into project health and financial variance.",
+    description: "Designing useful reporting and dashboards around the data and decisions a team actually needs.",
     iconName: "Layout",
     category: "additional",
     tags: ["PowerBI", "Analytics", "Executive"]
@@ -440,7 +440,7 @@ At WOW Business and Digital Ltd, our focus is on domain-specific AI Assistants t
 
 export interface CoreServiceInfo {
   id: string;
-  tabId: 'business-consultancy' | 'staffing' | 'training' | 'ai-solutions' | 'career-coaching';
+  tabId: 'business-consultancy' | 'staffing' | 'training' | 'ai-solutions' | 'consulting';
   title: string;
   shortNavTitle: string;
   tagline: string;
@@ -453,92 +453,48 @@ export interface CoreServiceInfo {
 
 export const CORE_FIVE_SERVICES: CoreServiceInfo[] = [
   {
-    id: "training",
-    tabId: "training",
-    title: "Training",
-    shortNavTitle: "Training",
-    tagline: "Practical training, work experience and professional development.",
-    description: "Practical training, work experience and professional development.",
-    iconName: "GraduationCap",
-    subOfferings: [
-      "Project & Programme Management",
-      "Change Management",
-      "AI for Business",
-      "PMO & Project Support",
-      "Work Experience"
-    ],
-    audience: "Teams, career switchers, managers, graduates, and organisations upskilling workforce",
-    href: "#training"
+    id: 'business-consultancy', tabId: 'business-consultancy',
+    title: 'Transformation & Service Redesign', shortNavTitle: 'Transformation',
+    tagline: 'Understand the challenge, improve services and make change work.',
+    description: 'We use evidence, engagement and process mapping to redesign services and workflows, then help teams put the changes into practice.',
+    iconName: 'TrendingUp',
+    subOfferings: ['Discovery and diagnosis', 'Service and process redesign', 'Digital-first workflows', 'Operating model and implementation planning', 'Benefits and outcome measures'],
+    audience: 'Organisations improving services, operations or customer and staff experience', href: '#business-consultancy'
   },
   {
-    id: "staffing",
-    tabId: "staffing",
-    title: "Staffing",
-    shortNavTitle: "Staffing",
-    tagline: "Experienced professionals supplied flexibly, from one to five days a week.",
-    description: "Experienced professionals supplied flexibly, from one to five days a week.",
-    iconName: "Users",
-    subOfferings: [
-      "Project Managers",
-      "Programme Managers",
-      "PMO Support",
-      "Business Analysts",
-      "Coordinators"
-    ],
-    audience: "Organisations seeking specialised delivery talent or capacity scaling",
-    href: "#staffing"
+    id: 'programme-delivery', tabId: 'consulting',
+    title: 'Programme & Project Delivery', shortNavTitle: 'Programme Delivery',
+    tagline: 'Senior leadership from mobilisation to measurable outcomes.',
+    description: 'We lead programmes and projects, strengthen governance and delivery assurance, and help recover work that has lost direction or momentum.',
+    iconName: 'Layers',
+    subOfferings: ['Programme and project leadership', 'PMO and proportionate governance', 'Integrated plans, risks and dependencies', 'Delivery recovery and assurance', 'Benefits tracking and handover'],
+    audience: 'Clients commissioning defined projects, interim leadership or complex programmes', href: '#consulting'
   },
   {
-    id: "business-consultancy",
-    tabId: "business-consultancy",
-    title: "Business Consultancy & Growth",
-    shortNavTitle: "Business Consultancy & Growth",
-    tagline: "Practical consultancy and coaching to grow and strengthen your organisation.",
-    description: "Practical consultancy and coaching to grow and strengthen your organisation.",
-    iconName: "TrendingUp",
-    subOfferings: [
-      "Business Consultancy",
-      "Business Coaching",
-      "Growth Strategy",
-      "Operational Improvement",
-      "Governance & Delivery Support"
-    ],
-    audience: "Enterprise leaders, SMEs, Healthcare trusts, Public Sector & Not-for-profits",
-    href: "#business-consultancy"
+    id: 'ai-solutions', tabId: 'ai-solutions',
+    title: 'Digital Adoption & Practical AI', shortNavTitle: 'Digital & AI',
+    tagline: 'Better workflows, supported by technology people can use.',
+    description: 'We identify where existing or new tools can improve enquiry handling, onboarding, case tracking and reporting, then support responsible adoption.',
+    iconName: 'Sparkles',
+    subOfferings: ['Digital workflow assessment and redesign', 'Technology adoption and readiness', 'Reporting and information flow', 'Practical automation and AI use cases', 'Staff engagement and capability building'],
+    audience: 'Teams looking to improve workflows, adopt technology or explore practical AI', href: '#ai-solutions'
   },
   {
-    id: "ai-solutions",
-    tabId: "ai-solutions",
-    title: "AI Solutions",
-    shortNavTitle: "AI Solutions",
-    tagline: "Practical, guided AI tools grounded in real business knowledge.",
-    description: "Practical, guided AI tools grounded in real business knowledge.",
-    iconName: "Sparkles",
-    subOfferings: [
-      "WOW Assistant",
-      "Business Assistant",
-      "Farm Assistant",
-      "Reporting Automation",
-      "Guided AI Tools"
-    ],
-    audience: "SMEs, Agribusinesses, Not-for-profits, Schools, Healthcare & Field Operations",
-    href: "#ai-solutions"
+    id: 'staffing', tabId: 'staffing',
+    title: 'Multidisciplinary Specialist Delivery', shortNavTitle: 'Specialist Delivery',
+    tagline: 'One accountable lead with expertise matched to the brief.',
+    description: 'WBD leads and coordinates delivery, drawing on associates in technology, finance, commercial, procurement, people, HR and communications as the commission requires.',
+    iconName: 'Users',
+    subOfferings: ['Scoped associate teams', 'Technology and AI expertise', 'Finance and commercial input', 'Procurement and supplier support', 'People, HR and communications expertise'],
+    audience: 'Clients and tenders requiring joined-up work across business functions', href: '#staffing'
   },
   {
-    id: "career-coaching",
-    tabId: "career-coaching",
-    title: "Career Coaching & Development",
-    shortNavTitle: "Career Coaching & Development",
-    tagline: "Support to plan and progress your career.",
-    description: "Support to plan and progress your career.",
-    iconName: "Briefcase",
-    subOfferings: [
-      "Career Coaching",
-      "CV Support",
-      "Interview Preparation",
-      "Career Development"
-    ],
-    audience: "Ambitious professionals, delivery leads, career switchers and senior executives",
-    href: "#career-coaching"
+    id: 'training', tabId: 'training',
+    title: 'People & Capability Development', shortNavTitle: 'People & Capability',
+    tagline: 'Build skills and confidence to sustain change.',
+    description: 'We support teams through change, practical learning and knowledge transfer. Our separate Career Accelerator offers structured development for aspiring project professionals.',
+    iconName: 'GraduationCap',
+    subOfferings: ['Change leadership and engagement', 'Team training and coaching', 'Digital confidence and adoption', 'Knowledge transfer and handover', 'Project Management Career Accelerator'],
+    audience: 'Organisations strengthening teams and individuals building delivery skills', href: '#training'
   }
 ];

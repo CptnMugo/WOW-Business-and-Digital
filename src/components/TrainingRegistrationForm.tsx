@@ -50,8 +50,6 @@ interface TrainingRegistrationFormProps {
   formData: TrainingFormData;
   setFormData: React.Dispatch<React.SetStateAction<TrainingFormData>>;
   onSubmit: (e: React.FormEvent) => void;
-  uploadedFileName: string | null;
-  onFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   dualActionButtons?: boolean;
   onFreeTester?: () => void;
   onSubmitAndPay?: () => void;
@@ -89,8 +87,6 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
   formData,
   setFormData,
   onSubmit,
-  uploadedFileName,
-  onFileUpload,
   dualActionButtons,
   onFreeTester,
   onSubmitAndPay
@@ -135,7 +131,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               value={formData.fullName}
               onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
               placeholder="e.g. Tendai Moyo"
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             />
           </div>
 
@@ -149,7 +145,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               placeholder="name@example.com"
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             />
           </div>
         </div>
@@ -165,7 +161,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               value={formData.mobileWhatsapp}
               onChange={(e) => setFormData({ ...formData, mobileWhatsapp: e.target.value })}
               placeholder="e.g. +44 121 296 9549"
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             />
           </div>
 
@@ -179,7 +175,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               value={formData.townCity}
               onChange={(e) => setFormData({ ...formData, townCity: e.target.value })}
               placeholder="e.g. Birmingham, London, Manchester..."
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             />
           </div>
         </div>
@@ -201,7 +197,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <select
               value={formData.workStatus}
               onChange={(e) => setFormData({ ...formData, workStatus: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
               <option value="Employed">Employed</option>
               <option value="Self-employed">Self-employed</option>
@@ -216,7 +212,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
                 value={formData.workStatusOther}
                 onChange={(e) => setFormData({ ...formData, workStatusOther: e.target.value })}
                 placeholder="Please specify work status..."
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-medium text-slate-900 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-medium text-slate-900 mt-2 focus:outline-none focus:ring-2 focus:ring-navy-500"
               />
             )}
           </div>
@@ -228,7 +224,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <select
               value={formData.rightToWorkUK}
               onChange={(e) => setFormData({ ...formData, rightToWorkUK: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
               <option value="Yes">Yes</option>
               <option value="No">No</option>
@@ -245,7 +241,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <select
               value={formData.ukWorkExperience}
               onChange={(e) => setFormData({ ...formData, ukWorkExperience: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
               <option value="Yes">Yes - Have UK workplace experience</option>
               <option value="No">No - Previous experience is outside UK or entering UK workplace</option>
@@ -259,7 +255,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <select
               value={formData.englishFirstLanguage}
               onChange={(e) => setFormData({ ...formData, englishFirstLanguage: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
               <option value="Yes">Yes</option>
               <option value="No">No (English as an additional language)</option>
@@ -284,7 +280,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           <select
             value={formData.highestQualification}
             onChange={(e) => setFormData({ ...formData, highestQualification: e.target.value })}
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
           >
             <option value="Master's Degree / Postgraduate">Master's Degree / Postgraduate Diploma (Level 7)</option>
             <option value="Undergraduate Degree">Undergraduate Degree / Bachelor's (Level 6)</option>
@@ -310,7 +306,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
                   onClick={() => toggleItem(formData.pmQualifications, 'pmQualifications', item)}
                   className={`p-2.5 rounded-xl text-xs font-bold text-left border transition-all flex items-center justify-between ${
                     isChecked
-                      ? 'bg-blue-600 text-white border-blue-700 shadow-xs'
+                      ? 'bg-navy-600 text-white border-navy-700 shadow-xs'
                       : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                   }`}
                 >
@@ -335,7 +331,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             value={formData.previousExperience}
             onChange={(e) => setFormData({ ...formData, previousExperience: e.target.value })}
             placeholder="Outline your background, previous responsibilities, sectors worked in, or relevant administrative/coordination roles..."
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
           />
         </div>
       </div>
@@ -361,7 +357,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             value={formData.careerObjective}
             onChange={(e) => setFormData({ ...formData, careerObjective: e.target.value })}
             placeholder="e.g. Project Manager, Junior PM, Project Coordinator, PMO Analyst, Change Lead..."
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
           />
         </div>
 
@@ -378,7 +374,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             value={formData.currentChallenge}
             onChange={(e) => setFormData({ ...formData, currentChallenge: e.target.value })}
             placeholder="e.g. Lack of UK workplace experience, passing initial screening but struggling in interviews, lack of live project deliverables to showcase..."
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
           />
         </div>
       </div>
@@ -391,7 +387,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           <h3 className="text-xs font-black uppercase tracking-wider text-slate-400">
             5. Development Needs (Multi-select)
           </h3>
-          <span className="text-[10px] text-blue-700 font-bold bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+          <span className="text-[10px] text-navy-700 font-bold bg-navy-50 px-2 py-0.5 rounded border border-navy-200">
             Select all that apply
           </span>
         </div>
@@ -423,7 +419,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             value={formData.developmentNeedsOther}
             onChange={(e) => setFormData({ ...formData, developmentNeedsOther: e.target.value })}
             placeholder="Specify any other key development needs..."
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 mt-2 focus:outline-none focus:ring-2 focus:ring-navy-500"
           />
         )}
       </div>
@@ -449,7 +445,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             value={formData.successMeasure}
             onChange={(e) => setFormData({ ...formData, successMeasure: e.target.value })}
             placeholder="e.g. Landing a £40k+ Project Manager role with solid workplace confidence and an employer reference..."
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
           />
         </div>
 
@@ -461,7 +457,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <select
               value={formData.weeklyAvailability}
               onChange={(e) => setFormData({ ...formData, weeklyAvailability: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
               <option value="Yes - can commit weekly time">Yes - can commit weekly time</option>
               <option value="Yes - flexible schedule">Yes - flexible schedule</option>
@@ -477,7 +473,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <select
               value={formData.birminghamAttendance}
               onChange={(e) => setFormData({ ...formData, birminghamAttendance: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
               <option value="Yes">Yes - can attend in Birmingham</option>
               <option value="No">No - remote alternative required</option>
@@ -492,7 +488,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <select
               value={formData.inPersonProjectAttendance}
               onChange={(e) => setFormData({ ...formData, inPersonProjectAttendance: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
               <option value="Yes">Yes</option>
               <option value="No">No - fully remote only</option>
@@ -518,7 +514,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <select
               value={formData.packageSelection}
               onChange={(e) => setFormData({ ...formData, packageSelection: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
               <option value="WOW Career Accelerator 6-Month Programme (£1,000)">
                 WOW Career Accelerator 6-Month Programme (£1,000)
@@ -539,13 +535,16 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             <select
               value={formData.paymentPreference}
               onChange={(e) => setFormData({ ...formData, paymentPreference: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
               <option value="Pay in full (£900 - 10% Early Settlement Discount by 31 Oct)">
                 Pay in full (£900 - 10% Early Settlement Discount by 31 Oct)
               </option>
               <option value="Pay in two instalments (1st £500 by 31 Oct • 2nd £500 by 30 Nov)">
-                Pay in two instalments (1st £500 by 31 Oct • 2nd £500 by 30 Nov)
+                Pay in two instalments (1st £500 by 31 Oct 2026 • 2nd £500 by 30 Nov 2026)
+              </option>
+              <option value="£50 registration deposit after acceptance">
+                £50 registration deposit after acceptance (credited against tuition)
               </option>
               <option value="Discuss employer sponsorship / bespoke arrangement">
                 Discuss employer sponsorship / bespoke arrangement
@@ -554,33 +553,9 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </div>
         </div>
 
-        {/* CV / SUPPORTING DOCUMENTS */}
-        <div>
-          <label className="text-xs font-bold text-slate-800 block mb-1">
-            Upload Current CV / Supporting Profile <span className="text-slate-400 font-normal">(Optional - PDF, DOCX up to 10MB)</span>
-          </label>
-          <div className="border-2 border-dashed border-slate-200 hover:border-blue-500 rounded-2xl p-4 text-center cursor-pointer bg-slate-50 hover:bg-blue-50/20 transition-all">
-            <input
-              type="file"
-              id="training-cv-upload"
-              onChange={onFileUpload}
-              className="hidden"
-              accept=".pdf,.doc,.docx,.png,.jpg"
-            />
-            <label htmlFor="training-cv-upload" className="cursor-pointer space-y-1 block">
-              <Upload className="w-5 h-5 text-blue-600 mx-auto" />
-              {uploadedFileName ? (
-                <span className="text-xs font-bold text-emerald-700 block">
-                  Attached: {uploadedFileName} ✓
-                </span>
-              ) : (
-                <span className="text-xs font-semibold text-slate-600 block">
-                  Click to upload your CV, certificate, or project portfolio
-                </span>
-              )}
-            </label>
-          </div>
-        </div>
+        <p className="text-xs text-slate-600 bg-slate-50 border border-slate-200 rounded-xl p-4">
+          If we need your CV or portfolio, we will request it after reviewing your application. Files are not submitted with this form.
+        </p>
       </div>
 
       {/* ======================================================== */}
@@ -588,7 +563,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
       {/* ======================================================== */}
       <div className="space-y-3 bg-slate-50 p-5 rounded-2xl border border-slate-200">
         <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
-          <ShieldCheck className="w-4 h-4 text-blue-700" />
+          <ShieldCheck className="w-4 h-4 text-navy-700" />
           <h3 className="text-xs font-black uppercase tracking-wider text-slate-900">
             8. Form Declarations <span className="text-rose-500">*</span>
           </h3>
@@ -605,7 +580,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               required
               checked={formData.declaration1}
               onChange={(e) => setFormData({ ...formData, declaration1: e.target.checked })}
-              className="mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+              className="mt-0.5 h-4 w-4 rounded text-navy-600 focus:ring-navy-500 border-slate-300"
             />
             <span className="text-slate-800 font-medium">
               I understand that this is a six-month training and work experience programme requiring active participation.
@@ -619,7 +594,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               required
               checked={formData.declaration2}
               onChange={(e) => setFormData({ ...formData, declaration2: e.target.checked })}
-              className="mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+              className="mt-0.5 h-4 w-4 rounded text-navy-600 focus:ring-navy-500 border-slate-300"
             />
             <span className="text-slate-800 font-medium">
               I understand that some project opportunities may require in-person attendance.
@@ -633,10 +608,10 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               required
               checked={formData.declaration3}
               onChange={(e) => setFormData({ ...formData, declaration3: e.target.checked })}
-              className="mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+              className="mt-0.5 h-4 w-4 rounded text-navy-600 focus:ring-navy-500 border-slate-300"
             />
             <span className="text-slate-800 font-medium">
-              I understand that the £50 administration fee is non-refundable once my place has been accepted and reserved.
+              I understand that the £50 registration deposit is non-refundable once my place has been accepted and reserved, and that it will be credited in full against my tuition fee if I continue onto the programme.
             </span>
           </label>
 
@@ -647,7 +622,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               required
               checked={formData.declaration4}
               onChange={(e) => setFormData({ ...formData, declaration4: e.target.checked })}
-              className="mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+              className="mt-0.5 h-4 w-4 rounded text-navy-600 focus:ring-navy-500 border-slate-300"
             />
             <span className="text-slate-800 font-medium">
               I understand the programme payment arrangements and final payment deadline.
@@ -661,7 +636,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               required
               checked={formData.declaration5}
               onChange={(e) => setFormData({ ...formData, declaration5: e.target.checked })}
-              className="mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+              className="mt-0.5 h-4 w-4 rounded text-navy-600 focus:ring-navy-500 border-slate-300"
             />
             <span className="text-slate-800 font-medium">
               I understand that project opportunities depend on availability, suitability and programme requirements.
@@ -675,7 +650,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               required
               checked={formData.declaration6}
               onChange={(e) => setFormData({ ...formData, declaration6: e.target.checked })}
-              className="mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+              className="mt-0.5 h-4 w-4 rounded text-navy-600 focus:ring-navy-500 border-slate-300"
             />
             <span className="text-slate-800 font-medium">
               I understand that any professional reference will reflect my actual participation, work and performance during the programme.
@@ -689,7 +664,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               required
               checked={formData.declaration7}
               onChange={(e) => setFormData({ ...formData, declaration7: e.target.checked })}
-              className="mt-0.5 h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+              className="mt-0.5 h-4 w-4 rounded text-navy-600 focus:ring-navy-500 border-slate-300"
             />
             <span className="text-slate-800 font-bold text-slate-900">
               I confirm that the information I have provided is accurate.
@@ -704,11 +679,11 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
       <div className="pt-6 border-t border-slate-200 space-y-4 bg-slate-50 p-5 rounded-2xl">
         <div className="text-[11px] text-slate-600 leading-relaxed space-y-2">
           <p className="font-bold text-slate-800 flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
+            <ShieldCheck className="w-4 h-4 text-navy-600 shrink-0" />
             <span>Privacy Note:</span>
           </p>
           <p>
-            We will use the information you provide to evaluate your suitability, reserve your place, and manage your onboarding. Please do not include sensitive personal, health, or financial information that is not required. See our <a href="#privacy" className="text-blue-700 font-bold underline">Privacy Notice</a> for full details.
+            We will use the information you provide to review your application and manage any agreed next steps. Please do not include sensitive personal, health, or financial information that is not required. For questions about how your information is handled, email <a href="mailto:wowdigital@wowbusinessanddigital.com" className="text-navy-700 font-bold underline">wowdigital@wowbusinessanddigital.com</a>.
           </p>
         </div>
 
@@ -719,10 +694,10 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             id="training-privacy-checkbox"
             checked={formData.privacyAcknowledged}
             onChange={(e) => setFormData({ ...formData, privacyAcknowledged: e.target.checked })}
-            className="mt-0.5 rounded text-blue-600 focus:ring-blue-500 h-4 w-4 border-slate-300"
+            className="mt-0.5 rounded text-navy-600 focus:ring-navy-500 h-4 w-4 border-slate-300"
           />
           <label htmlFor="training-privacy-checkbox" className="text-xs font-bold text-slate-900 cursor-pointer">
-            I have read the Privacy Notice and understand how my information will be used to process my registration. <span className="text-rose-500">*</span>
+            I understand that my information will be used to review my application and contact me about the programme. <span className="text-rose-500">*</span>
           </label>
         </div>
 
@@ -732,7 +707,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             id="training-marketing-checkbox"
             checked={formData.marketingConsent}
             onChange={(e) => setFormData({ ...formData, marketingConsent: e.target.checked })}
-            className="mt-0.5 rounded text-blue-600 focus:ring-blue-500 h-4 w-4 border-slate-300"
+            className="mt-0.5 rounded text-navy-600 focus:ring-navy-500 h-4 w-4 border-slate-300"
           />
           <label htmlFor="training-marketing-checkbox" className="text-xs font-semibold text-slate-700 cursor-pointer">
             Optional marketing consent: I would like to receive relevant news, course information and programme updates from WOW Business & Digital Limited.
@@ -750,7 +725,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
                 type="button"
                 id="btn-submit-and-pay"
                 onClick={onSubmitAndPay}
-                className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-600 text-white font-bold text-sm p-4 rounded-2xl shadow-lg hover:shadow-blue-500/30 transition-all flex items-center justify-between gap-3 active:scale-[0.99] cursor-pointer group"
+                className="w-full bg-gradient-to-r from-navy-600 via-navy-600 to-navy-700 hover:from-navy-500 hover:to-navy-600 text-white font-bold text-sm p-4 rounded-2xl shadow-lg hover:shadow-navy-500/30 transition-all flex items-center justify-between gap-3 active:scale-[0.99] cursor-pointer group"
               >
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0 border border-white/25">
@@ -759,11 +734,11 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
                   <div>
                     <div className="font-extrabold text-sm text-white flex items-center gap-1.5">
                       <span>Submit and Pay</span>
-                      <span className="text-[10px] font-bold text-amber-200 bg-blue-700/80 px-1.5 py-0.5 rounded border border-blue-400/40">
+                      <span className="text-[10px] font-bold text-amber-200 bg-navy-700/80 px-1.5 py-0.5 rounded border border-navy-400/40">
                         Instant Portal
                       </span>
                     </div>
-                    <div className="text-[11px] text-blue-100 font-normal mt-0.5">
+                    <div className="text-[11px] text-navy-100 font-normal mt-0.5">
                       Save details • Go to payment page
                     </div>
                   </div>

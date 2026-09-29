@@ -31,66 +31,15 @@ export const BANNER_OPTIONS: BannerOption[] = [
     name: 'WOW Ivory and Navy',
     category: 'blue',
     desc: 'Warm ivory canvas with deep navy typography and royal blue accents',
-    briefSource: 'WOW Transformation that works banner',
-    badgeHex: '#FFF9F0',
-    headerClass: 'bg-[#FFF9F0]/95 border-b border-[#DED7CB] text-[#081D3D] shadow-sm',
+    briefSource: 'WBD Evidence | Transformation | Impact brand pack',
+    badgeHex: '#f8f4ed',
+    headerClass: 'bg-[#f8f4ed]/95 border-b border-[#DED7CB] text-[#0b2d5b] shadow-sm',
     isLight: true,
-    navActiveBg: 'bg-[#081D3D] text-white shadow-sm font-bold',
-    navInactive: 'text-[#081D3D] hover:text-[#0755C9] hover:bg-[#EAF1F5]',
-    buttonClass: 'bg-[#0755C9] hover:bg-[#0646AA] text-white shadow-sm'
+    navActiveBg: 'bg-[#0b2d5b] text-white shadow-sm font-bold',
+    navInactive: 'text-[#0b2d5b] hover:text-[#0B2D5B] hover:bg-[#EAF1F5]',
+    buttonClass: 'bg-[#0B2D5B] hover:bg-[#173B63] text-white shadow-sm'
   },
-  {
-    id: 'growth-emerald',
-    name: 'Growth Emerald Green',
-    category: 'green',
-    desc: 'Rich emerald gradient representing sustainable growth',
-    briefSource: 'Sustainable Growth & People Empowerment Pillar',
-    badgeHex: '#10B981',
-    headerClass: 'bg-gradient-to-r from-[#059669] via-[#10B981] to-[#047857] border-b border-emerald-300/40 text-white shadow-xl',
-    isLight: false,
-    navActiveBg: 'bg-white/20 text-white border border-white/30 backdrop-blur-sm',
-    navInactive: 'text-emerald-50 hover:text-white hover:bg-white/15',
-    buttonClass: 'bg-white hover:bg-emerald-50 text-emerald-900 border border-white/40 shadow-md'
-  },
-  {
-    id: 'mint-teal',
-    name: 'Fresh Mint & Digital Teal',
-    category: 'green',
-    desc: 'Luminous mint-teal gradient for intelligent AI solutions',
-    briefSource: 'Digital Innovation & Intelligent Solutions',
-    badgeHex: '#14B8A6',
-    headerClass: 'bg-gradient-to-r from-[#0D9488] via-[#14B8A6] to-[#0F766E] border-b border-teal-300/40 text-white shadow-xl',
-    isLight: false,
-    navActiveBg: 'bg-white/20 text-white border border-white/30 backdrop-blur-sm',
-    navInactive: 'text-teal-50 hover:text-white hover:bg-white/15',
-    buttonClass: 'bg-white hover:bg-teal-50 text-teal-900 border border-white/40 shadow-md'
-  },
-  {
-    id: 'cyan-sky',
-    name: 'Cyan Sky Light Blue',
-    category: 'blue',
-    desc: 'Lighter cyan to royal blue gradient with bright clarity',
-    briefSource: 'Badge Outer Ring & Speech Bubble Perimeter',
-    badgeHex: '#00C8FF',
-    headerClass: 'bg-gradient-to-r from-[#00B8FF] via-[#0077FF] to-[#0055FF] border-b border-cyan-300/40 text-white shadow-xl',
-    isLight: false,
-    navActiveBg: 'bg-white/20 text-white border border-white/30 backdrop-blur-sm',
-    navInactive: 'text-cyan-50 hover:text-white hover:bg-white/15',
-    buttonClass: 'bg-white hover:bg-cyan-50 text-blue-700 border border-white/40 shadow-md'
-  },
-  {
-    id: 'electric-royal',
-    name: 'Electric Royal Blue (Primary)',
-    category: 'blue',
-    desc: 'Core brand primary blue with luminous energy',
-    briefSource: 'Primary WOW Brand Signature Blue',
-    badgeHex: '#0066FF',
-    headerClass: 'bg-gradient-to-r from-[#0077FF] via-[#0057E8] to-[#003EDB] border-b border-blue-400/40 text-white shadow-xl',
-    isLight: false,
-    navActiveBg: 'bg-white/20 text-white border border-white/30 backdrop-blur-sm',
-    navInactive: 'text-blue-100 hover:text-white hover:bg-white/10',
-    buttonClass: 'bg-white hover:bg-blue-50 text-blue-700 border border-white/40 shadow-md'
-  }
+
 ];
 
 interface HeaderProps {
@@ -105,7 +54,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(true);
   const [mobileProgramsOpen, setMobileProgramsOpen] = useState(true);
 
-  // Locked to Crisp Ice Light Blue Theme
+  // WBD brand palette
   const currentOption = BANNER_OPTIONS[0];
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -204,7 +153,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   return (
     <header className={`sticky top-0 z-50 backdrop-blur-md transition-colors duration-300 ${currentOption.headerClass}`} ref={dropdownRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 relative">
+        <div className="flex items-center justify-between h-[88px] sm:h-[112px] relative">
           {/* Top Banner Brand Link with Official Main Logo */}
           <div className="flex items-center gap-3 sm:gap-4 relative z-30">
             <button 
@@ -212,16 +161,13 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               className="text-left focus:outline-none group shrink-0 transition-transform duration-200 hover:scale-[1.02] flex items-center relative py-1"
               aria-label="WOW Business and Digital Limited Homepage"
             >
-              <Logo 
-                variant="horizontal" 
-                lightMode={false} 
-                className="h-10 sm:h-12 w-auto max-w-[210px] sm:max-w-[280px] md:max-w-none shrink-0" 
-              />
+              <span className="sm:hidden"><Logo variant="icon-only" className="w-[180px] h-auto" /></span>
+              <span className="hidden sm:block"><Logo variant="horizontal" className="w-[240px] h-auto" /></span>
             </button>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-2 font-medium text-xs">
+          <nav className="hidden xl:flex items-center gap-2 font-medium text-xs">
             
             {/* 1. SERVICES DROPDOWN */}
             <div 
@@ -257,13 +203,13 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   onMouseLeave={handleCloseServices}
                 >
                   <div className="bg-white border border-slate-200/90 rounded-2xl shadow-2xl p-4 space-y-2 text-slate-800">
-                    <div className="px-2 py-1 text-[11px] font-black uppercase text-blue-600 tracking-wider border-b border-slate-100 pb-2 flex items-center justify-between">
-                      <span>Core Service Divisions</span>
+                    <div className="px-2 py-1 text-[11px] font-black uppercase text-navy-600 tracking-wider border-b border-slate-100 pb-2 flex items-center justify-between">
+                      <span>Our Services</span>
                       <button 
                         onClick={() => handleNavClick('services')}
-                        className="text-[10px] text-slate-500 hover:text-blue-600 flex items-center gap-0.5 underline font-bold"
+                        className="text-[10px] text-slate-500 hover:text-navy-600 flex items-center gap-0.5 underline font-bold"
                       >
-                        <span>Full Directory</span>
+                        <span>See all services</span>
                         <ChevronRight className="w-3 h-3" />
                       </button>
                     </div>
@@ -282,15 +228,15 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                           <button
                             key={service.id}
                             onClick={() => handleNavClick(service.tabId as NavTab)}
-                            className="w-full text-left p-2.5 rounded-xl hover:bg-blue-50/60 border border-transparent hover:border-blue-200 transition-all flex items-start gap-3 group"
+                            className="w-full text-left p-2.5 rounded-xl hover:bg-navy-50/60 border border-transparent hover:border-navy-200 transition-all flex items-start gap-3 group"
                           >
-                            <div className="p-2 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0 mt-0.5 shadow-xs">
+                            <div className="p-2 rounded-lg bg-navy-50 border border-navy-100 text-navy-600 group-hover:bg-navy-600 group-hover:text-white transition-all shrink-0 mt-0.5 shadow-xs">
                               <IconComponent className="w-4 h-4" />
                             </div>
                             <div>
-                              <div className="font-bold text-xs text-slate-900 group-hover:text-blue-600 flex items-center gap-1.5">
+                              <div className="font-bold text-xs text-slate-900 group-hover:text-navy-600 flex items-center gap-1.5">
                                 <span>{service.title}</span>
-                                <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-600" />
+                                <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-navy-600" />
                               </div>
                               <div className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
                                 {service.description}
@@ -339,7 +285,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   onMouseLeave={handleClosePrograms}
                 >
                   <div className="bg-white border border-slate-200/90 rounded-2xl shadow-2xl p-4 space-y-2 text-slate-800">
-                    <div className="px-2 py-1 text-[11px] font-black uppercase text-blue-600 tracking-wider border-b border-slate-100 pb-2 flex items-center justify-between">
+                    <div className="px-2 py-1 text-[11px] font-black uppercase text-navy-600 tracking-wider border-b border-slate-100 pb-2 flex items-center justify-between">
                       <span>Academy &amp; Career Programs</span>
                       <span className="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-bold border border-emerald-200">
                         Programme Enrolment Open
@@ -350,21 +296,21 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                       {/* 1. Project Management Career accelerator */}
                       <button
                         onClick={() => handleNavClick('pm-career-accelerator')}
-                        className="w-full text-left p-3 rounded-xl hover:bg-blue-50/70 border border-slate-100 hover:border-blue-200 transition-all flex items-start gap-3.5 group bg-slate-50/50"
+                        className="w-full text-left p-3 rounded-xl hover:bg-navy-50/70 border border-slate-100 hover:border-navy-200 transition-all flex items-start gap-3.5 group bg-slate-50/50"
                       >
-                        <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-sm shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                        <div className="p-2.5 rounded-xl bg-gradient-to-br from-navy-600 to-navy-700 text-white shadow-sm shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
                           <GraduationCap className="w-5 h-5" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-extrabold text-xs sm:text-sm text-slate-900 group-hover:text-blue-600 flex items-center justify-between">
+                          <div className="font-extrabold text-xs sm:text-sm text-slate-900 group-hover:text-navy-600 flex items-center justify-between">
                             <span>Project Management Career Accelerator</span>
-                            <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-blue-600 shrink-0 ml-1" />
+                            <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-navy-600 shrink-0 ml-1" />
                           </div>
                           <div className="text-[11px] text-slate-600 line-clamp-2 mt-0.5 leading-snug">
                               Six months • Practical training • Work experience • Coaching
                           </div>
                           <div className="flex items-center gap-2 mt-2">
-                            <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-100/80 px-2 py-0.5 rounded-md">
+                            <span className="text-[10px] font-black uppercase tracking-wider text-navy-700 bg-navy-100/80 px-2 py-0.5 rounded-md">
                               6-Month Accelerator
                             </span>
                             <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
@@ -380,7 +326,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                         className="w-full text-left p-2.5 rounded-xl hover:bg-slate-100/80 border border-transparent transition-all flex items-center justify-between text-xs text-slate-600 hover:text-slate-900 font-bold mt-1"
                       >
                         <div className="flex items-center gap-2">
-                          <Award className="w-4 h-4 text-blue-600" />
+                          <Award className="w-4 h-4 text-navy-600" />
                           <span>All Academy Courses &amp; Placements</span>
                         </div>
                         <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
@@ -444,7 +390,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           {/* Action CTA & Mobile Menu Button */}
           <div className="flex items-center gap-2.5">
             {/* Desktop Action CTA */}
-            <div className="hidden lg:flex items-center">
+            <div className="hidden xl:flex items-center">
               <button
                 onClick={() => handleNavClick('contact')}
                 className={`font-black text-xs px-4 py-2 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center gap-1.5 ${currentOption.buttonClass}`}
@@ -455,10 +401,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="lg:hidden flex items-center">
+            <div className="xl:hidden flex items-center">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg transition-colors text-slate-800 hover:bg-sky-100"
+                className="p-2 rounded-lg transition-colors text-slate-800 hover:bg-navy-100"
                 aria-label="Toggle navigation menu"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -470,11 +416,11 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-4 shadow-2xl animate-in fade-in duration-200 text-slate-900">
+        <div className="xl:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-4 shadow-2xl animate-in fade-in duration-200 text-slate-900">
 
           {/* Mobile Logo Brand Preview */}
           <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200">
-            <Logo variant="horizontal" className="h-9 w-auto max-w-[220px]" />
+            <Logo variant="icon-only" className="w-[160px] h-auto" />
           </div>
 
           <div className="space-y-2">
@@ -483,7 +429,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             <div className="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden">
               <button
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="w-full p-3 text-left font-extrabold text-sm text-blue-700 flex items-center justify-between bg-slate-100/80"
+                className="w-full p-3 text-left font-extrabold text-sm text-navy-700 flex items-center justify-between bg-slate-100/80"
               >
                 <span>1. Services</span>
                 <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`} />
@@ -495,7 +441,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     <button
                       key={s.id}
                       onClick={() => handleNavClick(s.tabId as NavTab)}
-                      className="w-full text-left p-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 flex items-center justify-between"
+                      className="w-full text-left p-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-navy-50 hover:text-navy-700 flex items-center justify-between"
                     >
                       <span>{s.title}</span>
                       <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
@@ -503,7 +449,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   ))}
                   <button
                     onClick={() => handleNavClick('services')}
-                    className="w-full text-center p-2 rounded-lg text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 mt-2 block border border-blue-200"
+                    className="w-full text-center p-2 rounded-lg text-xs font-bold text-navy-700 bg-navy-50 hover:bg-navy-100 mt-2 block border border-navy-200"
                   >
                     View All Services Overview
                   </button>
@@ -515,7 +461,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             <div className="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden">
               <button
                 onClick={() => setMobileProgramsOpen(!mobileProgramsOpen)}
-                className="w-full p-3 text-left font-extrabold text-sm text-blue-700 flex items-center justify-between bg-slate-100/80"
+                className="w-full p-3 text-left font-extrabold text-sm text-navy-700 flex items-center justify-between bg-slate-100/80"
               >
                 <div className="flex items-center gap-2">
                   <span>2. Career Accelerator Programme</span>
@@ -528,18 +474,18 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <div className="p-2 space-y-1 bg-white border-t border-slate-200">
                   <button
                     onClick={() => handleNavClick('pm-career-accelerator')}
-                    className="w-full text-left p-2.5 rounded-xl text-xs font-bold text-slate-900 bg-blue-50/70 border border-blue-200 hover:bg-blue-100 flex items-start justify-between group"
+                    className="w-full text-left p-2.5 rounded-xl text-xs font-bold text-slate-900 bg-navy-50/70 border border-navy-200 hover:bg-navy-100 flex items-start justify-between group"
                   >
                     <div>
-                      <div className="text-blue-800 font-extrabold flex items-center gap-1.5">
-                        <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
+                      <div className="text-navy-800 font-extrabold flex items-center gap-1.5">
+                        <GraduationCap className="w-3.5 h-3.5 text-navy-600" />
                         <span>Project Management Career Accelerator</span>
                       </div>
                       <div className="text-[11px] text-slate-500 font-normal mt-0.5">
                         Six months • Practical training • Work experience • Coaching
                       </div>
                     </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-blue-600 mt-1 shrink-0" />
+                    <ChevronRight className="w-3.5 h-3.5 text-navy-600 mt-1 shrink-0" />
                   </button>
 
                   <button
@@ -584,7 +530,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           <div className="pt-2 border-t border-slate-200">
             <button
               onClick={() => handleNavClick('contact')}
-              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black text-sm p-3 rounded-xl flex items-center justify-center gap-2 shadow-lg"
+              className="w-full bg-[#0B2D5B] hover:bg-[#173B63] text-white font-black text-sm p-3 rounded-xl flex items-center justify-center gap-2 shadow-lg"
             >
               <PhoneCall className="w-4 h-4" />
               <span>Get In Touch</span>

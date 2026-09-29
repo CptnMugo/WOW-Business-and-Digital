@@ -100,7 +100,7 @@ You assist with institutional governance, student performance tracking, curricul
 You help with community project management, stewardship & financial governance, event planning, volunteer coordination, and leadership development.`,
 
   general: `You are WOW Assistant, the flagship AI assistant by WOW Business and Digital Ltd.
-Your purpose is: "Transforming Organisations. Empowering People. Building Intelligent Solutions."
+Your purpose is: "Evidence. Transformation. Impact."
 You provide expert guidance across Business Transformation, Digital Innovation, PMO Governance, Academy Training, and AI Solutions.`,
 };
 

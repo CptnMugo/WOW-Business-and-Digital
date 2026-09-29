@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowRight, BriefcaseBusiness, CheckCircle2, GraduationCap, Globe2, Sparkles } from 'lucide-react';
 import { NavTab } from '../types';
 import { EnquiryCategory } from './ContactSection';
-import brandBanner from '../assets/images/wbd-banner.webp';
 
 interface Version2Props {
   setActiveTab: (tab: NavTab) => void;
@@ -27,18 +26,15 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
         <div className="wbd-hero-glow" aria-hidden="true" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="wbd-hero-copy">
-            <p className="wbd-eyebrow">TRANSFORMATION · INNOVATION · GROWTH</p>
-            <h1 id="wbd-home-title">Transformation <span>that works.</span></h1>
-            <p className="wbd-hero-subtitle">People. Systems. Services. <strong>Better outcomes.</strong></p>
-            <p className="wbd-hero-description">WOW Business & Digital leads transformation, service redesign and programme delivery. We combine hands-on leadership with specialist associates across business and digital disciplines to help organisations move from plans to lasting change.</p>
+            <p className="wbd-eyebrow">WOW BUSINESS & DIGITAL</p>
+            <h1 id="wbd-home-title">Evidence. Transformation. <span>Impact.</span></h1>
+            <p className="wbd-hero-subtitle">Understand the need. Deliver practical change. <strong>Show what improves.</strong></p>
+            <p className="wbd-hero-description">We use evidence, insight and engagement to define the challenge, then lead service redesign and programme delivery across people, systems and technology. Senior leadership and specialist associates help turn change into measurable, sustainable outcomes.</p>
             <div className="wbd-hero-actions">
               <button onClick={() => navigate('consulting')} className="wbd-button wbd-button-primary">Explore our approach <ArrowRight size={18} /></button>
               <button onClick={() => contact('business-consultancy')} className="wbd-button wbd-button-secondary">Discuss a project</button>
             </div>
           </div>
-          <figure className="wbd-banner-frame">
-            <img src={brandBanner} alt="WOW Business and Digital banner presenting transformation that works through strategy, service redesign, programme delivery, digital enablement and people capability" />
-          </figure>
         </div>
       </section>
 
@@ -52,7 +48,7 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
             <button key={pillar.number} onClick={() => navigate(pillar.tab)} className={`wbd-pillar ${pillar.className}`}>
               <span className="wbd-pillar-number">{pillar.number} / 05</span>
               <span className="wbd-pillar-body"><strong>{pillar.title}</strong><span>{pillar.summary}</span></span>
-              <ArrowRight size={20} aria-hidden="true" />
+              <span className="wbd-pillar-link">Explore this service <ArrowRight size={18} aria-hidden="true" /></span>
             </button>
           ))}
         </div>

@@ -47,7 +47,7 @@ export default function App() {
   ].includes(activeTab);
 
   return (
-    <div className="min-h-screen bg-[#FFF9F0] text-[#081D3D] font-sans antialiased flex flex-col justify-between selection:bg-[#0755C9] selection:text-white">
+    <div className="min-h-screen bg-[#f8f4ed] text-[#0b2d5b] font-sans antialiased flex flex-col justify-between selection:bg-[#0B2D5B] selection:text-white">
       {/* Global Header */}
       <Header 
         activeTab={activeTab} 
@@ -61,7 +61,7 @@ export default function App() {
       />
 
       {/* Main View Area */}
-      <main className="flex-1">
+      <main className={`flex-1 ${activeTab === 'home' ? '' : 'wbd-interior'}`}>
         {activeTab === 'home' ? (
           <Version2Section 
             setActiveTab={setActiveTab} 
