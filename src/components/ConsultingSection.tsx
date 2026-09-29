@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavTab } from '../types';
-import { CONSULTING_SERVICES, BRAND_INFO } from '../data/companyData';
+import { CONSULTING_SERVICES } from '../data/companyData';
 import { Briefcase, CheckCircle2, ShieldCheck, ArrowRight, Filter, Search, Sliders, RefreshCw, BarChart2, Zap, Layout, FileText, Send } from 'lucide-react';
 
 interface ConsultingSectionProps {
@@ -9,7 +9,6 @@ interface ConsultingSectionProps {
 
 export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveTab }) => {
   const [activeCategory, setActiveCategory] = useState<'all' | 'core' | 'additional'>('all');
-  const [selectedSector, setSelectedSector] = useState<string>('All');
   const [selectedServiceForInquiry, setSelectedServiceForInquiry] = useState<string | null>(null);
 
   const filteredServices = CONSULTING_SERVICES.filter(service => {
@@ -24,7 +23,7 @@ export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveT
       <div className="text-center space-y-4 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-100 border border-sky-300 text-blue-700 text-xs font-bold">
           <Briefcase className="w-3.5 h-3.5 text-blue-600" />
-          <span>WOW Consulting Division</span>
+          <span>CONSULTING & DELIVERY</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
           Transformation, service redesign and programme delivery
@@ -69,7 +68,7 @@ export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveT
                 : 'bg-sky-50 text-slate-700 hover:bg-sky-100 border border-sky-100'
             }`}
           >
-            Core Consulting
+            Delivery & Change
           </button>
           <button
             onClick={() => setActiveCategory('additional')}
@@ -79,24 +78,11 @@ export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveT
                 : 'bg-sky-50 text-slate-700 hover:bg-sky-100 border border-sky-100'
             }`}
           >
-            Strategic Advisory & Audits
+            Targeted Support
           </button>
         </div>
 
-        {/* Sector dropdown filter */}
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <span className="text-xs font-bold text-slate-500 whitespace-nowrap">Target Sector:</span>
-          <select
-            value={selectedSector}
-            onChange={(e) => setSelectedSector(e.target.value)}
-            className="bg-slate-100 text-slate-800 text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="All">All Sectors</option>
-            {BRAND_INFO.sectors.map((s, i) => (
-              <option key={i} value={s}>{s}</option>
-            ))}
-          </select>
-        </div>
+
       </div>
 
       {/* SERVICES GRID */}
@@ -113,7 +99,7 @@ export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveT
                     ? 'bg-blue-500/10 text-blue-700 border border-blue-200'
                     : 'bg-slate-100 text-slate-700'
                 }`}>
-                  {service.category === 'core' ? 'Core Service' : 'Advisory / Audit'}
+                  {service.category === 'core' ? 'Delivery & Change' : 'Targeted Support'}
                 </span>
               </div>
 
@@ -149,44 +135,44 @@ export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveT
       <div className="bg-gradient-to-tr from-sky-50 via-blue-50 to-indigo-50 text-slate-900 rounded-3xl p-8 sm:p-12 border border-sky-200 space-y-8 shadow-sm">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <div className="text-xs font-bold uppercase tracking-widest text-blue-600">Targeted Advisory</div>
-          <h2 className="text-3xl font-black text-slate-900">Additional Specialised Consulting Services</h2>
+          <h2 className="text-3xl font-black text-slate-900">Targeted support for a defined need</h2>
           <p className="text-xs text-slate-600">
-            Providing tailored point-solutions for executive leadership, governance reviews, and project rescue.
+            We can focus on a particular delivery challenge or combine these skills within a wider programme.
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white border border-sky-100 p-5 rounded-2xl space-y-2 shadow-xs">
             <h4 className="font-bold text-blue-700 text-sm">Business Process Improvement</h4>
-            <p className="text-xs text-slate-600">Eliminating operational bottlenecks via Lean Six Sigma workflows.</p>
+            <p className="text-xs text-slate-600">Mapping work with teams and removing unnecessary steps.</p>
           </div>
           <div className="bg-white border border-sky-100 p-5 rounded-2xl space-y-2 shadow-xs">
             <h4 className="font-bold text-blue-700 text-sm">Digital & AI Readiness Audits</h4>
-            <p className="text-xs text-slate-600">Evaluating organisational capability before embarking on AI integration.</p>
+            <p className="text-xs text-slate-600">Assessing need, data, skills and governance before choosing tools.</p>
           </div>
           <div className="bg-white border border-sky-100 p-5 rounded-2xl space-y-2 shadow-xs">
             <h4 className="font-bold text-blue-700 text-sm">PMO Setup & Turnaround</h4>
-            <p className="text-xs text-slate-600">Deploying structured PMOs in under 30 days with standardized RAID logs.</p>
+            <p className="text-xs text-slate-600">Creating proportionate plans, reporting and decision routes.</p>
           </div>
           <div className="bg-white border border-sky-100 p-5 rounded-2xl space-y-2 shadow-xs">
             <h4 className="font-bold text-blue-700 text-sm">Project Recovery & Rescue</h4>
-            <p className="text-xs text-slate-600">Rapid diagnostic and recovery plans for high-risk delayed initiatives.</p>
+            <p className="text-xs text-slate-600">Understanding barriers and agreeing a practical route to recovery.</p>
           </div>
           <div className="bg-white border border-sky-100 p-5 rounded-2xl space-y-2 shadow-xs">
             <h4 className="font-bold text-blue-700 text-sm">Governance Reviews</h4>
-            <p className="text-xs text-slate-600">Assurance audits ensuring regulatory and internal compliance.</p>
+            <p className="text-xs text-slate-600">Reviewing governance, accountability and delivery risks.</p>
           </div>
           <div className="bg-white border border-sky-100 p-5 rounded-2xl space-y-2 shadow-xs">
             <h4 className="font-bold text-blue-700 text-sm">Executive Dashboards</h4>
-            <p className="text-xs text-slate-600">PowerBI and Tableau command centers for real-time portfolio metrics.</p>
+            <p className="text-xs text-slate-600">Reporting that supports decisions and tracks meaningful outcomes.</p>
           </div>
           <div className="bg-white border border-sky-100 p-5 rounded-2xl space-y-2 shadow-xs">
             <h4 className="font-bold text-blue-700 text-sm">Grant & Impact Reporting</h4>
-            <p className="text-xs text-slate-600">Rigorous donor M&E tracking and audit-ready impact briefs.</p>
+            <p className="text-xs text-slate-600">Helping programmes define, collect and report meaningful evidence.</p>
           </div>
           <div className="bg-white border border-sky-100 p-5 rounded-2xl space-y-2 shadow-xs">
             <h4 className="font-bold text-blue-700 text-sm">Strategy Development</h4>
-            <p className="text-xs text-slate-600">3-year digital transformation blueprints for board-level approval.</p>
+            <p className="text-xs text-slate-600">Turning ambitions into priorities, delivery plans and investment options.</p>
           </div>
         </div>
 
@@ -195,7 +181,7 @@ export const ConsultingSection: React.FC<ConsultingSectionProps> = ({ setActiveT
             onClick={() => setActiveTab('contact')}
             className="bg-blue-600 hover:bg-blue-700 text-white font-black text-xs px-8 py-3.5 rounded-xl transition-colors shadow-md cursor-pointer"
           >
-            Book Consulting Engagement
+            Discuss your requirement
           </button>
         </div>
       </div>
