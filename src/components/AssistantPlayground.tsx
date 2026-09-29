@@ -306,10 +306,10 @@ REQUIREMENTS:
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
       
       {/* TOP HEADER BAR */}
-      <div className="bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 text-slate-900 rounded-3xl p-6 sm:p-8 border border-sky-200 shadow-sm space-y-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-sky-200 pb-6">
+      <div className="bg-gradient-to-br from-navy-50 via-navy-50 to-navy-50 text-slate-900 rounded-3xl p-6 sm:p-8 border border-navy-200 shadow-sm space-y-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-navy-200 pb-6">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-black shadow-md">
+            <div className="w-12 h-12 rounded-2xl bg-navy-600 text-white flex items-center justify-center font-black shadow-md">
               <Sparkles className="w-6 h-6" />
             </div>
             <div>
@@ -323,25 +323,25 @@ REQUIREMENTS:
           </div>
 
           {/* WORKFLOW vs CHAT MODE TOGGLE */}
-          <div className="flex items-center bg-white border border-sky-200 p-1 rounded-2xl text-xs font-bold shadow-xs">
+          <div className="flex items-center bg-white border border-navy-200 p-1 rounded-2xl text-xs font-bold shadow-xs">
             <button
               onClick={() => setActiveTabMode('guided')}
               className={`px-4 py-2 rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
                 activeTabMode === 'guided'
-                  ? 'bg-blue-600 text-white shadow-md font-black'
-                  : 'text-slate-700 hover:text-blue-600'
+                  ? 'bg-navy-600 text-white shadow-md font-black'
+                  : 'text-slate-700 hover:text-navy-600'
               }`}
             >
               <ListChecks className="w-4 h-4" />
               <span>Guided Multi-Step Workflow</span>
-              <span className="bg-sky-100 text-blue-700 border border-sky-200 text-[9px] px-1.5 py-0.5 rounded font-mono">WA-001</span>
+              <span className="bg-navy-100 text-navy-700 border border-navy-200 text-[9px] px-1.5 py-0.5 rounded font-mono">WA-001</span>
             </button>
             <button
               onClick={() => setActiveTabMode('chat')}
               className={`px-4 py-2 rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
                 activeTabMode === 'chat'
-                  ? 'bg-blue-600 text-white shadow-md font-black'
-                  : 'text-slate-700 hover:text-blue-600'
+                  ? 'bg-navy-600 text-white shadow-md font-black'
+                  : 'text-slate-700 hover:text-navy-600'
               }`}
             >
               <MessageSquare className="w-4 h-4" />
@@ -352,7 +352,7 @@ REQUIREMENTS:
 
         {/* ASSISTANT SELECTION PILLS */}
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-blue-700 block">
+          <label className="text-xs font-bold uppercase tracking-wider text-navy-700 block">
             Select Specialised Assistant Persona:
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
@@ -360,8 +360,8 @@ REQUIREMENTS:
               onClick={() => handleAssistantTypeChange('business')}
               className={`p-3 rounded-2xl text-xs font-bold transition-all flex flex-col items-center gap-1.5 cursor-pointer ${
                 assistantType === 'business'
-                  ? 'bg-blue-600 text-white shadow-md scale-105'
-                  : 'bg-white text-slate-700 hover:bg-sky-50 border border-sky-200 shadow-xs'
+                  ? 'bg-navy-600 text-white shadow-md scale-105'
+                  : 'bg-white text-slate-700 hover:bg-navy-50 border border-navy-200 shadow-xs'
               }`}
             >
               <Briefcase className="w-4 h-4" />
@@ -372,8 +372,8 @@ REQUIREMENTS:
               onClick={() => handleAssistantTypeChange('farm')}
               className={`p-3 rounded-2xl text-xs font-bold transition-all flex flex-col items-center gap-1.5 cursor-pointer ${
                 assistantType === 'farm'
-                  ? 'bg-blue-600 text-white shadow-md scale-105'
-                  : 'bg-white text-slate-700 hover:bg-sky-50 border border-sky-200 shadow-xs'
+                  ? 'bg-navy-600 text-white shadow-md scale-105'
+                  : 'bg-white text-slate-700 hover:bg-navy-50 border border-navy-200 shadow-xs'
               }`}
             >
               <Wheat className="w-4 h-4" />
@@ -384,8 +384,8 @@ REQUIREMENTS:
               onClick={() => handleAssistantTypeChange('ngo')}
               className={`p-3 rounded-2xl text-xs font-bold transition-all flex flex-col items-center gap-1.5 cursor-pointer ${
                 assistantType === 'ngo'
-                  ? 'bg-blue-600 text-white shadow-md scale-105'
-                  : 'bg-white text-slate-700 hover:bg-sky-50 border border-sky-200 shadow-xs'
+                  ? 'bg-navy-600 text-white shadow-md scale-105'
+                  : 'bg-white text-slate-700 hover:bg-navy-50 border border-navy-200 shadow-xs'
               }`}
             >
               <HeartHandshake className="w-4 h-4" />
@@ -396,8 +396,8 @@ REQUIREMENTS:
               onClick={() => handleAssistantTypeChange('school')}
               className={`p-3 rounded-2xl text-xs font-bold transition-all flex flex-col items-center gap-1.5 cursor-pointer ${
                 assistantType === 'school'
-                  ? 'bg-blue-600 text-white shadow-md scale-105'
-                  : 'bg-white text-slate-700 hover:bg-sky-50 border border-sky-200 shadow-xs'
+                  ? 'bg-navy-600 text-white shadow-md scale-105'
+                  : 'bg-white text-slate-700 hover:bg-navy-50 border border-navy-200 shadow-xs'
               }`}
             >
               <GraduationCap className="w-4 h-4" />
@@ -408,8 +408,8 @@ REQUIREMENTS:
               onClick={() => handleAssistantTypeChange('church')}
               className={`p-3 rounded-2xl text-xs font-bold transition-all flex flex-col items-center gap-1.5 cursor-pointer ${
                 assistantType === 'church'
-                  ? 'bg-blue-600 text-white shadow-md scale-105'
-                  : 'bg-white text-slate-700 hover:bg-sky-50 border border-sky-200 shadow-xs'
+                  ? 'bg-navy-600 text-white shadow-md scale-105'
+                  : 'bg-white text-slate-700 hover:bg-navy-50 border border-navy-200 shadow-xs'
               }`}
             >
               <Church className="w-4 h-4" />
@@ -420,8 +420,8 @@ REQUIREMENTS:
               onClick={() => handleAssistantTypeChange('general')}
               className={`p-3 rounded-2xl text-xs font-bold transition-all flex flex-col items-center gap-1.5 cursor-pointer ${
                 assistantType === 'general'
-                  ? 'bg-blue-600 text-white shadow-md scale-105'
-                  : 'bg-white text-slate-700 hover:bg-sky-50 border border-sky-200 shadow-xs'
+                  ? 'bg-navy-600 text-white shadow-md scale-105'
+                  : 'bg-white text-slate-700 hover:bg-navy-50 border border-navy-200 shadow-xs'
               }`}
             >
               <Cpu className="w-4 h-4" />
@@ -440,7 +440,7 @@ REQUIREMENTS:
             <button 
               onClick={() => setStep(1)}
               className={`p-3 rounded-xl border text-left transition-all ${
-                step === 1 ? 'bg-blue-600 text-white border-blue-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
+                step === 1 ? 'bg-navy-600 text-white border-navy-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
               }`}
             >
               <div className="text-[10px] opacity-75">STEP 1</div>
@@ -450,7 +450,7 @@ REQUIREMENTS:
             <button 
               onClick={() => setStep(2)}
               className={`p-3 rounded-xl border text-left transition-all ${
-                step === 2 ? 'bg-blue-600 text-white border-blue-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
+                step === 2 ? 'bg-navy-600 text-white border-navy-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
               }`}
             >
               <div className="text-[10px] opacity-75">STEP 2</div>
@@ -460,7 +460,7 @@ REQUIREMENTS:
             <button 
               onClick={() => setStep(3)}
               className={`p-3 rounded-xl border text-left transition-all ${
-                step === 3 ? 'bg-blue-600 text-white border-blue-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
+                step === 3 ? 'bg-navy-600 text-white border-navy-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
               }`}
             >
               <div className="text-[10px] opacity-75">STEP 3</div>
@@ -470,7 +470,7 @@ REQUIREMENTS:
             <button 
               onClick={() => setStep(4)}
               className={`p-3 rounded-xl border text-left transition-all ${
-                step === 4 ? 'bg-blue-600 text-white border-blue-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
+                step === 4 ? 'bg-navy-600 text-white border-navy-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
               }`}
             >
               <div className="text-[10px] opacity-75">STEP 4</div>
@@ -481,7 +481,7 @@ REQUIREMENTS:
               disabled={!generatedOutput}
               onClick={() => setStep(5)}
               className={`p-3 rounded-xl border text-left transition-all ${
-                step === 5 ? 'bg-blue-600 text-white border-blue-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-400 border-slate-200 disabled:opacity-50'
+                step === 5 ? 'bg-navy-600 text-white border-navy-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-400 border-slate-200 disabled:opacity-50'
               }`}
             >
               <div className="text-[10px] opacity-75">STEP 5</div>
@@ -492,9 +492,9 @@ REQUIREMENTS:
           {/* STEP 1: ISOLATED PROJECT ACCOUNT & PERSONA (WA-003, WA-007) */}
           {step === 1 && (
             <div className="space-y-6 animate-fadeIn">
-              <div className="flex items-center gap-3 bg-blue-50 border border-blue-200 p-4 rounded-2xl">
-                <ShieldCheck className="w-6 h-6 text-blue-600 shrink-0" />
-                <div className="text-xs text-blue-900 leading-relaxed">
+              <div className="flex items-center gap-3 bg-navy-50 border border-navy-200 p-4 rounded-2xl">
+                <ShieldCheck className="w-6 h-6 text-navy-600 shrink-0" />
+                <div className="text-xs text-navy-900 leading-relaxed">
                   <strong>Use this demonstration thoughtfully:</strong> Please do not enter confidential, personal or sensitive information. Contact us to discuss how a tailored assistant would handle your organisation’s data.
                 </div>
               </div>
@@ -502,7 +502,7 @@ REQUIREMENTS:
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-900 block flex items-center gap-1.5">
-                    <FolderKanban className="w-4 h-4 text-blue-500" />
+                    <FolderKanban className="w-4 h-4 text-navy-500" />
                     <span>Project / Account Identifier (WA-003):</span>
                   </label>
                   <input
@@ -510,7 +510,7 @@ REQUIREMENTS:
                     value={projectAccount}
                     onChange={(e) => setProjectAccount(e.target.value)}
                     placeholder="e.g. PRJ-2026-HEALTHCARE-01"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
                   />
                   <p className="text-[11px] text-slate-500">Unique account code isolating your records.</p>
                 </div>
@@ -524,7 +524,7 @@ REQUIREMENTS:
                     value={customProjectName}
                     onChange={(e) => setCustomProjectName(e.target.value)}
                     placeholder="e.g. Regional Digital Health Transition"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
                   />
                   <p className="text-[11px] text-slate-500">Human-readable project title.</p>
                 </div>
@@ -533,7 +533,7 @@ REQUIREMENTS:
               <div className="pt-4 flex justify-end">
                 <button
                   onClick={() => setStep(2)}
-                  className="bg-blue-600 hover:bg-blue-500 text-white font-black text-xs px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-colors"
+                  className="bg-navy-600 hover:bg-navy-500 text-white font-black text-xs px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-colors"
                 >
                   <span>Continue to Activity Selection</span>
                   <ArrowRight className="w-4 h-4" />
@@ -556,7 +556,7 @@ REQUIREMENTS:
                       onClick={() => setSelectedActivity(act.id)}
                       className={`p-4 rounded-2xl border text-left transition-all space-y-1.5 cursor-pointer ${
                         selectedActivity === act.id
-                          ? 'bg-blue-600 text-white border-blue-600 ring-2 ring-blue-300 shadow-md'
+                          ? 'bg-navy-600 text-white border-navy-600 ring-2 ring-navy-300 shadow-md'
                           : 'bg-slate-50 text-slate-800 border-slate-200 hover:bg-slate-100'
                       }`}
                     >
@@ -564,7 +564,7 @@ REQUIREMENTS:
                         <span>{act.name}</span>
                         {selectedActivity === act.id && <CheckCircle2 className="w-4 h-4 text-white" />}
                       </div>
-                      <p className={`text-[11px] leading-relaxed ${selectedActivity === act.id ? 'text-blue-100' : 'text-slate-500'}`}>
+                      <p className={`text-[11px] leading-relaxed ${selectedActivity === act.id ? 'text-navy-100' : 'text-slate-500'}`}>
                         {act.desc}
                       </p>
                     </button>
@@ -580,7 +580,7 @@ REQUIREMENTS:
                   <button
                     onClick={() => setTargetOutputFormat('table')}
                     className={`p-3 rounded-xl border text-xs font-bold transition-all ${
-                      targetOutputFormat === 'table' ? 'bg-blue-600 text-white border-blue-700 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200'
+                      targetOutputFormat === 'table' ? 'bg-navy-600 text-white border-navy-700 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200'
                     }`}
                   >
                     Structured Matrix / Table
@@ -588,7 +588,7 @@ REQUIREMENTS:
                   <button
                     onClick={() => setTargetOutputFormat('report')}
                     className={`p-3 rounded-xl border text-xs font-bold transition-all ${
-                      targetOutputFormat === 'report' ? 'bg-blue-600 text-white border-blue-700 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200'
+                      targetOutputFormat === 'report' ? 'bg-navy-600 text-white border-navy-700 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200'
                     }`}
                   >
                     Executive Brief & Report
@@ -596,7 +596,7 @@ REQUIREMENTS:
                   <button
                     onClick={() => setTargetOutputFormat('brief')}
                     className={`p-3 rounded-xl border text-xs font-bold transition-all ${
-                      targetOutputFormat === 'brief' ? 'bg-blue-600 text-white border-blue-700 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200'
+                      targetOutputFormat === 'brief' ? 'bg-navy-600 text-white border-navy-700 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200'
                     }`}
                   >
                     Action Checklist / SOP
@@ -604,7 +604,7 @@ REQUIREMENTS:
                   <button
                     onClick={() => setTargetOutputFormat('markdown')}
                     className={`p-3 rounded-xl border text-xs font-bold transition-all ${
-                      targetOutputFormat === 'markdown' ? 'bg-blue-600 text-white border-blue-700 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200'
+                      targetOutputFormat === 'markdown' ? 'bg-navy-600 text-white border-navy-700 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200'
                     }`}
                   >
                     Markdown Document
@@ -621,7 +621,7 @@ REQUIREMENTS:
                 </button>
                 <button
                   onClick={() => setStep(3)}
-                  className="bg-blue-600 hover:bg-blue-500 text-white font-black text-xs px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-colors"
+                  className="bg-navy-600 hover:bg-navy-500 text-white font-black text-xs px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-colors"
                 >
                   <span>Continue to Guided Inputs</span>
                   <ArrowRight className="w-4 h-4" />
@@ -648,7 +648,7 @@ REQUIREMENTS:
                     value={inputTitle}
                     onChange={(e) => setInputTitle(e.target.value)}
                     placeholder="e.g. Digital Healthcare EHR Rollout RAID Matrix"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
                   />
                 </div>
 
@@ -660,7 +660,7 @@ REQUIREMENTS:
                     type="date"
                     value={inputDate}
                     onChange={(e) => setInputDate(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
                   />
                 </div>
 
@@ -673,7 +673,7 @@ REQUIREMENTS:
                     value={inputContext}
                     onChange={(e) => setInputContext(e.target.value)}
                     placeholder="Describe the operational environment, core challenges, stakeholder expectations, and constraints..."
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
                   />
                 </div>
 
@@ -686,7 +686,7 @@ REQUIREMENTS:
                     value={inputKeyMetrics}
                     onChange={(e) => setInputKeyMetrics(e.target.value)}
                     placeholder="e.g. Budget: £150k, Team size: 6, Duration: 12 weeks"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
                   />
                 </div>
 
@@ -699,7 +699,7 @@ REQUIREMENTS:
                     value={inputNotes}
                     onChange={(e) => setInputNotes(e.target.value)}
                     placeholder="e.g. EU GDPR, ISO 27001, Ministry Audit Gate"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
                   />
                 </div>
               </div>
@@ -714,7 +714,7 @@ REQUIREMENTS:
                 <button
                   onClick={handleRunValidation}
                   disabled={isValidating}
-                  className="bg-blue-600 hover:bg-blue-500 text-white font-black text-xs px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-colors"
+                  className="bg-navy-600 hover:bg-navy-500 text-white font-black text-xs px-6 py-3 rounded-xl flex items-center gap-2 shadow-md transition-colors"
                 >
                   {isValidating ? (
                     <>
@@ -759,8 +759,8 @@ REQUIREMENTS:
                 </div>
               )}
 
-              <div className="bg-sky-50 text-slate-900 rounded-2xl p-6 space-y-4 font-mono text-xs border border-sky-200">
-                <div className="flex items-center justify-between border-b border-sky-200 pb-3 text-blue-700 font-bold">
+              <div className="bg-navy-50 text-slate-900 rounded-2xl p-6 space-y-4 font-mono text-xs border border-navy-200">
+                <div className="flex items-center justify-between border-b border-navy-200 pb-3 text-navy-700 font-bold">
                   <span>SPECIFICATION SUMMARY</span>
                   <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold">ISOLATED ACCESS</span>
                 </div>
@@ -774,7 +774,7 @@ REQUIREMENTS:
                   <div><strong className="text-slate-900">Target Date:</strong> {inputDate}</div>
                 </div>
 
-                <div className="pt-2 border-t border-sky-200 text-[11px] text-slate-600">
+                <div className="pt-2 border-t border-navy-200 text-[11px] text-slate-600">
                   <strong className="text-slate-900">Title:</strong> {inputTitle}
                 </div>
               </div>
@@ -789,7 +789,7 @@ REQUIREMENTS:
                 <button
                   onClick={handleGenerateGuidedOutput}
                   disabled={isGeneratingOutput}
-                  className="bg-blue-600 hover:bg-blue-500 text-white font-black text-xs px-8 py-3.5 rounded-xl flex items-center gap-2 shadow-lg transition-all disabled:opacity-50"
+                  className="bg-navy-600 hover:bg-navy-500 text-white font-black text-xs px-8 py-3.5 rounded-xl flex items-center gap-2 shadow-lg transition-all disabled:opacity-50"
                 >
                   {isGeneratingOutput ? (
                     <>
@@ -824,12 +824,12 @@ REQUIREMENTS:
                 </button>
               </div>
 
-              <div className="bg-white text-slate-900 rounded-2xl p-6 border border-sky-200 shadow-sm space-y-4">
+              <div className="bg-white text-slate-900 rounded-2xl p-6 border border-navy-200 shadow-sm space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-200 pb-3 text-xs">
-                  <span className="font-mono text-blue-700 font-bold">DOCUMENT REVIEW PREVIEW</span>
+                  <span className="font-mono text-navy-700 font-bold">DOCUMENT REVIEW PREVIEW</span>
                   <button
                     onClick={() => handleCopyText(generatedOutput, 'output-doc')}
-                    className="text-slate-500 hover:text-blue-600 flex items-center gap-1 font-semibold cursor-pointer"
+                    className="text-slate-500 hover:text-navy-600 flex items-center gap-1 font-semibold cursor-pointer"
                   >
                     {copiedId === 'output-doc' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedId === 'output-doc' ? 'Copied' : 'Copy All'}</span>
@@ -871,9 +871,9 @@ REQUIREMENTS:
                 <button
                   key={idx}
                   onClick={() => handleSendMessage(prompt)}
-                  className="bg-white hover:bg-blue-50 text-slate-800 text-xs px-3.5 py-2 rounded-xl border border-slate-200 shadow-sm transition-colors text-left flex items-center gap-1.5"
+                  className="bg-white hover:bg-navy-50 text-slate-800 text-xs px-3.5 py-2 rounded-xl border border-slate-200 shadow-sm transition-colors text-left flex items-center gap-1.5"
                 >
-                  <Sparkles className="w-3 h-3 text-blue-500 shrink-0" />
+                  <Sparkles className="w-3 h-3 text-navy-500 shrink-0" />
                   <span>"{prompt}"</span>
                 </button>
               ))}
@@ -884,14 +884,14 @@ REQUIREMENTS:
           <div className="bg-white border border-slate-200 rounded-3xl shadow-lg overflow-hidden flex flex-col h-[520px]">
             
             {/* Chat top bar */}
-            <div className="bg-sky-100 text-slate-900 p-4 flex items-center justify-between border-b border-sky-200">
+            <div className="bg-navy-100 text-slate-900 p-4 flex items-center justify-between border-b border-navy-200">
               <div className="flex items-center gap-2">
-                <Bot className="w-5 h-5 text-blue-600" />
+                <Bot className="w-5 h-5 text-navy-600" />
                 <span className="font-bold text-sm capitalize">WOW {assistantType} Assistant Session</span>
               </div>
               <button
                 onClick={() => setMessages([])}
-                className="text-xs text-slate-600 hover:text-blue-600 flex items-center gap-1 transition-colors cursor-pointer"
+                className="text-xs text-slate-600 hover:text-navy-600 flex items-center gap-1 transition-colors cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5" /> Clear History
               </button>
@@ -915,8 +915,8 @@ REQUIREMENTS:
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold ${
                         msg.sender === 'user'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-sky-600 text-white'
+                          ? 'bg-navy-600 text-white'
+                          : 'bg-navy-600 text-white'
                       }`}
                     >
                       {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
@@ -925,7 +925,7 @@ REQUIREMENTS:
                     <div
                       className={`rounded-2xl p-4 text-xs leading-relaxed space-y-2 shadow-sm ${
                         msg.sender === 'user'
-                          ? 'bg-blue-600 text-white rounded-tr-none'
+                          ? 'bg-navy-600 text-white rounded-tr-none'
                           : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none'
                       }`}
                     >
@@ -958,13 +958,13 @@ REQUIREMENTS:
 
               {loading && (
                 <div className="flex gap-3 max-w-xl mr-auto">
-                  <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-navy-600 text-white flex items-center justify-center shrink-0">
                     <Bot className="w-4 h-4 animate-spin" />
                   </div>
                   <div className="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none text-xs text-slate-500 flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-blue-600 animate-bounce"></div>
-                    <div className="w-2 h-2 rounded-full bg-blue-600 animate-bounce delay-100"></div>
-                    <div className="w-2 h-2 rounded-full bg-blue-600 animate-bounce delay-200"></div>
+                    <div className="w-2 h-2 rounded-full bg-navy-600 animate-bounce"></div>
+                    <div className="w-2 h-2 rounded-full bg-navy-600 animate-bounce delay-100"></div>
+                    <div className="w-2 h-2 rounded-full bg-navy-600 animate-bounce delay-200"></div>
                     <span className="ml-2 font-medium">WOW Assistant is analyzing...</span>
                   </div>
                 </div>
@@ -988,12 +988,12 @@ REQUIREMENTS:
                   onChange={(e) => setInputText(e.target.value)}
                   placeholder={`Ask WOW ${assistantType.toUpperCase()} Assistant anything...`}
                   disabled={loading}
-                  className="flex-1 bg-slate-100 text-slate-900 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                  className="flex-1 bg-slate-100 text-slate-900 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-navy-500 disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={loading || !inputText.trim()}
-                  className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition-all disabled:opacity-50 flex items-center gap-1.5 shrink-0"
+                  className="bg-navy-600 hover:bg-navy-500 text-white font-bold text-xs px-5 py-3 rounded-xl transition-all disabled:opacity-50 flex items-center gap-1.5 shrink-0"
                 >
                   <span>Send</span>
                   <Send className="w-3.5 h-3.5" />
