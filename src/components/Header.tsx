@@ -39,58 +39,7 @@ export const BANNER_OPTIONS: BannerOption[] = [
     navInactive: 'text-[#0b2d5b] hover:text-[#1e63f3] hover:bg-[#EAF1F5]',
     buttonClass: 'bg-[#1e63f3] hover:bg-[#0646AA] text-white shadow-sm'
   },
-  {
-    id: 'growth-emerald',
-    name: 'Growth Emerald Green',
-    category: 'green',
-    desc: 'Rich emerald gradient representing sustainable growth',
-    briefSource: 'Sustainable Growth & People Empowerment Pillar',
-    badgeHex: '#10B981',
-    headerClass: 'bg-gradient-to-r from-[#059669] via-[#10B981] to-[#047857] border-b border-emerald-300/40 text-white shadow-xl',
-    isLight: false,
-    navActiveBg: 'bg-white/20 text-white border border-white/30 backdrop-blur-sm',
-    navInactive: 'text-emerald-50 hover:text-white hover:bg-white/15',
-    buttonClass: 'bg-white hover:bg-emerald-50 text-emerald-900 border border-white/40 shadow-md'
-  },
-  {
-    id: 'mint-teal',
-    name: 'Fresh Mint & Digital Teal',
-    category: 'green',
-    desc: 'Luminous mint-teal gradient for intelligent AI solutions',
-    briefSource: 'Digital Innovation & Intelligent Solutions',
-    badgeHex: '#14B8A6',
-    headerClass: 'bg-gradient-to-r from-[#0D9488] via-[#14B8A6] to-[#0F766E] border-b border-teal-300/40 text-white shadow-xl',
-    isLight: false,
-    navActiveBg: 'bg-white/20 text-white border border-white/30 backdrop-blur-sm',
-    navInactive: 'text-teal-50 hover:text-white hover:bg-white/15',
-    buttonClass: 'bg-white hover:bg-teal-50 text-teal-900 border border-white/40 shadow-md'
-  },
-  {
-    id: 'cyan-sky',
-    name: 'Cyan Sky Light Blue',
-    category: 'blue',
-    desc: 'Lighter cyan to royal blue gradient with bright clarity',
-    briefSource: 'Badge Outer Ring & Speech Bubble Perimeter',
-    badgeHex: '#00C8FF',
-    headerClass: 'bg-gradient-to-r from-[#00B8FF] via-[#0077FF] to-[#0055FF] border-b border-cyan-300/40 text-white shadow-xl',
-    isLight: false,
-    navActiveBg: 'bg-white/20 text-white border border-white/30 backdrop-blur-sm',
-    navInactive: 'text-cyan-50 hover:text-white hover:bg-white/15',
-    buttonClass: 'bg-white hover:bg-cyan-50 text-blue-700 border border-white/40 shadow-md'
-  },
-  {
-    id: 'electric-royal',
-    name: 'Electric Royal Blue (Primary)',
-    category: 'blue',
-    desc: 'Core brand primary blue with luminous energy',
-    briefSource: 'Primary WOW Brand Signature Blue',
-    badgeHex: '#0066FF',
-    headerClass: 'bg-gradient-to-r from-[#0077FF] via-[#0057E8] to-[#003EDB] border-b border-blue-400/40 text-white shadow-xl',
-    isLight: false,
-    navActiveBg: 'bg-white/20 text-white border border-white/30 backdrop-blur-sm',
-    navInactive: 'text-blue-100 hover:text-white hover:bg-white/10',
-    buttonClass: 'bg-white hover:bg-blue-50 text-blue-700 border border-white/40 shadow-md'
-  }
+
 ];
 
 interface HeaderProps {
@@ -105,7 +54,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(true);
   const [mobileProgramsOpen, setMobileProgramsOpen] = useState(true);
 
-  // Locked to Crisp Ice Light Blue Theme
+  // WBD brand palette
   const currentOption = BANNER_OPTIONS[0];
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -258,12 +207,12 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 >
                   <div className="bg-white border border-slate-200/90 rounded-2xl shadow-2xl p-4 space-y-2 text-slate-800">
                     <div className="px-2 py-1 text-[11px] font-black uppercase text-blue-600 tracking-wider border-b border-slate-100 pb-2 flex items-center justify-between">
-                      <span>Core Service Divisions</span>
+                      <span>Our Services</span>
                       <button 
                         onClick={() => handleNavClick('services')}
                         className="text-[10px] text-slate-500 hover:text-blue-600 flex items-center gap-0.5 underline font-bold"
                       >
-                        <span>Full Directory</span>
+                        <span>See all services</span>
                         <ChevronRight className="w-3 h-3" />
                       </button>
                     </div>
@@ -584,7 +533,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           <div className="pt-2 border-t border-slate-200">
             <button
               onClick={() => handleNavClick('contact')}
-              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black text-sm p-3 rounded-xl flex items-center justify-center gap-2 shadow-lg"
+              className="w-full bg-[#0B2D5B] hover:bg-[#173B63] text-white font-black text-sm p-3 rounded-xl flex items-center justify-center gap-2 shadow-lg"
             >
               <PhoneCall className="w-4 h-4" />
               <span>Get In Touch</span>
