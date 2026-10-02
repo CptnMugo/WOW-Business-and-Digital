@@ -1,10 +1,11 @@
 import express from "express";
+import { installWorkspaceAccess } from "./server/workspaceAccess.js";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
-import Stripe from "stripe";
 import dotenv from "dotenv";
 import fs from "fs";
+import { randomUUID } from "crypto";
 import {
   getAllRegistrations,
   processRegistrationSubmission,
@@ -27,8 +28,10 @@ if (
 
 const app = express();
 const PORT = 3000;
+app.set("trust proxy", "loopback");
 
-app.use(express.json());
+app.use(express.json({ limit: "100kb" }));
+installWorkspaceAccess(app);
 
 const ENQUIRY_CATEGORIES = new Set(['general', 'business-consultancy', 'staffing', 'training', 'ai-solutions', 'career-coaching', 'partnership', 'associate']);
 const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char] || char));
@@ -77,17 +80,6 @@ app.post('/api/enquiries', async (req, res) => {
     res.status(500).json({ error: 'The enquiry could not be recorded.' });
   }
 });
-
-// Initialize Stripe Client lazily
-let stripeClient: Stripe | null = null;
-function getStripe(): Stripe | null {
-  if (!stripeClient && process.env.STRIPE_SECRET_KEY) {
-    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-02-24.acacia" as any,
-    });
-  }
-  return stripeClient;
-}
 
 // Initialize Gemini AI Client lazily or at server startup
 let aiClient: GoogleGenAI | null = null;
@@ -170,7 +162,7 @@ app.post("/api/ai-assistant", async (req, res) => {
     // Fallback response if GEMINI_API_KEY is missing or in offline preview
     const fallbackResponses: Record<string, string> = {
       business: `[WOW Business Assistant Advisory]: For your query regarding "${prompt}", we recommend establishing a structured PMO framework with weekly RAID logs, benefits realization metrics, and clear governance reviews. WOW Consulting can assist with an Operational Readiness Assessment.`,
-      farm: `[WOW Farm Assistant Advisory]: Regarding "${prompt}", integrating smart crop rotation, automated supply tracking, and resource management can yield up to a 35% gain in operational efficiency. We recommend conducting a Digital & Agricultural Readiness Audit.`,
+      farm: `[WOW Farm Assistant Advisory]: Regarding "${prompt}", integrating smart crop rotation, automated supply tracking, and resource management can help improve operational efficiency. We recommend conducting a Digital & Agricultural Readiness Audit.`,
       ngo: `[WOW NGO Assistant Advisory]: For "${prompt}", impact reporting requires clear M&E frameworks, outcome indicators, and structured Grant Tracking. WOW AI Solutions provides automated Grant & Impact Reporting toolkits.`,
       school: `[WOW School Assistant Advisory]: Addressing "${prompt}" involves aligning administrative workflows, digitizing attendance/performance tracking, and setting clear governance milestones for educational quality.`,
       church: `[WOW Church Assistant Advisory]: For "${prompt}", effective ministry leadership benefits from transparent financial governance, organized volunteer coordination, and structured community outreach planning.`,
@@ -178,101 +170,25 @@ app.post("/api/ai-assistant", async (req, res) => {
     };
 
     const text = fallbackResponses[assistantType] || fallbackResponses.general;
-    res.json({ text, assistantType, source: "fallback" });
+    res.json({ text: `Demonstration response. Live AI is not connected.\n\n${text}`, assistantType, source: "fallback" });
   } catch (error: any) {
     console.error("AI Assistant API Error:", error);
     res.status(500).json({
       error: "Failed to generate AI response",
-      details: error?.message || "Unknown server error",
     });
   }
 });
 
-// Stripe Gateway Status endpoint
-app.get("/api/stripe/status", (req, res) => {
-  const hasSecretKey = Boolean(process.env.STRIPE_SECRET_KEY);
-  const publishableKey = process.env.VITE_STRIPE_PUBLISHABLE_KEY || null;
-  res.json({
-    configured: hasSecretKey,
-    mode: hasSecretKey ? (process.env.STRIPE_SECRET_KEY?.startsWith("sk_live") ? "live" : "test") : "simulation",
-    publishableKey,
-  });
+// Invoice after acceptance is the current payment policy. A test key is not a live facility.
+app.get('/api/stripe/status', (_req, res) => {
+  res.json({ configured: false, mode: 'invoice', publishableKey: null });
 });
-
-// Stripe Create Checkout Session endpoint
-app.post("/api/stripe/create-checkout-session", async (req, res) => {
-  try {
-    const {
-      amount,
-      currency = "gbp",
-      title = "WOW Business & Digital Services",
-      description = "",
-      customerEmail,
-      customerName,
-      clientCompany,
-      invoiceReference,
-      successUrl,
-      cancelUrl,
-    } = req.body;
-
-    const parsedAmount = typeof amount === "string" ? parseFloat(amount) : Number(amount);
-    if (isNaN(parsedAmount) || parsedAmount <= 0) {
-      res.status(400).json({ error: "A valid positive payment amount is required" });
-      return;
-    }
-
-    const stripe = getStripe();
-    const curr = (currency || "gbp").toLowerCase();
-
-    // If real STRIPE_SECRET_KEY is configured, call Stripe API to create live/test session
-    if (stripe) {
-      const origin = req.headers.origin || "http://localhost:3000";
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        line_items: [
-          {
-            price_data: {
-              currency: curr,
-              product_data: {
-                name: title,
-                description: description || `WOW Business & Digital Limited • ${title}`,
-              },
-              unit_amount: Math.round(parsedAmount * 100),
-            },
-            quantity: 1,
-          },
-        ],
-        mode: "payment",
-        customer_email: customerEmail || undefined,
-        metadata: {
-          customerName: customerName || "N/A",
-          clientCompany: clientCompany || "N/A",
-          invoiceReference: invoiceReference || "N/A",
-          title: title || "N/A",
-        },
-        success_url: successUrl || `${origin}/?payment=success&session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: cancelUrl || `${origin}/?payment=cancelled`,
-      });
-
-      res.json({
-        sessionId: session.id,
-        url: session.url,
-        isLive: true,
-        reference: session.id,
-      });
-      return;
-    }
-
-    // Never report a simulated payment as successful to a visitor.
-    res.status(503).json({ error: 'Online payments are temporarily unavailable. Please contact WOW Business & Digital.' });
-    return;
-  } catch (error: any) {
-    console.error("Stripe Checkout Error:", error);
-    res.status(500).json({
-      error: "Failed to create Stripe payment session",
-      details: error?.message || "Unknown error occurred",
-    });
+app.post('/api/stripe/create-checkout-session', (req, res) => {
+  const amount = Number(req.body?.amount);
+  if (!Number.isFinite(amount) || amount <= 0) {
+    res.status(400).json({ error: 'A valid positive payment amount is required' }); return;
   }
+  res.status(503).json({ error: 'Online card checkout is not offered. Apply for review; an invoice follows acceptance.' });
 });
 
 // -------------------------------------------------------------
@@ -282,26 +198,34 @@ app.post("/api/stripe/create-checkout-session", async (req, res) => {
 // Submit Registration: logs dossier, triggers email alerts (Option 2), and syncs to Google Sheets (Option 3)
 app.post("/api/registrations/submit", async (req, res) => {
   try {
-    const data: RegistrationData = req.body;
-
-    if (!validTraining(data)) {
-      res.status(400).json({ error: "Please complete the required application fields, declarations and privacy acknowledgement." });
+    const body = req.body;
+    const selectFields = ['workStatus', 'rightToWorkUK', 'highestQualification', 'ukWorkExperience', 'englishFirstLanguage', 'weeklyAvailability', 'birminghamAttendance', 'inPersonProjectAttendance', 'packageSelection', 'paymentPreference'];
+    if (!validTraining(body) || !selectFields.every(key => typeof body[key] === 'string' && body[key].trim()) || !['pmQualifications', 'developmentNeeds'].every(key => Array.isArray(body[key]) && body[key].length > 0 && body[key].every((v: unknown) => typeof v === 'string' && v.trim())) || typeof body.submissionId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(body.submissionId)) {
+      res.status(400).json({ error: "Please complete the required application fields, selections, declarations and privacy acknowledgement." });
       return;
     }
-
-    if (!data.referenceNumber) {
-      data.referenceNumber = `WOW-PM-${Math.floor(100000 + Math.random() * 900000)}`;
+    const duplicate = getAllRegistrations().find(record => record.submissionId === body.submissionId);
+    if (duplicate) {
+      if (duplicate.email !== body.email) { res.status(409).json({ error: 'Please start a new application.' }); return; }
+      res.json({ success: true, referenceNumber: duplicate.referenceNumber, emailAlertSent: duplicate.emailDelivery?.staffAlert.sent ?? false, delegateWelcomeSent: duplicate.emailDelivery?.delegateWelcome.sent ?? false, sheetsSynced: duplicate.sheetsSync?.synced ?? false });
+      return;
     }
-    if (!data.submittedAt) {
-      data.submittedAt = new Date().toISOString();
-    }
+    // Copy application fields only; ignore client-supplied workflow state and internal metadata.
+    const fields = ['fullName', 'email', 'mobileWhatsapp', 'townCity', ...selectFields, 'workStatusOther', 'highestQualificationOther', 'pmQualifications', 'previousExperience', 'careerObjective', 'currentChallenge', 'developmentNeeds', 'developmentNeedsOther', 'successMeasure', 'howDidYouHear', 'promoCode', 'privacyAcknowledged', 'marketingConsent', ...[1,2,3,4,5,6,7].map(n => 'declaration' + n)];
+    const data = {
+      ...Object.fromEntries(fields.map(key => [key, body[key]])),
+      submissionId: body.submissionId,
+      referenceNumber: `WOW-PM-${randomUUID()}`,
+      submittedAt: new Date().toISOString(),
+      submissionType: 'APPLICATION', status: 'APPLICATION_REVIEW_PENDING',
+      cohortDate: '14 November 2026', programTitle: 'Project Management Career Accelerator (6-Month)',
+    } as RegistrationData;
 
     const processed = await processRegistrationSubmission(data);
 
     res.json({
       success: true,
       referenceNumber: processed.referenceNumber,
-      registration: processed,
       emailAlertSent: processed.emailDelivery?.staffAlert.sent ?? false,
       delegateWelcomeSent: processed.emailDelivery?.delegateWelcome.sent ?? false,
       sheetsSynced: processed.sheetsSync?.synced ?? false,
@@ -310,7 +234,6 @@ app.post("/api/registrations/submit", async (req, res) => {
     console.error("Registration submission error:", error);
     res.status(500).json({
       error: "Failed to process registration submission",
-      details: error?.message || "Unknown error",
     });
   }
 });
@@ -330,8 +253,8 @@ app.get("/api/registrations", (req, res) => {
       emailConfigured: !!(process.env.RESEND_API_KEY || (process.env.SMTP_HOST && process.env.SMTP_USER)),
       hasResend: !!process.env.RESEND_API_KEY,
       hasSmtp: !!(process.env.SMTP_HOST && process.env.SMTP_USER),
-      resendFrom: process.env.RESEND_FROM || process.env.SMTP_FROM || "WOW Academy Admissions <admissions@wowdigital.co.uk>",
-      admissionsEmail: process.env.ADMISSIONS_EMAIL || "admissions@wowdigital.co.uk",
+      resendFrom: process.env.RESEND_FROM || process.env.SMTP_FROM || "WOW Academy Admissions <wowdigital@wowbusinessanddigital.com>",
+      admissionsEmail: process.env.ADMISSIONS_EMAIL || "wowdigital@wowbusinessanddigital.com",
     });
   } catch (error: any) {
     res.status(500).json({ error: "Failed to retrieve registrations" });
@@ -346,7 +269,7 @@ app.post("/api/registrations/test-email", async (req, res) => {
   }
   try {
     const { recipientEmail, fromAddress: customFrom } = req.body;
-    const targetEmail = recipientEmail?.trim() || process.env.ADMISSIONS_EMAIL || "admissions@wowdigital.co.uk";
+    const targetEmail = recipientEmail?.trim() || process.env.ADMISSIONS_EMAIL || "wowdigital@wowbusinessanddigital.com";
 
     if (customFrom && typeof customFrom === 'string' && customFrom.trim()) {
       process.env.RESEND_FROM = customFrom.trim();
@@ -363,7 +286,7 @@ app.post("/api/registrations/test-email", async (req, res) => {
         <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px 16px; border-radius: 8px; font-size: 13px; margin: 16px 0;">
           <div style="margin-bottom: 4px;"><strong>Timestamp:</strong> ${new Date().toISOString()}</div>
           <div style="margin-bottom: 4px;"><strong>Delivery Engine:</strong> ${process.env.RESEND_API_KEY ? 'Resend API (Live)' : process.env.SMTP_HOST ? 'Standard SMTP' : 'Local Preview Simulator'}</div>
-          <div style="margin-bottom: 4px;"><strong>Sender (From):</strong> ${process.env.RESEND_FROM || 'WOW Academy Admissions <admissions@wowdigital.co.uk>'}</div>
+          <div style="margin-bottom: 4px;"><strong>Sender (From):</strong> ${process.env.RESEND_FROM || 'WOW Admissions <wowdigital@wowbusinessanddigital.com>'}</div>
           <div><strong>Recipient:</strong> ${targetEmail}</div>
         </div>
         <p style="font-size: 12px; color: #64748b; margin-bottom: 0;">
@@ -378,7 +301,7 @@ app.post("/api/registrations/test-email", async (req, res) => {
       method: result.method,
       error: result.error,
       targetEmail,
-      fromUsed: process.env.RESEND_FROM || 'WOW Academy Admissions <admissions@wowdigital.co.uk>',
+      fromUsed: process.env.RESEND_FROM || 'WOW Admissions <wowdigital@wowbusinessanddigital.com>',
     });
   } catch (err: any) {
     res.status(500).json({ error: "Failed to dispatch test email", details: err?.message });
@@ -435,6 +358,19 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), "dist");
+    // Query routes need programme-specific metadata before JavaScript for social previews.
+    app.get('/', (req, res) => {
+      let html = fs.readFileSync(path.join(distPath, 'index.html'), 'utf-8');
+      if (['pm-career-accelerator', 'pm-registration'].includes(String(req.query.page))) {
+        const title = 'Project Management Career Accelerator | Starts 14 November 2026 | WOW';
+        const description = 'Six months of practical project management development, supervised live WOW project work and career coaching. Standard fee £1,000. Apply for review; invoice after acceptance.';
+        html = html.replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
+          .replace(/(<meta name="description" content=")[^"]*/, '$1' + description)
+          .replace(/(<meta property="og:title" content=")[^"]*/, '$1' + title)
+          .replace(/(<meta property="og:description" content=")[^"]*/, '$1' + description);
+      }
+      res.type('html').send(html);
+    });
     app.use(express.static(distPath));
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));

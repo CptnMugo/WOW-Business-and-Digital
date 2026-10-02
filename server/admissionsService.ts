@@ -5,7 +5,8 @@ import nodemailer from 'nodemailer';
 export interface RegistrationData {
   referenceNumber: string;
   submittedAt: string;
-  submissionType: 'SUBMIT_AND_PAY' | 'FREE_TESTER';
+  submissionType: 'APPLICATION' | 'SUBMIT_AND_PAY' | 'FREE_TESTER';
+  submissionId?: string;
   status: string;
   firstName: string;
   lastName: string;
@@ -46,47 +47,25 @@ export interface RegistrationData {
 const DATA_DIR = path.join(process.cwd(), 'data');
 const REGISTRATIONS_FILE = path.join(DATA_DIR, 'registrations.json');
 
-// Ensure data folder and file exist
+// Saving failures must reach the API; never replace an unreadable register with an empty one.
 function ensureDataFile() {
-  try {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
-    }
-    if (!fs.existsSync(REGISTRATIONS_FILE)) {
-      fs.writeFileSync(REGISTRATIONS_FILE, JSON.stringify([], null, 2));
-    }
-  } catch (err) {
-    console.warn('[Admissions] Could not ensure data file:', err);
-  }
+  fs.mkdirSync(DATA_DIR, { recursive: true, mode: 0o700 });
+  if (!fs.existsSync(REGISTRATIONS_FILE)) fs.writeFileSync(REGISTRATIONS_FILE, '[]', { mode: 0o600 });
 }
-
 export function getAllRegistrations(): RegistrationData[] {
   ensureDataFile();
-  try {
-    const raw = fs.readFileSync(REGISTRATIONS_FILE, 'utf-8');
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error('[Admissions] Error reading registrations:', err);
-    return [];
-  }
+  const records = JSON.parse(fs.readFileSync(REGISTRATIONS_FILE, 'utf-8'));
+  if (!Array.isArray(records)) throw new Error('Admissions register is not an array');
+  return records;
 }
-
 export function saveRegistration(record: RegistrationData): RegistrationData {
-  ensureDataFile();
-  try {
-    const existing = getAllRegistrations();
-    const index = existing.findIndex((r) => r.referenceNumber === record.referenceNumber);
-    if (index >= 0) {
-      existing[index] = record;
-    } else {
-      existing.unshift(record);
-    }
-    fs.writeFileSync(REGISTRATIONS_FILE, JSON.stringify(existing, null, 2));
-    return record;
-  } catch (err) {
-    console.error('[Admissions] Error saving registration:', err);
-    return record;
-  }
+  const existing = getAllRegistrations();
+  const index = existing.findIndex(r => r.referenceNumber === record.referenceNumber);
+  if (index >= 0) existing[index] = record; else existing.unshift(record);
+  const temporary = REGISTRATIONS_FILE + '.tmp';
+  fs.writeFileSync(temporary, JSON.stringify(existing, null, 2), { mode: 0o600 });
+  fs.renameSync(temporary, REGISTRATIONS_FILE);
+  return record;
 }
 
 // Generate Google Apps Script snippet for 1-click Google Sheet integration
@@ -185,16 +164,18 @@ export async function syncToGoogleSheets(reg: RegistrationData): Promise<{ synce
     };
 
     const response = await fetch(webhookUrl, {
+      signal: AbortSignal.timeout(10000),
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
-    if (response.ok) {
+    const webhookResult = await response.json().catch(() => null);
+    if (response.ok && webhookResult?.result === 'success') {
       console.log(`[Spreadsheet Sync] Successfully dispatched ref: ${reg.referenceNumber} to webhook: ${webhookUrl}`);
       return { synced: true, destination: webhookUrl };
     } else {
-      const text = await response.text();
+      const text = JSON.stringify(webhookResult) || 'Webhook did not confirm success';
       console.warn(`[Spreadsheet Sync] Webhook responded with status ${response.status}: ${text}`);
       return { synced: false, destination: webhookUrl, error: `HTTP ${response.status}: ${text}` };
     }
@@ -206,266 +187,20 @@ export async function syncToGoogleSheets(reg: RegistrationData): Promise<{ synce
 
 // OPTION 2: Email Templates and Dispatch
 
+const escape = (value: unknown) => String(value ?? '').replace(/[&<>"']/g, character => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[character]!));
 export function generateStaffAlertEmail(reg: RegistrationData): { subject: string; text: string; html: string } {
-  const subject = `[New Application Ref: ${reg.referenceNumber}] ${reg.firstName} ${reg.lastName} - PM Career Accelerator`;
-  
-  const text = `
-NEW DELEGATE REGISTRATION RECEIVED
-Reference: ${reg.referenceNumber}
-Submission Time: ${new Date(reg.submittedAt).toLocaleString('en-GB')}
-Status: ${reg.status}
-
-APPLICANT DETAILS:
-- Full Name: ${reg.firstName} ${reg.lastName}
-- Email: ${reg.email}
-- Phone: ${reg.phone}
-- Country/City: ${reg.country || 'N/A'}, ${reg.city || 'N/A'}
-- LinkedIn: ${reg.linkedInUrl || 'N/A'}
-
-PROGRAMME & PAYMENT:
-- Selected Programme: ${reg.programTitle || 'Project Management Career Accelerator (6-Month)'}
-- Cohort: ${reg.cohortDate || 'Next Available'}
-- Payment Preference: ${reg.paymentPreference || 'Standard'}
-- Submission Type: ${reg.submissionType}
-
-BACKGROUND:
-- Employment: ${reg.employmentStatus || 'N/A'} (${reg.currentJobTitle || 'N/A'} at ${reg.currentCompany || 'N/A'})
-- Experience: ${reg.experienceLevel || 'N/A'}
-- Highest Qualification: ${reg.highestQualification || 'N/A'}
-- Motivation/Goals: ${reg.careerGoals || 'N/A'}
-
-EMERGENCY CONTACT:
-- Name: ${reg.emergencyContactName || 'N/A'} (${reg.emergencyContactRelationship || 'N/A'})
-- Phone: ${reg.emergencyContactPhone || 'N/A'}
-
-Special Requirements: ${reg.specialRequirements || 'None'}
-  `.trim();
-
-  const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 24px; color: #1e293b; }
-    .container { max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #ffffff; padding: 28px; }
-    .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 9999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
-    .title { margin: 0; font-size: 20px; font-weight: 800; }
-    .content { padding: 28px; }
-    .section-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #2563eb; margin-top: 20px; margin-bottom: 8px; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px; }
-    .grid { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
-    .grid td { padding: 8px 4px; font-size: 13px; vertical-align: top; }
-    .label { font-weight: 700; color: #64748b; width: 35%; }
-    .val { color: #0f172a; font-weight: 500; }
-    .highlight-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 14px; margin: 16px 0; }
-    .footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 18px 28px; font-size: 12px; color: #64748b; text-align: center; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <div class="badge">Admissions Notification</div>
-      <h1 class="title">New Delegate Application Received</h1>
-      <p style="margin: 4px 0 0 0; opacity: 0.9; font-size: 13px;">Reference: <strong>${reg.referenceNumber}</strong></p>
-    </div>
-    
-    <div class="content">
-      <div class="highlight-box">
-        <strong style="color: #1e3a8a; font-size: 14px;">${reg.firstName} ${reg.lastName}</strong><br>
-        <span style="font-size: 13px; color: #3b82f6;">${reg.email} • ${reg.phone}</span><br>
-        <span style="font-size: 12px; color: #64748b;">Selected Tier: <strong>${reg.paymentPreference || 'Standard'}</strong></span>
-      </div>
-
-      <div class="section-title">Candidate Profile</div>
-      <table class="grid">
-        <tr><td class="label">Full Name</td><td class="val"><strong>${reg.firstName} ${reg.lastName}</strong></td></tr>
-        <tr><td class="label">Email Address</td><td class="val"><a href="mailto:${reg.email}">${reg.email}</a></td></tr>
-        <tr><td class="label">Phone</td><td class="val"><a href="tel:${reg.phone}">${reg.phone}</a></td></tr>
-        <tr><td class="label">Location</td><td class="val">${reg.city || 'N/A'}, ${reg.country || 'N/A'}</td></tr>
-        <tr><td class="label">LinkedIn</td><td class="val">${reg.linkedInUrl ? `<a href="${reg.linkedInUrl}" target="_blank">${reg.linkedInUrl}</a>` : 'Not provided'}</td></tr>
-      </table>
-
-      <div class="section-title">Programme Selection &amp; Payment</div>
-      <table class="grid">
-        <tr><td class="label">Programme</td><td class="val"><strong>${reg.programTitle || 'Project Management Career Accelerator'}</strong></td></tr>
-        <tr><td class="label">Cohort Date</td><td class="val">${reg.cohortDate || 'Next Available'}</td></tr>
-        <tr><td class="label">Payment Plan</td><td class="val"><strong>${reg.paymentPreference || 'Standard'}</strong></td></tr>
-        <tr><td class="label">Status</td><td class="val">${reg.status}</td></tr>
-      </table>
-
-      <div class="section-title">Career Background &amp; Motivation</div>
-      <table class="grid">
-        <tr><td class="label">Employment</td><td class="val">${reg.employmentStatus || 'N/A'}</td></tr>
-        <tr><td class="label">Current Role</td><td class="val">${reg.currentJobTitle || 'N/A'} (${reg.currentCompany || 'N/A'})</td></tr>
-        <tr><td class="label">Experience Level</td><td class="val">${reg.experienceLevel || 'N/A'}</td></tr>
-        <tr><td class="label">Highest Qualification</td><td class="val">${reg.highestQualification || 'N/A'}</td></tr>
-      </table>
-
-      ${reg.careerGoals ? `
-        <div style="font-size: 12px; color: #64748b; font-weight: 700; margin-top: 8px;">Career Goals &amp; Objectives:</div>
-        <div style="background: #f8fafc; border-left: 3px solid #2563eb; padding: 8px 12px; font-size: 12px; color: #334155; margin-top: 4px; font-style: italic;">
-          "${reg.careerGoals}"
-        </div>
-      ` : ''}
-
-      <div class="section-title">Emergency Contact &amp; Requirements</div>
-      <table class="grid">
-        <tr><td class="label">Emergency Contact</td><td class="val">${reg.emergencyContactName || 'N/A'} (${reg.emergencyContactRelationship || 'N/A'})</td></tr>
-        <tr><td class="label">Contact Phone</td><td class="val">${reg.emergencyContactPhone || 'N/A'}</td></tr>
-        <tr><td class="label">Accessibility/Needs</td><td class="val">${reg.specialRequirements || 'None specified'}</td></tr>
-      </table>
-    </div>
-
-    <div class="footer">
-      WOW Business and Digital Ltd • Birmingham, United Kingdom<br>
-      Admissions Team Hotline: +44121 296 9549 • info@wowdigital.co.uk
-    </div>
-  </div>
-</body>
-</html>
-  `.trim();
-
-  return { subject, text, html };
+  const subject = `Application received: ${reg.referenceNumber} — Career Accelerator`;
+  const publicRecord = { ...reg };
+  delete publicRecord.emailDelivery; delete publicRecord.sheetsSync;
+  const text = `Application awaiting review. No payment has been taken.\n\n${JSON.stringify(publicRecord, null, 2)}`;
+  return { subject, text, html: `<h1>Application awaiting review</h1><p>No payment has been taken.</p><pre>${escape(JSON.stringify(publicRecord, null, 2))}</pre>` };
 }
-
 export function generateDelegateWelcomeEmail(reg: RegistrationData): { subject: string; text: string; html: string } {
-  const subject = `Welcome to WOW Academy: Project Management Career Accelerator (Ref: ${reg.referenceNumber})`;
-  
-  const text = `
-Dear ${reg.firstName},
-
-Congratulations on taking this significant step toward accelerating your project management career!
-
-We have successfully received your official application and registration dossier for the Project Management Career Accelerator (6-Month Practical Work Experience Programme).
-
-APPLICATION SUMMARY:
-- Application Reference: ${reg.referenceNumber}
-- Registered Programme: ${reg.programTitle || 'Project Management Career Accelerator'}
-- Selected Cohort: ${reg.cohortDate || 'Next Available Session'}
-- Payment Preference: ${reg.paymentPreference || 'Standard Tuition'}
-
-WHAT HAPPENS NEXT:
-1. Admissions Review: Our academic PM board reviews your candidate profile and confirms your place.
-2. Orientation & Onboarding Pack: You will receive access to your learning portal, induction schedule, and project team assignment.
-3. Live Interactive Kickoff: Meet your senior PM mentors and cohort delegates for your first live session.
-4. Real Client Projects: Begin hands-on PMO governance, stakeholder management, Agile sprints, and work experience delivery.
-
-If you have any questions or require assistance with payment settlement or onboarding, contact our admissions office directly at +44121 296 9549 or info@wowdigital.co.uk.
-
-Kind regards,
-
-Admissions & Academic Directorate
-WOW Academy • WOW Business and Digital Ltd
-Birmingham, United Kingdom
-Hotline: +44121 296 9549
-  `.trim();
-
-  const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 24px; color: #1e293b; }
-    .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
-    .header { background: linear-gradient(135deg, #0f172a, #1e3a8a); color: #ffffff; padding: 32px 28px; text-align: center; }
-    .logo-text { font-size: 22px; font-weight: 900; letter-spacing: -0.02em; color: #ffffff; margin-bottom: 6px; }
-    .logo-sub { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: #93c5fd; font-weight: 700; }
-    .content { padding: 32px 28px; line-height: 1.6; }
-    .ref-badge { display: inline-block; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 9999px; margin: 12px 0 20px 0; }
-    .step-card { display: flex; gap: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
-    .step-num { width: 28px; height: 28px; border-radius: 50%; background: #2563eb; color: #ffffff; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; shrink: 0; }
-    .step-text { font-size: 13px; color: #334155; }
-    .step-title { font-weight: 800; color: #0f172a; margin-bottom: 2px; }
-    .cta-box { background: linear-gradient(to right, #1e3a8a, #2563eb); border-radius: 12px; padding: 20px; color: #ffffff; text-align: center; margin: 24px 0; }
-    .footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 28px; font-size: 12px; color: #64748b; text-align: center; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <div class="logo-text">WOW ACADEMY</div>
-      <div class="logo-sub">WOW Business and Digital Ltd</div>
-      <h1 style="font-size: 20px; font-weight: 800; margin: 16px 0 4px 0;">Welcome to Your Career Accelerator</h1>
-      <p style="margin: 0; font-size: 13px; opacity: 0.85;">Learn • Work • Earn — 6-Month Practical Programme</p>
-    </div>
-
-    <div class="content">
-      <p style="font-size: 15px; margin-top: 0;">Dear <strong>${reg.firstName}</strong>,</p>
-      
-      <p style="font-size: 14px; color: #334155;">
-        Congratulations on submitting your application for the <strong>Project Management Career Accelerator</strong>. We are delighted to welcome you to our professional development community.
-      </p>
-
-      <div style="text-align: center;">
-        <span class="ref-badge">Application Reference: ${reg.referenceNumber}</span>
-      </div>
-
-      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; margin-bottom: 24px; font-size: 13px;">
-        <div style="font-weight: 800; color: #0f172a; margin-bottom: 8px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">Your Registration Summary:</div>
-        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #e2e8f0;">
-          <span style="color: #64748b;">Selected Cohort:</span>
-          <span style="font-weight: 700; color: #0f172a;">${reg.cohortDate || 'Next Available Session'}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #e2e8f0;">
-          <span style="color: #64748b;">Payment Option:</span>
-          <span style="font-weight: 700; color: #0f172a;">${reg.paymentPreference || 'Standard Tuition'}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; padding: 4px 0;">
-          <span style="color: #64748b;">Programme Duration:</span>
-          <span style="font-weight: 700; color: #2563eb;">6 Months Comprehensive</span>
-        </div>
-      </div>
-
-      <div style="font-weight: 800; color: #0f172a; font-size: 14px; margin-bottom: 12px;">Next Steps in Your Onboarding:</div>
-
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <div class="step-text">
-          <div class="step-title">Admissions &amp; Profile Verification</div>
-          Our academic board is reviewing your candidate dossier to finalize cohort placement and team assignments.
-        </div>
-      </div>
-
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <div class="step-text">
-          <div class="step-title">Learning Portal &amp; Welcome Pack Access</div>
-          You will receive your student login credentials, syllabus roadmap, and tool setup guides (Jira, Confluence, Slack, MS Project).
-        </div>
-      </div>
-
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-text">
-          <div class="step-title">Live Interactive Orientation Kickoff</div>
-          Meet your assigned PM Mentor, project teams, and enterprise clients during our live induction session.
-        </div>
-      </div>
-
-      <div class="cta-box">
-        <div style="font-weight: 800; font-size: 15px; margin-bottom: 4px;">Need Assistance or Have Questions?</div>
-        <p style="margin: 0 0 12px 0; font-size: 12px; opacity: 0.9;">Our admissions advisors are here to support your transition every step of the way.</p>
-        <div style="font-size: 14px; font-weight: 800;">Call Us: +44121 296 9549</div>
-      </div>
-    </div>
-
-    <div class="footer">
-      <strong>WOW Business and Digital Ltd</strong><br>
-      Birmingham, United Kingdom • Registration No: 12345678<br>
-      Admissions Email: info@wowdigital.co.uk • Contact: +44121 296 9549
-    </div>
-  </div>
-</body>
-</html>
-  `.trim();
-
-  return { subject, text, html };
+  const subject = `Application received — ${reg.referenceNumber}`;
+  const text = `Hello ${reg.firstName},\n\nThank you for applying to the six-month Project Management Career Accelerator, starting 14 November 2026.\n\nReference: ${reg.referenceNumber}\nPayment preference: ${reg.paymentPreference || 'To discuss'}\n\nYour application is awaiting review. This acknowledgement is not an offer of a place. No payment has been taken. If accepted, you will receive confirmation of delivery arrangements, enrolment terms and an invoice before payment is requested.\n\nFor updates, email wowdigital@wowbusinessanddigital.com and quote your reference.\n\nWOW Business and Digital Ltd`;
+  return { subject, text, html: `<div style="font-family:Arial,sans-serif;max-width:650px"><h1>Application received</h1><p>${escape(text).replace(/\n/g, '<br>')}</p></div>` };
 }
 
-// Clean and sanitize the Resend 'from' address to strictly comply with Resend format rules:
-// Either "email@example.com" or "Name <email@example.com>" (without stray quotes or invalid brackets)
 export function sanitizeResendFromAddress(rawInput?: string): string {
   if (!rawInput) {
     return 'WOW Academy Admissions <WowAcademy@contact.wowbusinessanddigital.com>';
@@ -524,6 +259,7 @@ export async function sendOutboundEmail(
 
       let res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
+        signal: AbortSignal.timeout(10000),
         headers: {
           'Authorization': `Bearer ${process.env.RESEND_API_KEY.trim()}`,
           'Content-Type': 'application/json',
@@ -610,14 +346,13 @@ export async function sendOutboundEmail(
         connectionTimeout: 4000,
         greetingTimeout: 4000,
         socketTimeout: 5000,
-        tls: {
-          rejectUnauthorized: false
-        }
+        tls: { rejectUnauthorized: true }
       });
 
       await transporter.sendMail({
         from: process.env.SMTP_FROM || `"WOW Academy Admissions" <${process.env.SMTP_USER}>`,
         to,
+        replyTo: process.env.REPLY_TO_EMAIL || 'wowdigital@wowbusinessanddigital.com',
         subject,
         text,
         html,
@@ -658,10 +393,13 @@ export async function processRegistrationSubmission(rawReg: RegistrationData): P
     reg.programTitle = 'Project Management Career Accelerator (6-Month)';
   }
   if (!reg.cohortDate) {
-    reg.cohortDate = 'October 2026 Intake';
+    reg.cohortDate = '14 November 2026';
   }
 
-  const staffEmail = process.env.ADMISSIONS_EMAIL || 'admissions@wowdigital.co.uk';
+  // Persist first: notification failure must not lose an application.
+  saveRegistration(reg);
+
+  const staffEmail = process.env.ADMISSIONS_EMAIL || 'wowdigital@wowbusinessanddigital.com';
   const staffContent = generateStaffAlertEmail(reg);
   const delegateContent = generateDelegateWelcomeEmail(reg);
 

@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
+@font-face { font-family: "Montserrat"; src: url("/fonts/Montserrat-Variable.ttf") format("truetype"); font-style: normal; font-weight: 100 900; font-display: swap; }
+
 /* Shared WBD palette for the legacy utility-based pages as well as the homepage. */
 @theme {
+  --font-sans: "Montserrat", "Segoe UI", sans-serif;
   /* Navy interaction scale: every page uses these same normal/hover/focus colours. */
   --color-navy-50: #f8f4ed;
   --color-navy-100: #f2e8d7;
@@ -66,11 +69,11 @@
 
 @layer base {
   html, body {
-    font-family: "Aptos", "Aptos Display", "Aptos Regular", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    font-family: "Montserrat", "Segoe UI", sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Aptos Display", "Aptos Bold", "Aptos", "Segoe UI", sans-serif;
+    font-family: "Montserrat", "Segoe UI", sans-serif;
   }
 }
 

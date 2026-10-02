@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, BriefcaseBusiness, CheckCircle2, GraduationCap, Globe2, Sparkles } from 'lucide-react';
+import { Logo } from './Logo';
 import { NavTab } from '../types';
 import { EnquiryCategory } from './ContactSection';
 
@@ -26,15 +27,29 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
         <div className="wbd-hero-glow" aria-hidden="true" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="wbd-hero-copy">
-            <p className="wbd-eyebrow">WOW BUSINESS & DIGITAL</p>
+            <div className="flex justify-center mb-8 sm:mb-10"><Logo variant="horizontal" className="w-[260px] sm:w-[360px] max-w-full h-auto" /></div>
             <h1 id="wbd-home-title">Evidence. Transformation. <span>Impact.</span></h1>
             <p className="wbd-hero-subtitle">Understand the need. Deliver practical change. <strong>Show what improves.</strong></p>
-            <p className="wbd-hero-description">We use evidence, insight and engagement to define the challenge, then lead service redesign and programme delivery across people, systems and technology. Senior leadership and specialist associates help turn change into measurable, sustainable outcomes.</p>
+            <p className="wbd-hero-description">We help you turn a need into a practical result. From improving one workflow or introducing a digital tool to delivering a wider programme, we bring the planning, hands-on support and specialist skills your project needs.</p>
             <div className="wbd-hero-actions">
               <button onClick={() => navigate('consulting')} className="wbd-button wbd-button-primary">Explore our approach <ArrowRight size={18} /></button>
               <button onClick={() => contact('business-consultancy')} className="wbd-button wbd-button-secondary">Discuss a project</button>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" aria-labelledby="who-we-help">
+        <h2 id="who-we-help" className="text-2xl sm:text-3xl font-bold mb-6">Support that fits what you need</h2>
+        <div className="grid md:grid-cols-3 gap-5">
+          {[
+            { title: 'For individuals', text: 'Career coaching, CV support and practical project management learning.', tab: 'career-coaching' as NavTab, link: 'Explore career support' },
+            { title: 'For small businesses', text: 'Get a project moving, simplify day-to-day processes or introduce a useful digital tool.', tab: 'business-consultancy' as NavTab, link: 'Explore business support' },
+            { title: 'For larger organisations', text: 'Service redesign, programme leadership and specialist teams for broader delivery needs.', tab: 'consulting' as NavTab, link: 'Explore programme delivery' },
+          ].map(route => <div key={route.title} className="rounded-2xl border border-[#ded7cb] bg-white p-6">
+            <h3 className="text-xl font-bold">{route.title}</h3><p className="my-4 leading-relaxed text-sm">{route.text}</p>
+            <button onClick={() => navigate(route.tab)} className="underline font-bold text-sm">{route.link}</button>
+          </div>)}
         </div>
       </section>
 
@@ -58,8 +73,8 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
         <div className="wbd-delivery-panel">
           <div>
             <p className="wbd-eyebrow">SENIOR-LED · MULTIDISCIPLINARY</p>
-            <h2 id="wbd-delivery-title">One accountable lead. The right expertise around the work.</h2>
-            <p>Programme leadership connects the moving parts. Depending on your brief, we bring together associates in technology and AI, finance and commercial strategy, procurement, people and HR, communications and other business functions.</p>
+            <h2 id="wbd-delivery-title">One lead. The right people for your project.</h2>
+            <p>We plan and coordinate the work from start to finish. When you need additional expertise, we bring in associates in technology and AI, finance, procurement, people and HR, communications and other business functions.</p>
             <button onClick={() => navigate('about')} className="wbd-text-link">About our experience <ArrowRight size={18} /></button>
           </div>
           <div className="wbd-delivery-list">
@@ -79,7 +94,7 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
       </section>
 
       <section className="wbd-international max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p>Internationally connected, with developing partnerships and programmes in Zimbabwe.</p>
+        <p>Internationally connected, with developing partnerships and programmes.</p>
         <button onClick={() => contact('partnership')}>Discuss a partnership <ArrowRight size={17} /></button>
       </section>
     </div>

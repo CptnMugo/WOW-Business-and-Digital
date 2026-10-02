@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AssociateRegistration } from './components/AssociateRegistration';
 import { NavTab } from './types';
 import { Header } from './components/Header';
@@ -24,14 +24,31 @@ import { Version2Section } from './components/Version2Section';
 import { ProjectManagementCareerAcceleratorSection } from './components/ProjectManagementCareerAcceleratorSection';
 import { ProjectManagementRegistrationPage } from './components/ProjectManagementRegistrationPage';
 
+import { ProjectSimulationPage } from './components/ProjectSimulationPage';
+import { ProgrammePolicies } from './components/ProgrammePolicies';
+
+const tabs: NavTab[] = ['home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','academy','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation'];
+const readTab = (): NavTab => {
+ const query = new URLSearchParams(window.location.search);
+ if (query.has('payment')) return 'payments';
+ const page = query.get('page');
+ return tabs.includes(page as NavTab) ? page as NavTab : 'home';
+};
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState<NavTab>(() => {
-    if (typeof window !== 'undefined' && window.location.search.includes('payment=')) {
-      return 'payments';
-    }
-    if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('page') === 'associates') return 'associates';
-    return 'home';
-  });
+  const [activeTab, setTab] = useState<NavTab>(readTab);
+  const setActiveTab = (tab: NavTab) => {
+    const url = new URL(window.location.href);
+    url.search = '';
+    if (tab !== 'home') url.searchParams.set('page', tab);
+    if (readTab() !== tab) window.history.pushState({}, '', url);
+    setTab(tab); window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  useEffect(() => {
+    const back = () => { setTab(readTab()); window.scrollTo(0,0); };
+    window.addEventListener('popstate', back);
+    return () => window.removeEventListener('popstate', back);
+  }, []);
   const [contactCategory, setContactCategory] = useState<EnquiryCategory | undefined>(undefined);
 
   const handleNavigateToContact = (category?: EnquiryCategory) => {
@@ -72,6 +89,8 @@ export default function App() {
         ) : (
           <>
             {isServicesTab && <ServicesSection activeTab={activeTab} setActiveTab={setActiveTab} />}
+            {(activeTab === 'privacy' || activeTab === 'programme-terms') && <ProgrammePolicies privacy={activeTab === 'privacy'} />}
+            {activeTab === 'project-simulation' && <ProjectSimulationPage setActiveTab={setActiveTab} />}
             {activeTab === 'associates' && <AssociateRegistration />}
             {activeTab === 'about' && <AboutSection setActiveTab={setActiveTab} />}
             {activeTab === 'contact' && <ContactSection initialCategory={contactCategory} />}

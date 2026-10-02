@@ -12,15 +12,15 @@ export const AssistantPlayground: React.FC = () => {
   const [customProjectName, setCustomProjectName] = useState<string>('My Organisation Transformation Project');
   const [selectedActivity, setSelectedActivity] = useState<string>('raid-log');
   const [targetOutputFormat, setTargetOutputFormat] = useState<'markdown' | 'report' | 'table' | 'brief'>('table');
-  
+
   // Guided inputs
   const [inputTitle, setInputTitle] = useState<string>('PMO Governance & RAID Review');
   const [inputContext, setInputContext] = useState<string>('Implementing digital healthcare systems across 3 regional sites with tight budget constraints.');
   const [inputKeyMetrics, setInputKeyMetrics] = useState<string>('Budget: £250,000, Timeline: 6 months, Staffing: 8 team members');
   const [inputDate, setInputDate] = useState<string>('2026-09-01');
   const [inputNotes, setInputNotes] = useState<string>('Ensure compliance with national data privacy standards.');
-  
-  // Validation state (WA-005)
+
+  // Validation state
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [isValidating, setIsValidating] = useState<boolean>(false);
   const [isGeneratingOutput, setIsGeneratingOutput] = useState<boolean>(false);
@@ -55,7 +55,7 @@ export const AssistantPlayground: React.FC = () => {
   // Handle Assistant Type Switch
   const handleAssistantTypeChange = (type: typeof assistantType) => {
     setAssistantType(type);
-    
+
     // Set sensible activity defaults for guided workflow
     const defaultActivities: Record<string, string> = {
       business: 'raid-log',
@@ -102,7 +102,7 @@ export const AssistantPlayground: React.FC = () => {
         errors.push('Please provide a brief background context (at least 15 characters).');
       }
       if (!projectAccount.trim()) {
-        errors.push('An isolated Project/Account identifier is required for data isolation compliance.');
+        errors.push('Please enter a project name or reference to identify this output.');
       }
 
       setValidationErrors(errors);
@@ -304,7 +304,7 @@ REQUIREMENTS:
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
-      
+
       {/* TOP HEADER BAR */}
       <div className="bg-gradient-to-br from-navy-50 via-navy-50 to-navy-50 text-slate-900 rounded-3xl p-6 sm:p-8 border border-navy-200 shadow-sm space-y-6">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-navy-200 pb-6">
@@ -334,7 +334,7 @@ REQUIREMENTS:
             >
               <ListChecks className="w-4 h-4" />
               <span>Guided Multi-Step Workflow</span>
-              <span className="bg-navy-100 text-navy-700 border border-navy-200 text-[9px] px-1.5 py-0.5 rounded font-mono">WA-001</span>
+
             </button>
             <button
               onClick={() => setActiveTabMode('chat')}
@@ -434,10 +434,10 @@ REQUIREMENTS:
       {/* MODE 1: GUIDED MULTI-STEP WORKFLOW (WB-002 v3.0 WA-001..WA-007) */}
       {activeTabMode === 'guided' && (
         <div className="bg-white border border-slate-200 rounded-3xl shadow-xl overflow-hidden p-6 sm:p-8 space-y-8">
-          
+
           {/* STEP PROGRESS INDICATOR */}
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pb-6 border-b border-slate-200 text-xs font-bold">
-            <button 
+            <button
               onClick={() => setStep(1)}
               className={`p-3 rounded-xl border text-left transition-all ${
                 step === 1 ? 'bg-navy-600 text-white border-navy-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
@@ -447,7 +447,7 @@ REQUIREMENTS:
               <div>Account & Persona</div>
             </button>
 
-            <button 
+            <button
               onClick={() => setStep(2)}
               className={`p-3 rounded-xl border text-left transition-all ${
                 step === 2 ? 'bg-navy-600 text-white border-navy-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
@@ -457,7 +457,7 @@ REQUIREMENTS:
               <div>Activity & Format</div>
             </button>
 
-            <button 
+            <button
               onClick={() => setStep(3)}
               className={`p-3 rounded-xl border text-left transition-all ${
                 step === 3 ? 'bg-navy-600 text-white border-navy-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
@@ -467,7 +467,7 @@ REQUIREMENTS:
               <div>Guided Inputs</div>
             </button>
 
-            <button 
+            <button
               onClick={() => setStep(4)}
               className={`p-3 rounded-xl border text-left transition-all ${
                 step === 4 ? 'bg-navy-600 text-white border-navy-700 font-extrabold shadow-sm' : 'bg-slate-50 text-slate-600 border-slate-200'
@@ -477,7 +477,7 @@ REQUIREMENTS:
               <div>Validation Check</div>
             </button>
 
-            <button 
+            <button
               disabled={!generatedOutput}
               onClick={() => setStep(5)}
               className={`p-3 rounded-xl border text-left transition-all ${
@@ -503,7 +503,7 @@ REQUIREMENTS:
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-900 block flex items-center gap-1.5">
                     <FolderKanban className="w-4 h-4 text-navy-500" />
-                    <span>Project / Account Identifier (WA-003):</span>
+                    <span>Project name or reference:</span>
                   </label>
                   <input
                     type="text"
@@ -542,7 +542,7 @@ REQUIREMENTS:
             </div>
           )}
 
-          {/* STEP 2: ACTIVITY & OUTPUT FORMAT SELECTION (WA-002) */}
+          {/* STEP 2: ACTIVITY & OUTPUT FORMAT SELECTION */}
           {step === 2 && (
             <div className="space-y-6 animate-fadeIn">
               <div className="space-y-3">
@@ -574,7 +574,7 @@ REQUIREMENTS:
 
               <div className="space-y-3 pt-4 border-t border-slate-200">
                 <label className="text-xs font-black uppercase tracking-wider text-slate-900 block">
-                  Select Target Output Format (WA-006):
+                  Select Target Output Format:
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <button
@@ -630,11 +630,11 @@ REQUIREMENTS:
             </div>
           )}
 
-          {/* STEP 3: GUIDED INPUT FIELDS (WA-004) */}
+          {/* STEP 3: GUIDED INPUT FIELDS */}
           {step === 3 && (
             <div className="space-y-6 animate-fadeIn">
               <div className="space-y-1">
-                <h3 className="font-black text-slate-900 text-base">Guided Data Capture (WA-004)</h3>
+                <h3 className="font-black text-slate-900 text-base">Guided Data Capture</h3>
                 <p className="text-xs text-slate-500">Provide specific facts, numbers, dates, and requirements to generate structured outputs.</p>
               </div>
 
@@ -723,7 +723,7 @@ REQUIREMENTS:
                     </>
                   ) : (
                     <>
-                      <span>Run Data Validation Check (WA-005)</span>
+                      <span>Run Data Validation Check</span>
                       <ShieldCheck className="w-4 h-4" />
                     </>
                   )}
@@ -732,13 +732,13 @@ REQUIREMENTS:
             </div>
           )}
 
-          {/* STEP 4: DATA VALIDATION & GENERATION TRIGGER (WA-005) */}
+          {/* STEP 4: DATA VALIDATION & GENERATION TRIGGER */}
           {step === 4 && (
             <div className="space-y-6 animate-fadeIn">
               <div className="space-y-2">
                 <h3 className="font-black text-slate-900 text-base flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                  <span>Validation & Conflict Pre-Check Passed (WA-005)</span>
+                  <span>Validation & Conflict Pre-Check Passed</span>
                 </h3>
                 <p className="text-xs text-slate-600">
                   Review the structured configuration before initiating AI output generation.
@@ -794,7 +794,7 @@ REQUIREMENTS:
                   {isGeneratingOutput ? (
                     <>
                       <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
-                      <span>Generating Structured Output (WA-006)...</span>
+                      <span>Generating Structured Output...</span>
                     </>
                   ) : (
                     <>
@@ -807,13 +807,13 @@ REQUIREMENTS:
             </div>
           )}
 
-          {/* STEP 5: GENERATED OUTPUT & DOWNLOADABLE FORMATS (WA-006) */}
+          {/* STEP 5: GENERATED OUTPUT & DOWNLOADABLE FORMATS */}
           {step === 5 && generatedOutput && (
             <div className="space-y-6 animate-fadeIn">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-emerald-50 border border-emerald-200 p-4 rounded-2xl">
                 <div className="flex items-center gap-2 text-emerald-900 text-xs font-bold">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                  <span>Output Generated Successfully using Approved WOW Templates (WA-006)</span>
+                  <span>Output Generated Successfully from your selected format</span>
                 </div>
                 <button
                   onClick={() => handleDownloadOutput(generatedOutput)}
@@ -882,7 +882,7 @@ REQUIREMENTS:
 
           {/* CHAT CONTAINER */}
           <div className="bg-white border border-slate-200 rounded-3xl shadow-lg overflow-hidden flex flex-col h-[520px]">
-            
+
             {/* Chat top bar */}
             <div className="bg-navy-100 text-slate-900 p-4 flex items-center justify-between border-b border-navy-200">
               <div className="flex items-center gap-2">

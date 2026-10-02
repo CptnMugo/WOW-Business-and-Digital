@@ -1,3 +1,4 @@
+import { CAREER_ACCELERATOR } from '../data/careerAccelerator';
 import React, { useState, useRef } from 'react';
 import { 
   GraduationCap, 
@@ -47,7 +48,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
       {/* HERO SECTION */}
       {/* ======================================================== */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[#F8F4ED] via-[#E9F5F5] to-white text-slate-900 pt-12 pb-20 border-b border-navy-200">
-        {/* Ambient background glows */}
+      {/* Ambient background glows */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-navy-300/25 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-navy-200/30 rounded-full blur-3xl pointer-events-none" />
 
@@ -57,7 +58,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
           <div className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-50 text-navy-700 text-xs font-bold border border-navy-200 shadow-2xs">
               <GraduationCap className="w-3.5 h-3.5 text-navy-600" />
-              <span>WOW Academy • Professional Programs</span>
+              <span>WOW Academy · Professional Programmes</span>
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-black border border-amber-300/80 shadow-2xs">
               <Percent className="w-3.5 h-3.5" />
@@ -77,6 +78,12 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               Practical training, supervised project work and career support over six months. Develop real deliverables, build communication skills and receive one-to-one coaching. References depend on genuine participation and performance.
             </p>
           </div>
+
+        <div className="max-w-4xl rounded-2xl border border-navy-200 bg-white/90 p-5 text-slate-800">
+          <p className="font-bold">Starts {CAREER_ACCELERATOR.startDate} · Six months</p>
+          <p className="mt-3"><strong>Executive mentorship package £1,250.</strong> {CAREER_ACCELERATOR.mentorshipScope}</p>
+          <p className="mt-3">Apply first. An invoice and payment instructions follow acceptance. The £900 early settlement offer applies to the standard programme.</p>
+        </div>
 
           {/* Quick Spec Matrix */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl pt-2">
@@ -110,7 +117,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
             <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-navy-200 shadow-xs">
               <div className="flex items-center gap-2 text-xs font-bold text-emerald-700 mb-1">
                 <Award className="w-4 h-4" />
-                <span>Special Tuition</span>
+                <span>Standard early settlement</span>
               </div>
               <div className="text-sm sm:text-base font-extrabold text-slate-900">£900 Early Bird</div>
               <div className="text-[11px] text-emerald-700 font-bold">Save £100 by 31 Oct</div>
@@ -150,6 +157,16 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
         </div>
       </section>
 
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white border border-navy-200 rounded-3xl p-7 sm:p-10 space-y-4">
+          <h2 className="text-2xl font-bold">Practise a project with WOW</h2>
+          <p className="max-w-3xl leading-relaxed">Alongside genuine WOW project work, explore a three-hour taster simulation or a five-day project simulation. Move through Discover, Plan, Build, Test and Present, practise stakeholder conversations and respond to a mid-project change.</p>
+          <p className="text-sm text-slate-600">This demonstration uses scripted sponsor and coach responses with optional device voice. Session invitations, team access and facilitator assessment are confirmed separately.</p>
+          <button onClick={() => setActiveTab('project-simulation')} className="bg-[#0b2d5b] text-white px-5 py-3 rounded-lg font-bold">Request simulation workspace access</button>
+        </div>
+      </section>
+
+
       {/* ======================================================== */}
       {/* SECTION: LEARN, WORK, EARN PILLARS */}
       {/* ======================================================== */}
@@ -159,7 +176,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
             <span>The Accelerator Philosophy</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Learn, Work, Earn!
+            Learn, deliver and develop
           </h2>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
             Most training gives you theory and certificates. The WOW Career Accelerator bridges the gap to real-world employment with actual delivery experience and executive polish.
@@ -216,7 +233,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                 2. Work
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Work as a project manager on real client case studies and digital transformation initiatives. Produce artefacts you can discuss in interviews.
+                {CAREER_ACCELERATOR.workDescription}
               </p>
               <ul className="space-y-2 pt-2 border-t border-slate-100 text-xs text-slate-700">
                 <li className="flex items-center gap-2">
@@ -249,7 +266,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                 03
               </div>
               <h3 className="text-2xl font-black text-slate-900">
-                3. Earn
+                3. Develop
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Build confidence in interviews through practical experience, STAR preparation and coaching. References can reflect work you actually complete.
@@ -265,11 +282,11 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Verifiable UK project manager reference</span>
+                  <span>WOW reference confirming your actual role and contribution</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Direct recruitment network exposure</span>
+                  <span>Career preparation and interview practice</span>
                 </li>
               </ul>
             </div>
@@ -330,7 +347,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </div>
               <h3 className="font-bold text-slate-900 text-base">International PMs Entering UK</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Experienced professionals with overseas experience who want UK workplace culture orientation, local governance vocabulary, and a credible UK reference.
+                Experienced professionals with overseas experience who want UK workplace culture orientation, local governance vocabulary, and a contribution-based WOW reference.
               </p>
             </div>
 
@@ -455,11 +472,11 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </li>
               <li className="flex items-start gap-2">
                 <Check className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
-                <span>Senior Director 1-on-1 mock interview panels</span>
+                <span>One-to-one mock interview practice</span>
               </li>
               <li className="flex items-start gap-2">
                 <Check className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
-                <span>Official WOW Business &amp; Digital reference</span>
+                <span>WOW reference subject to completed work and required standards</span>
               </li>
             </ul>
           </div>
@@ -500,7 +517,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                       <span>10% Early Settlement Discount Rate</span>
                     </div>
                     <p className="text-xs text-slate-600">
-                      Pay £900 in full by 31 October and save £100 off standard £1,000 tuition.
+                      Pay £900 in full by 31 October 2026 and save £100 off standard £1,000 tuition.
                     </p>
                   </div>
                   <div className="text-right shrink-0">
@@ -516,7 +533,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                       <span>2-Stage Installment Plan</span>
                     </div>
                     <p className="text-xs text-slate-600">
-                      £500 paid by 31 October + £500 paid by 30 November. No interest.
+                      £500 paid by 31 October 2026 + £500 paid by 30 November 2026. No interest.
                     </p>
                   </div>
                   <div className="text-right shrink-0">
@@ -532,7 +549,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                       <span>Reservation Holding Deposit</span>
                     </div>
                     <p className="text-xs text-slate-600">
-                      £50 registration deposit. Secures your place once your application is accepted. Non-refundable, but credited in full against your tuition fee when you continue onto the programme.
+                      £50 registration deposit. Secures your place once your application is accepted. Credited in full against tuition, including the first instalment. The deposit policy is subject to statutory cancellation and refund rights; full enrolment terms are provided before payment.
                     </p>
                   </div>
                   <div className="text-right shrink-0">
@@ -553,7 +570,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                 <span className="text-xs font-black uppercase tracking-wider text-navy-600">Programme Enrolment</span>
                 <h3 className="text-2xl font-black text-slate-900">Ready to Accelerate?</h3>
                 <p className="text-xs text-slate-600">
-                  Fill out the 5-step registration form to secure your place in the upcoming intake.
+                  Submit an application for review. We confirm your place before issuing an invoice.
                 </p>
               </div>
 
@@ -586,7 +603,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </div>
 
               <div className="text-center text-[11px] text-slate-500">
-                Direct bank transfer (UK Standard BACS) available with zero card processing fees.
+                Payment instructions are supplied on your invoice after acceptance. No payment is taken with your application.
               </div>
             </div>
 
@@ -655,7 +672,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                 className="bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 font-bold text-sm px-6 py-4 rounded-xl shadow-sm transition-all flex items-center gap-2 cursor-pointer active:scale-95"
               >
                 <CreditCard className="w-4 h-4 text-navy-600" />
-                <span>Go to Payments Portal</span>
+                <span>View fees and invoice arrangements</span>
               </button>
             </div>
 
@@ -689,7 +706,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               <span>Do I get real work experience to put on my CV?</span>
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              You will create practical project deliverables such as plans, RAID logs and presentations. Client work depends on suitable opportunities and supervision; any reference will describe the work you actually complete.
+              {CAREER_ACCELERATOR.workDescription}
             </p>
           </div>
 

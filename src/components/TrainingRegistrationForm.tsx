@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
-  Send, 
-  ShieldCheck, 
-  Check, 
-  Upload, 
+import {
+  Send,
+  ShieldCheck,
+  Check,
+  Upload,
   CheckCircle2,
   CreditCard,
   ArrowRight
@@ -50,6 +50,7 @@ interface TrainingRegistrationFormProps {
   formData: TrainingFormData;
   setFormData: React.Dispatch<React.SetStateAction<TrainingFormData>>;
   onSubmit: (e: React.FormEvent) => void;
+  submitting?: boolean;
   dualActionButtons?: boolean;
   onFreeTester?: () => void;
   onSubmitAndPay?: () => void;
@@ -87,6 +88,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
   formData,
   setFormData,
   onSubmit,
+  submitting = false,
   dualActionButtons,
   onFreeTester,
   onSubmitAndPay
@@ -122,10 +124,10 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-fullName">
               Full Name <span className="text-rose-500">*</span>
             </label>
-            <input
+            <input id="training-fullName"
               required
               type="text"
               value={formData.fullName}
@@ -136,10 +138,10 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-email">
               Email Address <span className="text-rose-500">*</span>
             </label>
-            <input
+            <input id="training-email"
               required
               type="email"
               value={formData.email}
@@ -152,10 +154,10 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-mobileWhatsapp">
               Mobile / WhatsApp Number <span className="text-rose-500">*</span>
             </label>
-            <input
+            <input id="training-mobileWhatsapp"
               required
               type="tel"
               value={formData.mobileWhatsapp}
@@ -166,10 +168,10 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-townCity">
               Town / City <span className="text-rose-500">*</span>
             </label>
-            <input
+            <input id="training-townCity"
               required
               type="text"
               value={formData.townCity}
@@ -191,14 +193,15 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-workStatus">
               Current Work Status <span className="text-rose-500">*</span>
             </label>
-            <select
+            <select id="training-workStatus" required
               value={formData.workStatus}
-              onChange={(e) => setFormData({ ...formData, workStatus: e.target.value })}
+              onChange={(e) =>  setFormData({ ...formData, workStatus: e.target.value })}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
+              <option value="" disabled>Please select</option>
               <option value="Employed">Employed</option>
               <option value="Self-employed">Self-employed</option>
               <option value="Unemployed">Unemployed</option>
@@ -218,14 +221,15 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-rightToWorkUK">
               Right to Work in the UK <span className="text-rose-500">*</span>
             </label>
-            <select
+            <select id="training-rightToWorkUK" required
               value={formData.rightToWorkUK}
-              onChange={(e) => setFormData({ ...formData, rightToWorkUK: e.target.value })}
+              onChange={(e) =>  setFormData({ ...formData, rightToWorkUK: e.target.value })}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
+              <option value="" disabled>Please select</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
               <option value="Not sure">Not sure</option>
@@ -235,28 +239,30 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-ukWorkExperience">
               UK Work Experience <span className="text-rose-500">*</span>
             </label>
-            <select
+            <select id="training-ukWorkExperience" required
               value={formData.ukWorkExperience}
-              onChange={(e) => setFormData({ ...formData, ukWorkExperience: e.target.value })}
+              onChange={(e) =>  setFormData({ ...formData, ukWorkExperience: e.target.value })}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
+              <option value="" disabled>Please select</option>
               <option value="Yes">Yes - Have UK workplace experience</option>
               <option value="No">No - Previous experience is outside UK or entering UK workplace</option>
             </select>
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-englishFirstLanguage">
               Is English your first language? <span className="text-rose-500">*</span>
             </label>
-            <select
+            <select id="training-englishFirstLanguage" required
               value={formData.englishFirstLanguage}
-              onChange={(e) => setFormData({ ...formData, englishFirstLanguage: e.target.value })}
+              onChange={(e) =>  setFormData({ ...formData, englishFirstLanguage: e.target.value })}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
+              <option value="" disabled>Please select</option>
               <option value="Yes">Yes</option>
               <option value="No">No (English as an additional language)</option>
               <option value="Prefer not to say">Prefer not to say</option>
@@ -274,14 +280,15 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
         </h3>
 
         <div>
-          <label className="text-xs font-bold text-slate-800 block mb-1">
+          <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-highestQualification">
             Highest Qualification <span className="text-rose-500">*</span>
           </label>
-          <select
+          <select id="training-highestQualification" required
             value={formData.highestQualification}
-            onChange={(e) => setFormData({ ...formData, highestQualification: e.target.value })}
+            onChange={(e) =>  setFormData({ ...formData, highestQualification: e.target.value })}
             className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
           >
+            <option value="" disabled>Please select</option>
             <option value="Master's Degree / Postgraduate">Master's Degree / Postgraduate Diploma (Level 7)</option>
             <option value="Undergraduate Degree">Undergraduate Degree / Bachelor's (Level 6)</option>
             <option value="Higher National Diploma / Foundation Degree">Higher National Diploma (HND) / Foundation Degree (Level 4/5)</option>
@@ -303,6 +310,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
                 <button
                   type="button"
                   key={item}
+                  aria-pressed={isChecked}
                   onClick={() => toggleItem(formData.pmQualifications, 'pmQualifications', item)}
                   className={`p-2.5 rounded-xl text-xs font-bold text-left border transition-all flex items-center justify-between ${
                     isChecked
@@ -319,13 +327,13 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
         </div>
 
         <div>
-          <label className="text-xs font-bold text-slate-800 block mb-1">
+          <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-previousExperience">
             Previous Experience <span className="text-rose-500">*</span>
           </label>
           <p className="text-[11px] text-slate-500 mb-1.5">
             Brief description of previous project, administrative, coordination, management or related experience.
           </p>
-          <textarea
+          <textarea id="training-previousExperience"
             required
             rows={3}
             value={formData.previousExperience}
@@ -345,13 +353,13 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
         </h3>
 
         <div>
-          <label className="text-xs font-bold text-slate-800 block mb-1">
+          <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-careerObjective">
             Career Objective <span className="text-rose-500">*</span>
           </label>
           <p className="text-[11px] text-slate-500 mb-1.5">
             What type of role would you ideally like to secure after the programme?
           </p>
-          <input
+          <input id="training-careerObjective"
             required
             type="text"
             value={formData.careerObjective}
@@ -362,13 +370,13 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
         </div>
 
         <div>
-          <label className="text-xs font-bold text-slate-800 block mb-1">
+          <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-currentChallenge">
             Current Challenge <span className="text-rose-500">*</span>
           </label>
           <p className="text-[11px] text-slate-500 mb-1.5">
             What is currently your biggest challenge in securing the type of role you want?
           </p>
-          <textarea
+          <textarea id="training-currentChallenge"
             required
             rows={3}
             value={formData.currentChallenge}
@@ -399,6 +407,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               <button
                 type="button"
                 key={item}
+                  aria-pressed={isChecked}
                 onClick={() => toggleItem(formData.developmentNeeds, 'developmentNeeds', item)}
                 className={`p-2.5 rounded-xl text-xs font-bold text-left border transition-all flex items-center justify-between ${
                   isChecked
@@ -433,32 +442,33 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
         </h3>
 
         <div>
-          <label className="text-xs font-bold text-slate-800 block mb-1">
+          <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-successMeasure">
             Success Measure <span className="text-rose-500">*</span>
           </label>
           <p className="text-[11px] text-slate-500 mb-1.5">
             What would make this six-month programme successful for you?
           </p>
-          <textarea
+          <textarea id="training-successMeasure"
             required
             rows={2}
             value={formData.successMeasure}
             onChange={(e) => setFormData({ ...formData, successMeasure: e.target.value })}
-            placeholder="e.g. Landing a £40k+ Project Manager role with solid workplace confidence and an employer reference..."
+            placeholder="e.g. Build confidence in planning and delivering projects..."
             className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
           />
         </div>
 
         <div className="grid sm:grid-cols-3 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-weeklyAvailability">
               Weekly Time Commitment <span className="text-rose-500">*</span>
             </label>
-            <select
+            <select id="training-weeklyAvailability" required
               value={formData.weeklyAvailability}
-              onChange={(e) => setFormData({ ...formData, weeklyAvailability: e.target.value })}
+              onChange={(e) =>  setFormData({ ...formData, weeklyAvailability: e.target.value })}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
+              <option value="" disabled>Please select</option>
               <option value="Yes - can commit weekly time">Yes - can commit weekly time</option>
               <option value="Yes - flexible schedule">Yes - flexible schedule</option>
               <option value="Part-time availability">Part-time / evenings only</option>
@@ -467,14 +477,15 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
-              3 Birmingham Workshop Days <span className="text-rose-500">*</span>
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-birminghamAttendance">
+              Birmingham workshops <span className="text-rose-500">*</span>
             </label>
-            <select
+            <select id="training-birminghamAttendance" required
               value={formData.birminghamAttendance}
-              onChange={(e) => setFormData({ ...formData, birminghamAttendance: e.target.value })}
+              onChange={(e) =>  setFormData({ ...formData, birminghamAttendance: e.target.value })}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
+              <option value="" disabled>Please select</option>
               <option value="Yes">Yes - can attend in Birmingham</option>
               <option value="No">No - remote alternative required</option>
               <option value="Need more info">Need more information on dates</option>
@@ -482,14 +493,15 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-inPersonProjectAttendance">
               Occasional Project In-Person Work <span className="text-rose-500">*</span>
             </label>
-            <select
+            <select id="training-inPersonProjectAttendance" required
               value={formData.inPersonProjectAttendance}
-              onChange={(e) => setFormData({ ...formData, inPersonProjectAttendance: e.target.value })}
+              onChange={(e) =>  setFormData({ ...formData, inPersonProjectAttendance: e.target.value })}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
+              <option value="" disabled>Please select</option>
               <option value="Yes">Yes</option>
               <option value="No">No - fully remote only</option>
               <option value="Hybrid / Depends on location">Hybrid / Depends on location</option>
@@ -508,14 +520,15 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
 
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-packageSelection">
               Package Selection <span className="text-rose-500">*</span>
             </label>
-            <select
+            <select id="training-packageSelection" required
               value={formData.packageSelection}
-              onChange={(e) => setFormData({ ...formData, packageSelection: e.target.value })}
+              onChange={(e) =>  setFormData({ ...formData, packageSelection: e.target.value, paymentPreference: '' })}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
+              <option value="" disabled>Please select</option>
               <option value="WOW Career Accelerator 6-Month Programme (£1,000)">
                 WOW Career Accelerator 6-Month Programme (£1,000)
               </option>
@@ -529,20 +542,22 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
+            <label className="text-xs font-bold text-slate-800 block mb-1" htmlFor="training-paymentPreference">
               Payment Preference <span className="text-rose-500">*</span>
             </label>
-            <select
+            <select id="training-paymentPreference" required
               value={formData.paymentPreference}
-              onChange={(e) => setFormData({ ...formData, paymentPreference: e.target.value })}
+              onChange={(e) =>  setFormData({ ...formData, paymentPreference: e.target.value })}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
-              <option value="Pay in full (£900 - 10% Early Settlement Discount by 31 Oct)">
-                Pay in full (£900 - 10% Early Settlement Discount by 31 Oct)
-              </option>
-              <option value="Pay in two instalments (1st £500 by 31 Oct • 2nd £500 by 30 Nov)">
-                Pay in two instalments (1st £500 by 31 Oct 2026 • 2nd £500 by 30 Nov 2026)
-              </option>
+              <option value="" disabled>Please select</option>
+              {formData.packageSelection.includes('£1,250') ? <>
+                <option value="Executive mentorship package £1,250 by invoice">Executive mentorship package £1,250 by invoice</option>
+                <option value="Discuss instalments for executive mentorship">Discuss instalments for executive mentorship</option>
+              </> : <>
+                <option value="Pay in full £900 by 31 October 2026">Pay in full £900 by 31 October 2026</option>
+                <option value="Two instalments £500 by 31 October 2026 and £500 by 30 November 2026">Two instalments £500 by 31 October 2026 and £500 by 30 November 2026</option>
+              </>}
               <option value="£50 registration deposit after acceptance">
                 £50 registration deposit after acceptance (credited against tuition)
               </option>
@@ -569,7 +584,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </h3>
         </div>
         <p className="text-[11px] text-slate-600">
-          Please review and confirm each of the following programme terms:
+          Read the programme information and terms, then confirm the declarations below. No payment is taken with your application.
         </p>
 
         <div className="space-y-3 pt-1 text-xs">
@@ -611,7 +626,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               className="mt-0.5 h-4 w-4 rounded text-navy-600 focus:ring-navy-500 border-slate-300"
             />
             <span className="text-slate-800 font-medium">
-              I understand that the £50 registration deposit is non-refundable once my place has been accepted and reserved, and that it will be credited in full against my tuition fee if I continue onto the programme.
+              I understand that the £50 registration deposit is subject to statutory cancellation and refund rights, and that it will be credited in full against my tuition fee if I continue onto the programme.
             </span>
           </label>
 
@@ -639,7 +654,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               className="mt-0.5 h-4 w-4 rounded text-navy-600 focus:ring-navy-500 border-slate-300"
             />
             <span className="text-slate-800 font-medium">
-              I understand that project opportunities depend on availability, suitability and programme requirements.
+              I understand that I will contribute to supervised live WOW projects and that allocations depend on suitability and programme requirements.
             </span>
           </label>
 
@@ -691,12 +706,12 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           <input
             required
             type="checkbox"
-            id="training-privacy-checkbox"
+
             checked={formData.privacyAcknowledged}
             onChange={(e) => setFormData({ ...formData, privacyAcknowledged: e.target.checked })}
             className="mt-0.5 rounded text-navy-600 focus:ring-navy-500 h-4 w-4 border-slate-300"
           />
-          <label htmlFor="training-privacy-checkbox" className="text-xs font-bold text-slate-900 cursor-pointer">
+          <label className="text-xs font-bold text-slate-900 cursor-pointer">
             I understand that my information will be used to review my application and contact me about the programme. <span className="text-rose-500">*</span>
           </label>
         </div>
@@ -704,61 +719,22 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
         <div className="flex items-start gap-2.5">
           <input
             type="checkbox"
-            id="training-marketing-checkbox"
+
             checked={formData.marketingConsent}
             onChange={(e) => setFormData({ ...formData, marketingConsent: e.target.checked })}
             className="mt-0.5 rounded text-navy-600 focus:ring-navy-500 h-4 w-4 border-slate-300"
           />
-          <label htmlFor="training-marketing-checkbox" className="text-xs font-semibold text-slate-700 cursor-pointer">
+          <label className="text-xs font-semibold text-slate-700 cursor-pointer">
             Optional marketing consent: I would like to receive relevant news, course information and programme updates from WOW Business & Digital Limited.
           </label>
         </div>
       </div>
 
-      {/* SUBMIT BUTTON(S) */}
-      <div className="pt-2">
-        {dualActionButtons ? (
-          <div className="space-y-3">
-            <div className="grid gap-3.5">
-              {/* BUTTON 2: SUBMIT AND PAY */}
-              <button
-                type="submit"
-                id="btn-submit-and-pay"
-                className="w-full bg-gradient-to-r from-navy-600 via-navy-600 to-navy-700 hover:from-navy-500 hover:to-navy-600 text-white font-bold text-sm p-4 rounded-2xl shadow-lg hover:shadow-navy-500/30 transition-all flex items-center justify-between gap-3 active:scale-[0.99] cursor-pointer group"
-              >
-                <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0 border border-white/25">
-                    <CreditCard className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <div className="font-extrabold text-sm text-white flex items-center gap-1.5">
-                      <span>Submit and Pay</span>
-                      <span className="text-[10px] font-bold text-amber-200 bg-navy-700/80 px-1.5 py-0.5 rounded border border-navy-400/40">
-                        Instant Portal
-                      </span>
-                    </div>
-                    <div className="text-[11px] text-navy-100 font-normal mt-0.5">
-                      Save details • Go to payment page
-                    </div>
-                  </div>
-                </div>
-                <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform shrink-0" />
-              </button>
-            </div>
-
-            <p className="text-center text-[11px] text-slate-500">
-              Submit your registration, then select your tuition payment option.
-            </p>
-          </div>
-        ) : (
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-600 text-white font-black text-sm py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group"
-          >
-            <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            <span>Submit Application &amp; Register</span>
-          </button>
-        )}
+      <div className="pt-2 space-y-3">
+        <button type="submit" id="btn-submit-application" disabled={submitting} className="w-full bg-[#0b2d5b] text-white rounded-xl py-4 font-bold disabled:opacity-60">
+          {submitting ? 'Saving application…' : 'Submit application'}
+        </button>
+        <p className="text-center text-sm text-slate-600">Your application will be reviewed. No payment is taken here.</p>
       </div>
     </form>
   );

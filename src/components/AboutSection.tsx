@@ -21,7 +21,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
           About WOW Business &amp; Digital
         </h1>
         <p className="text-slate-600 text-base leading-relaxed">
-          We lead transformation, service redesign and programme delivery, drawing on specialist associates to meet each client's needs.
+          We help you improve how work gets done, deliver projects and build the skills to keep moving forward. Our support can focus on one practical task or a wider programme.
         </p>
       </div>
 
@@ -30,15 +30,29 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
         <p className="text-sm leading-relaxed text-slate-700">WOW Business &amp; Digital combines consultancy and delivery experience with digital solutions, staffing and training. Our work is grounded in understanding organisations, engaging the people affected by change and turning plans into practical delivery.</p>
         <p className="text-sm leading-relaxed text-slate-700">Programme and project lead Rennie Mudzi brings experience across healthcare, health and social care and wider public service transformation. Her work has included digital care systems, electronic patient records, operational readiness, integrated planning, governance and stakeholder engagement. Previous roles inform our approach; they are not presented as contracts awarded to WOW.</p>
         <p className="text-sm leading-relaxed text-slate-700">For broader commissions, we shape a multidisciplinary team around the brief. Depending on the work, associates may contribute expertise in technology and AI, finance and commercial strategy, procurement, people and HR, communications and other business functions. WOW leads the programme and coordinates the specialists, with roles, availability and responsibilities agreed for each engagement.</p>
-        <p className="text-sm leading-relaxed text-slate-700">Our international work includes developing partnerships and programmes in Zimbabwe. We shape each engagement around local needs, partners and delivery requirements.</p>
+        <p className="text-sm leading-relaxed text-slate-700">Our international work includes developing partnerships and programmes. We shape each engagement around local needs, partners and delivery requirements.</p>
         <button onClick={() => setActiveTab('case-studies')} className="text-navy-700 font-bold text-sm underline cursor-pointer">Explore experience examples</button>
       </section>
 
+      <figure className="rounded-3xl overflow-hidden border border-[#ded7cb] bg-[#f8f4ed]">
+        <figcaption className="px-8 pt-8 text-xl font-bold">From evidence to practical results</figcaption>
+        <ol className="grid md:grid-cols-3 gap-px bg-[#ded7cb] mt-6">
+          {[
+            ['01', 'Understand', 'Listen to the people involved. Use evidence to agree what needs to improve.'],
+            ['02', 'Deliver', 'Make a clear plan. Work together to put the right changes into practice.'],
+            ['03', 'Improve', 'Check the results. Learn what works and help people sustain it.'],
+          ].map(([number, title, text]) => <li key={number} className="bg-[#f8f4ed] p-8">
+            <span className="block text-4xl text-[#896021] font-bold mb-4" aria-hidden="true">{number}</span>
+            <h3 className="text-xl font-bold">{title}</h3><p className="text-sm leading-relaxed mt-3">{text}</p>
+          </li>)}
+        </ol>
+      </figure>
+
       <section className="bg-navy-50 rounded-3xl p-8 sm:p-10 border border-navy-200 space-y-5">
-        <h2 className="text-2xl font-extrabold text-slate-900">One coordinated team for complex change</h2>
+        <h2 className="text-2xl font-extrabold text-slate-900">The right team to help you deliver</h2>
         <p className="text-sm leading-relaxed text-slate-700">We start with the service challenge, agree the outcomes and assemble the right mix of delivery and functional expertise. Together with client teams, we redesign processes and digital workflows, introduce new ways of working, strengthen capability and track the benefits beyond implementation.</p>
-        <p className="text-sm leading-relaxed text-slate-700">This approach supports a defined project, an interim leadership need or a wider tender requiring several disciplines. Each proposal sets out the people, responsibilities, deliverables and governance for that particular commission.</p>
-        <button onClick={() => setActiveTab('contact')} className="text-navy-700 font-bold text-sm underline cursor-pointer">Discuss a programme or tender</button>
+        <p className="text-sm leading-relaxed text-slate-700">We support smaller practical projects as well as larger programmes. You might need to improve a single workflow, introduce a digital tool, develop your team or bring together several specialists for a wider tender. Each proposal sets out the people, responsibilities, deliverables and governance for that particular commission.</p>
+        <button onClick={() => setActiveTab('contact')} className="text-navy-700 font-bold text-sm underline cursor-pointer">Discuss your project</button>
       </section>
 
       {/* VISION & PURPOSE CARDS */}
@@ -110,7 +124,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
         <div className="max-w-2xl mx-auto space-y-3">
           <h2 className="text-2xl font-bold text-slate-900">International connections</h2>
           <p className="text-xs text-slate-600 leading-relaxed">
-            Our developing Zimbabwe work creates opportunities for relevant partnerships, local programmes and practical digital solutions. Contact us to discuss a specific opportunity.
+            Our developing international work creates opportunities for relevant partnerships, local programmes and practical digital solutions. Contact us to discuss a specific opportunity.
           </p>
           <div className="pt-4 flex justify-center gap-4">
             <button

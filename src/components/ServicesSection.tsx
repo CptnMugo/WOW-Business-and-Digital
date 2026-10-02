@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavTab } from '../types';
-import { CORE_FIVE_SERVICES } from '../data/companyData';
+import { CORE_FIVE_SERVICES, ADDITIONAL_SUPPORT } from '../data/companyData';
 import { TrendingUp, Users, GraduationCap, Sparkles, Briefcase, ArrowRight, CheckCircle2, Layers } from 'lucide-react';
 
 interface ServicesSectionProps {
@@ -10,7 +10,7 @@ interface ServicesSectionProps {
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ activeTab, setActiveTab }) => {
   // Determine if specific sub-service is requested
-  const selectedService = CORE_FIVE_SERVICES.find(s => s.tabId === activeTab);
+  const selectedService = [...CORE_FIVE_SERVICES, ...ADDITIONAL_SUPPORT].find(s => s.tabId === activeTab);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
@@ -101,7 +101,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ activeTab, set
           </div>
         </div>
       ) : (
-        /* ALL 5 SERVICES GRID */
+        /* CORE SERVICES GRID */
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {CORE_FIVE_SERVICES.map((service, index) => (
             <div 
@@ -110,14 +110,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ activeTab, set
             >
               <div className="space-y-5">
                 <div className="flex items-center justify-between">
-                  <div className="p-3 rounded-2xl bg-navy-500/10 text-navy-600 group-hover:bg-navy-600 group-hover:text-white transition-colors">
-                    {service.id === 'business-consultancy' && <TrendingUp className="w-6 h-6" />}
-                    {service.id === 'staffing' && <Users className="w-6 h-6" />}
-                    {service.id === 'training' && <GraduationCap className="w-6 h-6" />}
-                    {service.id === 'ai-solutions' && <Sparkles className="w-6 h-6" />}
-                    {service.id === 'programme-delivery' && <Layers className="w-6 h-6" />}
-                  </div>
-                  <span className="text-xs font-black text-slate-400">0{index + 1}</span>
+                  <span className="text-4xl font-black text-navy-700" aria-hidden="true">0{index + 1}</span>
                 </div>
 
                 <div className="space-y-2">

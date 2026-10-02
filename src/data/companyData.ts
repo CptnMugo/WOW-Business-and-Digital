@@ -440,7 +440,7 @@ At WOW Business and Digital Ltd, our focus is on domain-specific AI Assistants t
 
 export interface CoreServiceInfo {
   id: string;
-  tabId: 'business-consultancy' | 'staffing' | 'training' | 'ai-solutions' | 'consulting';
+  tabId: 'business-consultancy' | 'staffing' | 'training' | 'ai-solutions' | 'consulting' | 'career-coaching';
   title: string;
   shortNavTitle: string;
   tagline: string;
@@ -451,50 +451,54 @@ export interface CoreServiceInfo {
   href: string;
 }
 
+// Four agreed service names; learning and associate support remain accessible separately.
 export const CORE_FIVE_SERVICES: CoreServiceInfo[] = [
   {
-    id: 'business-consultancy', tabId: 'business-consultancy',
-    title: 'Transformation & Service Redesign', shortNavTitle: 'Transformation',
-    tagline: 'Understand the challenge, improve services and make change work.',
-    description: 'We use evidence, engagement and process mapping to redesign services and workflows, then help teams put the changes into practice.',
-    iconName: 'TrendingUp',
-    subOfferings: ['Discovery and diagnosis', 'Service and process redesign', 'Digital-first workflows', 'Operating model and implementation planning', 'Benefits and outcome measures'],
-    audience: 'Organisations improving services, operations or customer and staff experience', href: '#business-consultancy'
-  },
-  {
     id: 'programme-delivery', tabId: 'consulting',
-    title: 'Programme & Project Delivery', shortNavTitle: 'Programme Delivery',
+    title: 'Programme and Project Delivery', shortNavTitle: 'Programme and Project Delivery',
     tagline: 'Senior leadership from mobilisation to measurable outcomes.',
-    description: 'We lead programmes and projects, strengthen governance and delivery assurance, and help recover work that has lost direction or momentum.',
-    iconName: 'Layers',
-    subOfferings: ['Programme and project leadership', 'PMO and proportionate governance', 'Integrated plans, risks and dependencies', 'Delivery recovery and assurance', 'Benefits tracking and handover'],
-    audience: 'Clients commissioning defined projects, interim leadership or complex programmes', href: '#consulting'
+    description: 'We lead programmes and projects, strengthen delivery assurance, and help recover work that has lost direction or momentum.',
+    iconName: 'Layers', subOfferings: ['Programme and project leadership', 'Integrated plans, risks and dependencies', 'Delivery recovery and assurance', 'Benefits tracking and handover'],
+    audience: 'Individuals and organisations commissioning defined projects, interim leadership or larger programmes', href: '#consulting'
   },
   {
-    id: 'ai-solutions', tabId: 'ai-solutions',
-    title: 'Digital Adoption & Practical AI', shortNavTitle: 'Digital & AI',
+    id: 'digital-transformation', tabId: 'ai-solutions',
+    title: 'Digital Transformation', shortNavTitle: 'Digital Transformation',
     tagline: 'Better workflows, supported by technology people can use.',
     description: 'We identify where existing or new tools can improve enquiry handling, onboarding, case tracking and reporting, then support responsible adoption.',
-    iconName: 'Sparkles',
-    subOfferings: ['Digital workflow assessment and redesign', 'Technology adoption and readiness', 'Reporting and information flow', 'Practical automation and AI use cases', 'Staff engagement and capability building'],
-    audience: 'Teams looking to improve workflows, adopt technology or explore practical AI', href: '#ai-solutions'
+    iconName: 'TrendingUp', subOfferings: ['Digital workflow assessment and redesign', 'Technology adoption and readiness', 'Reporting and information flow', 'Practical automation and AI use cases', 'Staff engagement and capability building'],
+    audience: 'Small businesses and larger teams improving workflows or adopting useful technology', href: '#ai-solutions'
   },
   {
-    id: 'staffing', tabId: 'staffing',
-    title: 'Multidisciplinary Specialist Delivery', shortNavTitle: 'Specialist Delivery',
+    id: 'change-adoption', tabId: 'training',
+    title: 'Change and Adoption', shortNavTitle: 'Change and Adoption',
+    tagline: 'Build skills, confidence and ownership to sustain change.',
+    description: 'We engage the people affected by change, understand their needs and support teams through readiness, practical learning and new ways of working. The separate Career Accelerator offers structured development for aspiring project professionals.',
+    iconName: 'Users', subOfferings: ['Change impact and readiness', 'Stakeholder engagement', 'Team training and coaching', 'Digital confidence and adoption', 'Knowledge transfer and handover'],
+    audience: 'Organisations strengthening teams and individuals building delivery skills', href: '#training'
+  },
+  {
+    id: 'pmo-governance', tabId: 'business-consultancy',
+    title: 'PMO and Governance', shortNavTitle: 'PMO and Governance',
+    tagline: 'Clear priorities, joined-up plans and proportionate assurance.',
+    description: 'We establish useful planning, reporting, risk and decision-making arrangements, shaped around the scale and needs of your project or programme.',
+    iconName: 'Layers', subOfferings: ['PMO setup and improvement', 'Governance and decision-making', 'Integrated plans and dependencies', 'RAID and delivery reporting', 'Benefits and outcome measures'],
+    audience: 'Organisations seeking clear ownership, reliable information and practical control of delivery', href: '#business-consultancy'
+  }
+];
+export const ADDITIONAL_SUPPORT: CoreServiceInfo[] = [
+  {
+    id: 'staffing', tabId: 'staffing', title: 'Flexible specialist support', shortNavTitle: 'Specialist support',
     tagline: 'One accountable lead with expertise matched to the brief.',
     description: 'WBD leads and coordinates delivery, drawing on associates in technology, finance, commercial, procurement, people, HR and communications as the commission requires.',
-    iconName: 'Users',
-    subOfferings: ['Scoped associate teams', 'Technology and AI expertise', 'Finance and commercial input', 'Procurement and supplier support', 'People, HR and communications expertise'],
+    iconName: 'Users', subOfferings: ['Scoped associate teams', 'Technology and AI expertise', 'Finance and commercial input', 'Procurement and supplier support', 'People, HR and communications expertise'],
     audience: 'Clients and tenders requiring joined-up work across business functions', href: '#staffing'
   },
   {
-    id: 'training', tabId: 'training',
-    title: 'People & Capability Development', shortNavTitle: 'People & Capability',
-    tagline: 'Build skills and confidence to sustain change.',
-    description: 'We support teams through change, practical learning and knowledge transfer. Our separate Career Accelerator offers structured development for aspiring project professionals.',
-    iconName: 'GraduationCap',
-    subOfferings: ['Change leadership and engagement', 'Team training and coaching', 'Digital confidence and adoption', 'Knowledge transfer and handover', 'Project Management Career Accelerator'],
-    audience: 'Organisations strengthening teams and individuals building delivery skills', href: '#training'
+    id: 'career-coaching', tabId: 'career-coaching', title: 'Career coaching and CV support', shortNavTitle: 'Career support',
+    tagline: 'Build confidence and explain your contribution clearly.',
+    description: 'Discuss your career goals, review your CV and portfolio, and practise explaining your experience in interviews. Support is agreed around your needs; employment and salary outcomes are not guaranteed.',
+    iconName: 'Users', subOfferings: ['Career goals and development planning', 'CV and portfolio review', 'Interview preparation and practice', 'Project Management Career Accelerator'],
+    audience: 'Individuals planning their next career step', href: '#career-coaching'
   }
 ];

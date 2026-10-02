@@ -169,6 +169,22 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           {/* Desktop Navigation */}
           <nav className="hidden xl:flex items-center gap-2 font-medium text-xs">
             
+            {/* 5. ABOUT */}
+            <button
+              onClick={() => handleNavClick('about')}
+              onMouseEnter={() => {
+                handleCloseServices();
+                handleClosePrograms();
+              }}
+              className={`px-4 py-2 rounded-xl transition-all font-bold ${
+                activeTab === 'about'
+                  ? currentOption.navActiveBg
+                  : currentOption.navInactive
+              }`}
+            >
+              About &amp; Experience
+            </button>
+
             {/* 1. SERVICES DROPDOWN */}
             <div 
               className="relative"
@@ -286,9 +302,9 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 >
                   <div className="bg-white border border-slate-200/90 rounded-2xl shadow-2xl p-4 space-y-2 text-slate-800">
                     <div className="px-2 py-1 text-[11px] font-black uppercase text-navy-600 tracking-wider border-b border-slate-100 pb-2 flex items-center justify-between">
-                      <span>Academy &amp; Career Programs</span>
+                      <span>Academy and Career Programmes</span>
                       <span className="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-bold border border-emerald-200">
-                        Programme Enrolment Open
+                        Applications open
                       </span>
                     </div>
 
@@ -337,22 +353,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               )}
             </div>
 
-            {/* 3. PAYMENTS */}
-            <button
-              onClick={() => handleNavClick('payments')}
-              onMouseEnter={() => {
-                handleCloseServices();
-                handleClosePrograms();
-              }}
-              className={`px-4 py-2 rounded-xl transition-all font-bold ${
-                activeTab === 'payments'
-                  ? currentOption.navActiveBg
-                  : currentOption.navInactive
-              }`}
-            >
-              Payments
-            </button>
-
             {/* 4. CONTACT */}
             <button
               onClick={() => handleNavClick('contact')}
@@ -369,21 +369,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               Contact Us
             </button>
 
-            {/* 5. ABOUT */}
-            <button
-              onClick={() => handleNavClick('about')}
-              onMouseEnter={() => {
-                handleCloseServices();
-                handleClosePrograms();
-              }}
-              className={`px-4 py-2 rounded-xl transition-all font-bold ${
-                activeTab === 'about'
-                  ? currentOption.navActiveBg
-                  : currentOption.navInactive
-              }`}
-            >
-              About &amp; Experience
-            </button>
 
           </nav>
 
@@ -425,13 +410,21 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
 
           <div className="space-y-2">
             
+            {/* Mobile About */}
+            <button
+              onClick={() => handleNavClick('about')}
+              className="w-full text-left p-3 rounded-2xl text-sm font-extrabold flex items-center justify-between border bg-slate-50 text-slate-900 border-slate-200 hover:bg-slate-100"
+            >
+              <span>About &amp; Experience</span>
+              <ChevronRight className="w-4 h-4 text-slate-400" />
+            </button>
             {/* Mobile Services Accordion */}
             <div className="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden">
               <button
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
                 className="w-full p-3 text-left font-extrabold text-sm text-navy-700 flex items-center justify-between bg-slate-100/80"
               >
-                <span>1. Services</span>
+                <span>Services</span>
                 <ChevronDown className={`w-4 h-4 transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`} />
               </button>
               
@@ -464,7 +457,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 className="w-full p-3 text-left font-extrabold text-sm text-navy-700 flex items-center justify-between bg-slate-100/80"
               >
                 <div className="flex items-center gap-2">
-                  <span>2. Career Accelerator Programme</span>
+                  <span>Career Accelerator Programme</span>
                   <span className="text-[10px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-bold">New</span>
                 </div>
                 <ChevronDown className={`w-4 h-4 transition-transform ${mobileProgramsOpen ? 'rotate-180' : ''}`} />
@@ -492,39 +485,23 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     onClick={() => handleNavClick('academy')}
                     className="w-full text-left p-2 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center justify-between mt-1"
                   >
-                    <span>View All Academy Programs</span>
+                    <span>View All Academy Programmes</span>
                     <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
                   </button>
                 </div>
               )}
             </div>
 
-            {/* Mobile Payments */}
-            <button
-              onClick={() => handleNavClick('payments')}
-              className="w-full text-left p-3 rounded-2xl text-sm font-extrabold flex items-center justify-between border bg-slate-50 text-slate-900 border-slate-200 hover:bg-slate-100"
-            >
-              <span>3. Payments &amp; Retainers</span>
-              <ChevronRight className="w-4 h-4 text-slate-400" />
-            </button>
-
             {/* Mobile Contact */}
             <button
               onClick={() => handleNavClick('contact')}
               className="w-full text-left p-3 rounded-2xl text-sm font-extrabold flex items-center justify-between border bg-slate-50 text-slate-900 border-slate-200 hover:bg-slate-100"
             >
-              <span>4. Contact Us</span>
+              <span>Contact Us</span>
               <ChevronRight className="w-4 h-4 text-slate-400" />
             </button>
 
-            {/* Mobile About */}
-            <button
-              onClick={() => handleNavClick('about')}
-              className="w-full text-left p-3 rounded-2xl text-sm font-extrabold flex items-center justify-between border bg-slate-50 text-slate-900 border-slate-200 hover:bg-slate-100"
-            >
-              <span>5. About &amp; Experience</span>
-              <ChevronRight className="w-4 h-4 text-slate-400" />
-            </button>
+
           </div>
 
           <div className="pt-2 border-t border-slate-200">
