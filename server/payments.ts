@@ -1,0 +1,161 @@
+import express, { Express } from 'express';
+import Stripe from 'stripe';
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHmac, timingSafeEqual } from 'node:crypto';
+import { getAllRegistrations } from './admissionsService.js';
+
+const file = () => path.join(process.cwd(), 'data', 'payments.json');
+type Payment = { session: string; reference: string; amount: number; live: boolean; date: string; plan?: string; refunded?: number };
+export const readPayments = (): Payment[] => fs.existsSync(file()) ? JSON.parse(fs.readFileSync(file(), 'utf8')) : [];
+const origin = () => new URL(process.env.APP_URL || '').origin;
+const signingKey = () => (process.env.PAYMENT_LINK_SECRET || '').length >= 32 ? process.env.PAYMENT_LINK_SECRET! : '';
+export function paymentToken(reference: string) {
+  return signingKey() ? createHmac('sha256', signingKey()).update(reference).digest('hex') : '';
+}
+export function paymentLink(reference: string) {
+  if (!signingKey()) return '';
+  try { return `${origin()}/?page=payments&reference=${encodeURIComponent(reference)}&token=${paymentToken(reference)}`; } catch { return ''; }
+}
+function validToken(reference: string, token: string) {
+  const expected = paymentToken(reference);
+  return !!expected && typeof token === 'string' && /^[0-9a-f]{64}$/.test(token) && timingSafeEqual(Buffer.from(token), Buffer.from(expected));
+}
+export function quotePayment(plan: string, alreadyPaid: number, mentorship: boolean, custom?: string, now = new Date()) {
+  const total = mentorship ? 125000 : 100000;
+  if (plan === 'custom') {
+    if (typeof custom !== 'string' || !/^\d+(\.\d{1,2})?$/.test(custom)) throw new Error('Enter an amount in pounds with no more than two decimal places.');
+    const amount = Math.round(Number(custom) * 100);
+    if (amount < 100 || amount > total - alreadyPaid) throw new Error('Enter at least £1 and no more than the remaining programme balance.');
+    return amount;
+  }
+  const targets: Record<string, number> = { deposit: 5000, instalment: alreadyPaid < 50000 ? 50000 : total, full: total, early: 90000 };
+  if (!(plan in targets)) throw new Error('Choose a payment option.');
+  if (plan === 'early' && (mentorship || now >= new Date('2026-11-01T00:00:00Z'))) throw new Error('The £900 offer is for the standard programme paid by 31 October 2026.');
+  const amount = targets[plan] - alreadyPaid;
+  if (amount <= 0) throw new Error('This payment stage is already paid. Choose the next stage if a balance remains.');
+  return amount;
+}
+export function recordPaidSession(session: Stripe.Checkout.Session) {
+  if (session.payment_status !== 'paid') return false;
+  const m = session.metadata || {};
+  if (!m.wbd_reference || !m.wbd_amount || session.currency !== 'gbp' || session.amount_total !== Number(m.wbd_amount)) throw new Error('Payment verification failed.');
+  const payments = readPayments();
+  if (!payments.some(p => p.session === session.id)) {
+    payments.push({ session: session.id, reference: m.wbd_reference, amount: session.amount_total!, live: session.livemode, date: new Date().toISOString(), plan: m.plan });
+    fs.mkdirSync(path.dirname(file()), { recursive: true, mode: 0o700 });
+    fs.writeFileSync(file() + '.tmp', JSON.stringify(payments, null, 2), { mode: 0o600 });
+    fs.renameSync(file() + '.tmp', file());
+  }
+  return true;
+}
+const locks = new Set<string>();
+export function recordRefund(session: Stripe.Checkout.Session, amountRefunded: number) {
+  recordPaidSession(session);
+  const payments = readPayments();
+  const payment = payments.find(p => p.session === session.id);
+  if (!payment || !Number.isInteger(amountRefunded) || amountRefunded < 0 || amountRefunded > payment.amount) throw new Error('Invalid refund amount.');
+  payment.refunded = Math.max(payment.refunded || 0, amountRefunded);
+  fs.writeFileSync(file() + '.tmp', JSON.stringify(payments, null, 2), { mode: 0o600 });
+  fs.renameSync(file() + '.tmp', file());
+}
+export function installPaymentWebhook(app: Express) {
+  app.post('/api/stripe/webhook', express.raw({ type: 'application/json', limit: '100kb' }), async (req, res) => {
+    try {
+      if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) { res.sendStatus(503); return; }
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+      const event = stripe.webhooks.constructEvent(req.body, req.headers['stripe-signature'] as string, process.env.STRIPE_WEBHOOK_SECRET);
+      if (['checkout.session.completed', 'checkout.session.async_payment_succeeded'].includes(event.type)) {
+        const session = event.data.object as Stripe.Checkout.Session;
+        if (session.metadata?.wbd_reference) recordPaidSession(session);
+      }
+      if (event.type === 'charge.refunded') {
+        const charge = event.data.object as Stripe.Charge;
+        if (typeof charge.payment_intent === 'string') {
+          const sessions = await stripe.checkout.sessions.list({ payment_intent: charge.payment_intent, limit: 1 });
+          for (const session of sessions.data) if (session.metadata?.wbd_reference) recordRefund(session, charge.amount_refunded);
+        }
+      }
+      res.json({ received: true });
+    } catch { res.status(400).json({ error: 'Webhook could not be verified or recorded; retry required.' }); }
+  });
+}
+export function installPaymentRoutes(app: Express, createClient: () => Stripe = () => new Stripe(process.env.STRIPE_SECRET_KEY!)) {
+  const configured = () => {
+    try { return !!(process.env.STRIPE_SECRET_KEY?.match(/^sk_(test|live)_/) && process.env.STRIPE_WEBHOOK_SECRET && signingKey() && /^https:\/\//.test(origin())); } catch { return false; }
+  };
+  const mode = () => process.env.STRIPE_SECRET_KEY?.startsWith('sk_live_') ? 'live' : 'test';
+  app.get('/api/stripe/status', (_req, res) => res.json({ configured: configured(), mode: mode() }));
+  app.post('/api/stripe/application', (req, res) => {
+    const { reference, token } = req.body || {};
+    if (typeof reference !== 'string' || !validToken(reference, token)) { res.status(403).json({ error: 'Open the private payment link supplied after your application.' }); return; }
+    const reg = getAllRegistrations().find(r => r.referenceNumber === reference);
+    if (!reg) { res.status(404).json({ error: 'Application not found.' }); return; }
+    const live = mode() === 'live';
+    const paid = readPayments().filter(p => p.reference === reference && p.live === live).reduce((n,p) => n + p.amount - (p.refunded || 0), 0);
+    res.set('Cache-Control','no-store').json({ paid, reserved: live && paid >= 5000, settled: paid >= (reg.packageSelection?.includes('1,250') ? 125000 : readPayments().some(p=>p.reference===reference && p.live===live && p.plan==='early') ? 90000 : 100000), mentorship: reg.packageSelection?.includes('1,250'), mode: mode() });
+  });
+  app.post('/api/stripe/create-checkout-session', async (req, res) => {
+    const { reference, token, plan, customAmount, termsAccepted } = req.body || {};
+    if (typeof reference !== 'string' || !validToken(reference, token)) { res.status(403).json({ error: 'Open your private application payment link.' }); return; }
+    if (termsAccepted !== true) { res.status(400).json({ error: 'Please read and accept the programme terms before payment.' }); return; }
+    if (!configured()) { res.status(503).json({ error: 'Card payments are not ready yet. Please contact WOW quoting your application reference. Your place is not reserved without payment or an agreed sponsorship arrangement.' }); return; }
+    if (locks.has(reference)) { res.status(409).json({ error: 'A checkout is being prepared. Please wait and try again.' }); return; }
+    locks.add(reference);
+    try {
+      const reg = getAllRegistrations().find(r => r.referenceNumber === reference);
+      if (!reg) throw new Error('Application not found.');
+      const stripe = createClient();
+      // One reusable Stripe customer per application; inspect sessions across process restarts.
+      const customersFile = path.join(path.dirname(file()), 'payment-customers.json');
+      const customers = fs.existsSync(customersFile) ? JSON.parse(fs.readFileSync(customersFile, 'utf8')) : {};
+      const customerKey = `${mode()}:${reference}`;
+      if (!customers[customerKey]) {
+        const created = await stripe.customers.create({ email: reg.email, metadata: { wbd_reference: reference } }, { idempotencyKey: `wbd-customer-${reference}` });
+        // Re-read after the network await so another application's customer is not overwritten.
+        const current = fs.existsSync(customersFile) ? JSON.parse(fs.readFileSync(customersFile, 'utf8')) : {};
+        current[customerKey] = created.id;
+        fs.mkdirSync(path.dirname(file()), { recursive: true, mode: 0o700 });
+        fs.writeFileSync(customersFile + '.tmp', JSON.stringify(current), { mode: 0o600 });
+        fs.renameSync(customersFile + '.tmp', customersFile);
+        customers[customerKey] = created.id;
+      }
+      const customer = { id: customers[customerKey] };
+      const sessions = await stripe.checkout.sessions.list({ customer: customer.id, limit: 100 });
+      for (const session of sessions.data) {
+        if (session.metadata?.wbd_reference !== reference) continue;
+        if (session.payment_status === 'paid') recordPaidSession(session);
+        if (session.status === 'complete' && session.payment_status !== 'paid') throw new Error('An earlier payment is still being confirmed. Please contact WOW before paying again.');
+        if (session.status === 'open') await stripe.checkout.sessions.expire(session.id);
+      }
+      const paid = readPayments().filter(p => p.reference === reference && p.live === (mode() === 'live')).reduce((n,p) => n + p.amount - (p.refunded || 0), 0);
+      const settledEarly = readPayments().some(p => p.reference === reference && p.live === (mode() === 'live') && p.plan === 'early');
+      if (settledEarly && paid >= 90000) throw new Error('Your early settlement programme fee is already paid in full.');
+      const amount = quotePayment(plan, paid, !!reg.packageSelection?.includes('1,250'), customAmount);
+      const returnUrl = paymentLink(reference);
+      const session = await stripe.checkout.sessions.create({
+        mode: 'payment', customer: customer.id, payment_method_types: ['card'],
+        line_items: [{ price_data: { currency: 'gbp', unit_amount: amount, product_data: { name: `WOW Career Accelerator - ${plan === 'deposit' ? 'registration deposit' : plan === 'custom' ? 'agreed part payment' : plan === 'instalment' ? 'instalment' : 'programme balance'}` } }, quantity: 1 }],
+        client_reference_id: reference, metadata: { wbd_reference: reference, wbd_amount: String(amount), plan, termsAcceptedAt: new Date().toISOString(), termsVersion: '2026-10-02' },
+        success_url: `${returnUrl}&session_id={CHECKOUT_SESSION_ID}`, cancel_url: `${returnUrl}&cancelled=1`, expires_at: Math.floor(Date.now()/1000)+1800,
+      });
+      res.json({ url: session.url, mode: mode(), amount });
+    } catch (error) { res.status(400).json({ error: error instanceof Error && !('type' in error) ? error.message : 'Checkout could not be prepared. No payment has been taken. Please try again or contact WOW.' }); }
+    finally { locks.delete(reference); }
+  });
+  app.post('/api/stripe/verify', async (req, res) => {
+    const { reference, token, sessionId } = req.body || {};
+    if (typeof reference !== 'string' || !validToken(reference, token) || typeof sessionId !== 'string') { res.sendStatus(403); return; }
+    try {
+      const stripe = createClient();
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
+      if (session.metadata?.wbd_reference !== reference) { res.sendStatus(403); return; }
+      const paid = recordPaidSession(session);
+      res.set('Cache-Control','no-store').json({ paid, mode: session.livemode ? 'live' : 'test' });
+    } catch { res.status(503).json({ error: 'Payment confirmation is temporarily unavailable. Do not pay again; contact WOW with your reference.' }); }
+  });
+  app.get('/api/stripe/ledger', (req,res) => {
+    if (!process.env.ADMISSIONS_ADMIN_TOKEN || req.headers.authorization !== `Bearer ${process.env.ADMISSIONS_ADMIN_TOKEN}`) { res.sendStatus(403); return; }
+    res.set('Cache-Control','no-store').json(readPayments());
+  });
+}

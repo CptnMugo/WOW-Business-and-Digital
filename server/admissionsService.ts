@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer';
 
 export interface RegistrationData {
   referenceNumber: string;
+  paymentUrl?: string;
   submittedAt: string;
   submissionType: 'APPLICATION' | 'SUBMIT_AND_PAY' | 'FREE_TESTER';
   submissionId?: string;
@@ -28,6 +29,7 @@ export interface RegistrationData {
   cohortDate?: string;
   learningMode?: string;
   paymentPreference?: string;
+  packageSelection?: string;
   emergencyContactName?: string;
   emergencyContactRelationship?: string;
   emergencyContactPhone?: string;
@@ -197,7 +199,7 @@ export function generateStaffAlertEmail(reg: RegistrationData): { subject: strin
 }
 export function generateDelegateWelcomeEmail(reg: RegistrationData): { subject: string; text: string; html: string } {
   const subject = `Application received — ${reg.referenceNumber}`;
-  const text = `Hello ${reg.firstName},\n\nThank you for applying to the six-month Project Management Career Accelerator, starting 14 November 2026.\n\nReference: ${reg.referenceNumber}\nPayment preference: ${reg.paymentPreference || 'To discuss'}\n\nYour application is awaiting review. This acknowledgement is not an offer of a place. No payment has been taken. If accepted, you will receive confirmation of delivery arrangements, enrolment terms and an invoice before payment is requested.\n\nFor updates, email wowdigital@wowbusinessanddigital.com and quote your reference.\n\nWOW Business and Digital Ltd`;
+  const text = `Hello ${reg.firstName},\n\nThank you for applying to the six-month Project Management Career Accelerator, starting 14 November 2026.\n\nReference: ${reg.referenceNumber}\nPayment preference: ${reg.paymentPreference || 'To discuss'}\n\nYour application is awaiting review. This acknowledgement is not an offer of a place. No payment has been taken. To reserve a place, pay at least the £50 registration deposit, credited against tuition. Payment reserves your place subject to application review; submission alone does not. Employer sponsorship requires written agreement.\n\nPrivate payment link (keep this secure): ${reg.paymentUrl || "Please contact WOW with your reference for payment instructions."}\n\nFor updates, email wowdigital@wowbusinessanddigital.com and quote your reference.\n\nWOW Business and Digital Ltd`;
   return { subject, text, html: `<div style="font-family:Arial,sans-serif;max-width:650px"><h1>Application received</h1><p>${escape(text).replace(/\n/g, '<br>')}</p></div>` };
 }
 

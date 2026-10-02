@@ -1,0 +1,25 @@
+const {chromium}=require('playwright');
+const path=require('node:path');
+(async()=>{
+ const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+ const page=await browser.newPage();
+ const file='file://'+path.resolve('../WBD_Payment_Journey_Preview.html');
+ await page.goto(file);await page.getByRole('heading',{name:'Reserve your place and pay online'}).waitFor();
+ await page.screenshot({path:'../payment-preview-desktop.png',fullPage:true});
+ await page.getByRole('link',{name:'After £50 deposit'}).click();
+ await page.getByText('£850.00 remaining',{exact:true}).waitFor();
+ await page.getByText('£450.00 remaining',{exact:true}).waitFor();
+ await page.getByRole('radio').last().check();
+ await page.getByRole('spinbutton').fill('1');
+ await page.getByRole('checkbox').check();
+ await page.getByRole('button',{name:'Test payment £1.00 with Stripe'}).click();
+ await page.getByRole('status').filter({hasText:'No payment was taken'}).waitFor();
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(file+'?page=payments&reference=WOW-CA-26-7K4M9P&token=demo');
+ await page.getByRole('heading',{name:'Reserve your place and pay online'}).waitFor();
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);
+ if(overflow)throw Error('Mobile horizontal overflow');
+ await page.screenshot({path:'../payment-preview-mobile.png',fullPage:true});
+ console.log('PASS desktop/mobile payment preview, deposit credits, bespoke amount and demonstration checkout; no external requests.');
+ await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

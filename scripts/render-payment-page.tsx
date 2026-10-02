@@ -1,0 +1,13 @@
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import fs from 'node:fs';
+import { PaymentsSection } from '../src/components/PaymentsSection';
+const index = fs.readFileSync('dist/index.html','utf8');
+const cssPath = index.match(/href="(\/assets\/[^\"]+\.css)"/)![1];
+let css = fs.readFileSync('dist'+cssPath,'utf8');
+css = css.replaceAll('/fonts/Montserrat-Variable.ttf','data:font/ttf;base64,'+fs.readFileSync('public/fonts/Montserrat-Variable.ttf').toString('base64'));
+const body = renderToStaticMarkup(<PaymentsSection setActiveTab={()=>{}}/>).replaceAll('<input','<input disabled').replaceAll('<button','<button disabled');
+const html = '<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WBD Payment Page Preview</title><style>'+css+'</style></head><body class="bg-slate-50"><div style="background:#0b2d5b;color:white;padding:20px;text-align:center;font:16px Arial"><strong>WOW Business and Digital | Payment page preview</strong><p>Visual review only. Controls are disabled. No payment will be taken.</p></div>'+body+'<aside style="margin:24px auto;padding:24px;max-width:900px;background:#f8f4ed;font:16px Arial;line-height:1.7"><strong>After a £50 deposit is verified</strong><p>Early settlement balance: £850. First instalment balance: £450, followed by the second £500 instalment. New application reference example: WOW-CA-26-7K4M9P.</p><p>Registered applicants use their private payment link to continue to Stripe. This is a static preview, so it shows the public payment options without applicant information.</p></aside></body></html>';
+fs.writeFileSync('../WBD_Payment_Page_Direct_Preview.html',html);
+if(!html.includes('£900.00') || !html.includes('£50.00') || html.includes('<script'))throw new Error('Preview validation failed');
+console.log('Saved verified direct payment page: no JavaScript or route navigation required.');

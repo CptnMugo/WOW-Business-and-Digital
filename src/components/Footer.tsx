@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
             <h2 className="text-sm font-bold text-[#f0c474] mb-3">Connect</h2>
             <ul className="text-sm text-[#dbe4ec] space-y-1">{links([
               ['contact', 'Contact us'], ['associates', 'Become an associate'],
-              ['payments', 'Fees and invoice payments'],
+              ['payments', 'Fees and payments'],
             ])}</ul>
             <p className="text-xs text-[#dbe4ec] mt-4 leading-relaxed max-w-xs">UK and international enquiries welcome.</p>
           </nav>

@@ -552,14 +552,14 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
             >
               <option value="" disabled>Please select</option>
               {formData.packageSelection.includes('£1,250') ? <>
-                <option value="Executive mentorship package £1,250 by invoice">Executive mentorship package £1,250 by invoice</option>
+                <option value="Executive mentorship package £1,250">Executive mentorship package £1,250</option>
                 <option value="Discuss instalments for executive mentorship">Discuss instalments for executive mentorship</option>
               </> : <>
                 <option value="Pay in full £900 by 31 October 2026">Pay in full £900 by 31 October 2026</option>
                 <option value="Two instalments £500 by 31 October 2026 and £500 by 30 November 2026">Two instalments £500 by 31 October 2026 and £500 by 30 November 2026</option>
               </>}
-              <option value="£50 registration deposit after acceptance">
-                £50 registration deposit after acceptance (credited against tuition)
+              <option value="£50 registration deposit to reserve your place">
+                £50 registration deposit to reserve your place (credited against tuition)
               </option>
               <option value="Discuss employer sponsorship / bespoke arrangement">
                 Discuss employer sponsorship / bespoke arrangement
@@ -584,7 +584,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </h3>
         </div>
         <p className="text-[11px] text-slate-600">
-          Read the programme information and terms, then confirm the declarations below. No payment is taken with your application.
+          Read the programme information and terms, then confirm the declarations below. Continue to Stripe after submitting. At least £50 is required to reserve a place, unless sponsorship is agreed in writing.
         </p>
 
         <div className="space-y-3 pt-1 text-xs">
@@ -734,7 +734,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
         <button type="submit" id="btn-submit-application" disabled={submitting} className="w-full bg-[#0b2d5b] text-white rounded-xl py-4 font-bold disabled:opacity-60">
           {submitting ? 'Saving application…' : 'Submit application'}
         </button>
-        <p className="text-center text-sm text-slate-600">Your application will be reviewed. No payment is taken here.</p>
+        <p className="text-center text-sm text-slate-600">Your application will be saved for review. Continue to payment to reserve your place.</p>
       </div>
     </form>
   );

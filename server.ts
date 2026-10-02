@@ -1,3 +1,4 @@
+import { installPaymentWebhook, installPaymentRoutes, paymentLink, readPayments } from './server/payments.js';
 import express from "express";
 import { installWorkspaceAccess } from "./server/workspaceAccess.js";
 import path from "path";
@@ -5,7 +6,7 @@ import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 import fs from "fs";
-import { randomUUID } from "crypto";
+import { randomUUID, randomBytes } from "crypto";
 import {
   getAllRegistrations,
   processRegistrationSubmission,
@@ -29,7 +30,9 @@ if (
 const app = express();
 const PORT = 3000;
 app.set("trust proxy", "loopback");
+app.use((_req, res, next) => { res.set("Referrer-Policy", "no-referrer"); next(); });
 
+installPaymentWebhook(app);
 app.use(express.json({ limit: "100kb" }));
 installWorkspaceAccess(app);
 
@@ -179,17 +182,7 @@ app.post("/api/ai-assistant", async (req, res) => {
   }
 });
 
-// Invoice after acceptance is the current payment policy. A test key is not a live facility.
-app.get('/api/stripe/status', (_req, res) => {
-  res.json({ configured: false, mode: 'invoice', publishableKey: null });
-});
-app.post('/api/stripe/create-checkout-session', (req, res) => {
-  const amount = Number(req.body?.amount);
-  if (!Number.isFinite(amount) || amount <= 0) {
-    res.status(400).json({ error: 'A valid positive payment amount is required' }); return;
-  }
-  res.status(503).json({ error: 'Online card checkout is not offered. Apply for review; an invoice follows acceptance.' });
-});
+installPaymentRoutes(app);
 
 // -------------------------------------------------------------
 // ADMISSIONS & REGISTRATION PIPELINE (Option 2 & Option 3)
@@ -207,25 +200,34 @@ app.post("/api/registrations/submit", async (req, res) => {
     const duplicate = getAllRegistrations().find(record => record.submissionId === body.submissionId);
     if (duplicate) {
       if (duplicate.email !== body.email) { res.status(409).json({ error: 'Please start a new application.' }); return; }
-      res.json({ success: true, referenceNumber: duplicate.referenceNumber, emailAlertSent: duplicate.emailDelivery?.staffAlert.sent ?? false, delegateWelcomeSent: duplicate.emailDelivery?.delegateWelcome.sent ?? false, sheetsSynced: duplicate.sheetsSync?.synced ?? false });
+      res.json({ success: true, referenceNumber: duplicate.referenceNumber, paymentUrl: paymentLink(duplicate.referenceNumber), emailAlertSent: duplicate.emailDelivery?.staffAlert.sent ?? false, delegateWelcomeSent: duplicate.emailDelivery?.delegateWelcome.sent ?? false, sheetsSynced: duplicate.sheetsSync?.synced ?? false });
       return;
     }
     // Copy application fields only; ignore client-supplied workflow state and internal metadata.
     const fields = ['fullName', 'email', 'mobileWhatsapp', 'townCity', ...selectFields, 'workStatusOther', 'highestQualificationOther', 'pmQualifications', 'previousExperience', 'careerObjective', 'currentChallenge', 'developmentNeeds', 'developmentNeedsOther', 'successMeasure', 'howDidYouHear', 'promoCode', 'privacyAcknowledged', 'marketingConsent', ...[1,2,3,4,5,6,7].map(n => 'declaration' + n)];
+    const existingReferences = new Set(getAllRegistrations().map(record => record.referenceNumber));
+    const alphabet = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+    let referenceNumber: string;
+    do {
+      const suffix = Array.from(randomBytes(6), byte => alphabet[byte % alphabet.length]).join('');
+      referenceNumber = `WOW-CA-${new Date().getUTCFullYear().toString().slice(-2)}-${suffix}`;
+    } while (existingReferences.has(referenceNumber));
     const data = {
       ...Object.fromEntries(fields.map(key => [key, body[key]])),
       submissionId: body.submissionId,
-      referenceNumber: `WOW-PM-${randomUUID()}`,
+      referenceNumber,
       submittedAt: new Date().toISOString(),
       submissionType: 'APPLICATION', status: 'APPLICATION_REVIEW_PENDING',
       cohortDate: '14 November 2026', programTitle: 'Project Management Career Accelerator (6-Month)',
     } as RegistrationData;
 
+    data.paymentUrl = paymentLink(data.referenceNumber);
     const processed = await processRegistrationSubmission(data);
 
     res.json({
       success: true,
       referenceNumber: processed.referenceNumber,
+      paymentUrl: paymentLink(processed.referenceNumber),
       emailAlertSent: processed.emailDelivery?.staffAlert.sent ?? false,
       delegateWelcomeSent: processed.emailDelivery?.delegateWelcome.sent ?? false,
       sheetsSynced: processed.sheetsSync?.synced ?? false,
@@ -245,7 +247,7 @@ app.get("/api/registrations", (req, res) => {
     return;
   }
   try {
-    const list = getAllRegistrations();
+    const list = getAllRegistrations().map(reg => ({ ...reg, paymentUrl: paymentLink(reg.referenceNumber), livePaymentTotal: readPayments().filter(p => p.reference === reg.referenceNumber && p.live).reduce((sum, p) => sum + p.amount - (p.refunded || 0), 0) / 100 }));
     res.json({
       registrations: list,
       total: list.length,
@@ -363,7 +365,7 @@ async function startServer() {
       let html = fs.readFileSync(path.join(distPath, 'index.html'), 'utf-8');
       if (['pm-career-accelerator', 'pm-registration'].includes(String(req.query.page))) {
         const title = 'Project Management Career Accelerator | Starts 14 November 2026 | WOW';
-        const description = 'Six months of practical project management development, supervised live WOW project work and career coaching. Standard fee £1,000. Apply for review; invoice after acceptance.';
+        const description = 'Six months of practical project management development, supervised live WOW project work and career coaching. Standard fee £1,000. Apply for review; £50 registration deposit credited against tuition.';
         html = html.replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
           .replace(/(<meta name="description" content=")[^"]*/, '$1' + description)
           .replace(/(<meta property="og:title" content=")[^"]*/, '$1' + title)

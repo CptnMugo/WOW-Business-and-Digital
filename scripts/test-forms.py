@@ -53,6 +53,7 @@ with tempfile.TemporaryDirectory(prefix='wbd-forms-') as folder:
         assert len(saved)==8 and {x['category'] for x in saved}==set(cases)
         passed.append('All eight successful enquiry payloads persisted exactly once; rejected submissions not saved')
         result=request('/api/registrations/submit',training)
+        assert __import__('re').fullmatch(r'WOW-CA-26-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}', result['referenceNumber'])
         assert result['success'] and not result['emailAlertSent'] and not result['delegateWelcomeSent']
         assert 'registration' not in result
         repeated=request('/api/registrations/submit',training)
@@ -87,17 +88,17 @@ with tempfile.TemporaryDirectory(prefix='wbd-forms-') as folder:
         register.write_text(previous)
         passed.append('Retries reuse the reference; server owns status/date; private metadata excluded; corrupt storage fails without overwriting')
         status=request('/api/stripe/status')
-        assert status['configured'] is False and status['mode']=='invoice' and status['publishableKey'] is None
+        assert status['configured'] is False and status['mode']=='test'
         with urllib.request.urlopen('http://127.0.0.1:3000/?page=pm-career-accelerator') as response:
             html=response.read().decode()
             assert '<title>Project Management Career Accelerator | Starts 14 November 2026 | WOW</title>' in html
-            assert 'og:image' in html and 'invoice after acceptance' in html
+            assert 'og:image' in html and 'registration deposit' in html
         with urllib.request.urlopen('http://127.0.0.1:3000/WBD_Website_Share_Image_1200x630.png') as response:
             assert response.headers['Content-Type']=='image/png' and len(response.read())>1000
         passed.append('Campaign URL returns programme metadata and the approved social sharing image')
-        request('/api/stripe/create-checkout-session',dict(amount=50),503)
-        request('/api/stripe/create-checkout-session',dict(amount=-1),400)
-        passed.append('Payments: unconfigured checkout blocked without fake success; negative amount rejected')
+        request('/api/stripe/create-checkout-session',dict(amount=50),403)
+        request('/api/stripe/create-checkout-session',dict(amount=-1),403)
+        passed.append('Payments: unconfigured status reported; checkout requests without private payment links rejected')
         request('/api/ai-assistant',dict(prompt='Explain programme governance',assistantType='business'))
         request('/api/ai-assistant',dict(prompt=''),400)
         passed.append('Assistant: local fallback responds; empty request rejected')
