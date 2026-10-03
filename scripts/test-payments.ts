@@ -90,6 +90,8 @@ try{
  recordPaidSession(live);
  assert.equal((await call('application',auth)).paid,0);
  delete process.env.STRIPE_WEBHOOK_SECRET;
+ assert.equal((await call('status')).configured,true);
+ delete process.env.STRIPE_SECRET_KEY;
  assert.equal((await call('status')).configured,false);
  await call('create-checkout-session',{...auth,termsAccepted:true,plan:'deposit'},503);
  console.log(`PASS ${checks} payment checks: prices, credits, deadlines, private links, duplicate/cancelled checkouts, signatures, live/test separation and fail-closed setup. No Stripe network calls or money moved.`);

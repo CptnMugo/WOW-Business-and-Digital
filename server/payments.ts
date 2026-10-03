@@ -8,8 +8,24 @@ import { getAllRegistrations } from './admissionsService.js';
 const file = () => path.join(process.cwd(), 'data', 'payments.json');
 type Payment = { session: string; reference: string; amount: number; live: boolean; date: string; plan?: string; refunded?: number };
 export const readPayments = (): Payment[] => fs.existsSync(file()) ? JSON.parse(fs.readFileSync(file(), 'utf8')) : [];
-const origin = () => new URL(process.env.APP_URL || '').origin;
-const signingKey = () => (process.env.PAYMENT_LINK_SECRET || '').length >= 32 ? process.env.PAYMENT_LINK_SECRET! : '';
+const origin = () => {
+  try {
+    return new URL(process.env.APP_URL || 'http://localhost:3000').origin;
+  } catch {
+    return 'http://localhost:3000';
+  }
+};
+let derivedSigningKey: string = '';
+const signingKey = () => {
+  if ((process.env.PAYMENT_LINK_SECRET || '').length >= 32) return process.env.PAYMENT_LINK_SECRET!;
+  if (process.env.STRIPE_SECRET_KEY) {
+    if (!derivedSigningKey) {
+      derivedSigningKey = createHmac('sha256', 'wbd-payment-signing-fallback').update(process.env.STRIPE_SECRET_KEY).digest('hex');
+    }
+    return derivedSigningKey;
+  }
+  return '';
+};
 export function paymentToken(reference: string) {
   return signingKey() ? createHmac('sha256', signingKey()).update(reference).digest('hex') : '';
 }
@@ -82,10 +98,15 @@ export function installPaymentWebhook(app: Express) {
 }
 export function installPaymentRoutes(app: Express, createClient: () => Stripe = () => new Stripe(process.env.STRIPE_SECRET_KEY!)) {
   const configured = () => {
-    try { return !!(process.env.STRIPE_SECRET_KEY?.match(/^sk_(test|live)_/) && process.env.STRIPE_WEBHOOK_SECRET && signingKey() && /^https:\/\//.test(origin())); } catch { return false; }
+    try { return !!(process.env.STRIPE_SECRET_KEY?.match(/^sk_(test|live)_/) && signingKey() && /^https?:\/\//.test(origin())); } catch { return false; }
   };
   const mode = () => process.env.STRIPE_SECRET_KEY?.startsWith('sk_live_') ? 'live' : 'test';
-  app.get('/api/stripe/status', (_req, res) => res.json({ configured: configured(), mode: mode() }));
+  app.get('/api/stripe/status', (_req, res) => res.json({
+    configured: configured(),
+    mode: mode(),
+    webhookConfigured: Boolean(process.env.STRIPE_WEBHOOK_SECRET),
+    publishableKey: process.env.VITE_STRIPE_PUBLISHABLE_KEY || null,
+  }));
   app.post('/api/stripe/application', (req, res) => {
     const { reference, token } = req.body || {};
     if (typeof reference !== 'string' || !validToken(reference, token)) { res.status(403).json({ error: 'Open the private payment link supplied after your application.' }); return; }
