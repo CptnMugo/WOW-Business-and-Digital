@@ -40,7 +40,7 @@ export const PaymentsSection = ({ setActiveTab }: { setActiveTab: (tab: NavTab) 
             } catch(e) { if(active) {setVerificationBlocked(true);setMessage(e instanceof Error ? e.message : 'Please contact WOW before paying again.');} }
           } else if (query.has('cancelled')) setMessage('Checkout was cancelled. Your application is saved; no payment has been confirmed for this checkout.');
           const a = await post('/api/stripe/application',{reference,token});
-          if(active) {setAccount(a); if(a.paid >= 5000) setPlan(a.mentorship ? 'full' : 'instalment');}
+          if(active) {setAccount(a); if(a.paid >= 5000) setPlan(a.mentorship ? 'custom' : 'instalment');}
         }
       } catch(e) {if(active) setMessage(e instanceof Error ? e.message : 'Card payments are unavailable.');}
     })();
@@ -55,7 +55,7 @@ export const PaymentsSection = ({ setActiveTab }: { setActiveTab: (tab: NavTab) 
       {id:'early',title:'Early settlement',target:90000,description:'£900 total when paid in full by 31 October 2026. Any deposit already paid is deducted.'},
       {id:'instalment',title:'Two instalments',target:paid < 50000 ? 50000 : 100000,description:'£500 by 31 October and £500 by 30 November 2026. Your deposit counts towards the first £500.'},
     ] : []),
-    {id:'full',title:account?.mentorship ? 'Programme with executive mentorship' : 'Standard programme',target:total,description:account?.mentorship ? programme.mentorshipScope : '£1,000 total. Previous verified payments are deducted.'},
+    ...(!account?.mentorship ? [{id:'full',title:'Standard programme',target:total,description:'£1,000 total. Previous verified payments are deducted.'}] : []),
   ];
   const earlyExpired = new Date() >= new Date('2026-11-01T00:00:00Z');
   const amount = plan === 'custom' ? Math.round(Number(customAmount)*100) : (options.find(o=>o.id===plan)?.target || 0)-paid;
@@ -73,6 +73,7 @@ export const PaymentsSection = ({ setActiveTab }: { setActiveTab: (tab: NavTab) 
     {message && <p role="status" className="bg-[#f8f4ed] border border-[#d4a24c] rounded-xl p-5">{message}</p>}
     {reference && <p className="break-all">Application reference: <strong>{reference}</strong></p>}
     {account && <div className="bg-[#f8f4ed] rounded-xl p-5"><p>Verified {status?.mode === 'test' ? 'test ' : ''}payments: <strong>{money(paid)}</strong></p><p>{account.reserved ? 'A live payment of at least £50 is recorded. Your acceptance email confirms your enrolment arrangements.' : 'No live reservation payment is recorded. Please wait for acceptance, then follow your agreed payment schedule.'}</p></div>}
+    {account?.mentorship && <p>Executive mentorship is an optional add-on. Payment options and arrangements are available. Please agree the additional fee and schedule with WOW before making a bespoke payment.</p>}
     <form onSubmit={checkout} className="space-y-6">
       <fieldset><legend className="font-bold text-xl mb-4">Choose your payment</legend><div className="grid md:grid-cols-2 gap-4">
         {options.map(o => <label key={o.id} className={`block bg-white border-2 rounded-2xl p-5 cursor-pointer ${plan===o.id?'border-[#b78a38]':'border-slate-200'}`}>

@@ -539,8 +539,8 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               <option value="WOW Career Accelerator 6-Month Programme (£1,000)">
                 WOW Career Accelerator 6-Month Programme (£1,000)
               </option>
-              <option value="Career Accelerator + 1-to-1 Executive Mentorship (£1,250)">
-                Career Accelerator + 1-to-1 Executive Mentorship (£1,250)
+              <option value="Career Accelerator with optional executive mentorship add-on">
+                Career Accelerator with optional executive mentorship add-on
               </option>
               <option value="Not sure - I would like advice">
                 Not sure - I would like advice
@@ -558,8 +558,8 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
               className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-navy-500"
             >
               <option value="" disabled>Please select</option>
-              {formData.packageSelection.includes('£1,250') ? <>
-                <option value="Executive mentorship package £1,250">Executive mentorship package £1,250</option>
+              {/mentorship/i.test(formData.packageSelection) ? <>
+                <option value="Discuss payment arrangements for the executive mentorship add-on">Discuss payment arrangements for the executive mentorship add-on</option>
                 <option value="Discuss instalments for executive mentorship">Discuss instalments for executive mentorship</option>
               </> : <>
                 <option value="Pay in full £900 by 31 October 2026">Pay in full £900 by 31 October 2026</option>

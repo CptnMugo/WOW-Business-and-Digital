@@ -81,7 +81,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
 
         <div className="max-w-4xl rounded-2xl border border-navy-200 bg-white/90 p-5 text-slate-800">
           <p className="font-bold">Starts {CAREER_ACCELERATOR.startDate} · Six months</p>
-          <p className="mt-3"><strong>Executive mentorship package £1,250.</strong> {CAREER_ACCELERATOR.mentorshipScope}</p>
+          <p className="mt-3"><strong>Optional executive mentorship add-on.</strong> {CAREER_ACCELERATOR.mentorshipScope} Payment options and arrangements are available; please discuss these with us during your confirmation call.</p>
           <p className="mt-3">Apply first. Payment will be requested by email only once your application is accepted. The £900 early settlement offer applies to the standard programme.</p>
         </div>
 

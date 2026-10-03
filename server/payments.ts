@@ -93,7 +93,7 @@ export function installPaymentRoutes(app: Express, createClient: () => Stripe = 
     if (!reg) { res.status(404).json({ error: 'Application not found.' }); return; }
     const live = mode() === 'live';
     const paid = readPayments().filter(p => p.reference === reference && p.live === live).reduce((n,p) => n + p.amount - (p.refunded || 0), 0);
-    res.set('Cache-Control','no-store').json({ paid, reserved: live && paid >= 5000, settled: paid >= (reg.packageSelection?.includes('1,250') ? 125000 : readPayments().some(p=>p.reference===reference && p.live===live && p.plan==='early') ? 90000 : 100000), mentorship: reg.packageSelection?.includes('1,250'), mode: mode() });
+    res.set('Cache-Control','no-store').json({ paid, reserved: live && paid >= 5000, settled: paid >= (/mentorship/i.test(reg.packageSelection || '') ? 125000 : readPayments().some(p=>p.reference===reference && p.live===live && p.plan==='early') ? 90000 : 100000), mentorship: /mentorship/i.test(reg.packageSelection || ''), mode: mode() });
   });
   app.post('/api/stripe/create-checkout-session', async (req, res) => {
     const { reference, token, plan, customAmount, termsAccepted } = req.body || {};
@@ -131,7 +131,8 @@ export function installPaymentRoutes(app: Express, createClient: () => Stripe = 
       const paid = readPayments().filter(p => p.reference === reference && p.live === (mode() === 'live')).reduce((n,p) => n + p.amount - (p.refunded || 0), 0);
       const settledEarly = readPayments().some(p => p.reference === reference && p.live === (mode() === 'live') && p.plan === 'early');
       if (settledEarly && paid >= 90000) throw new Error('Your early settlement programme fee is already paid in full.');
-      const amount = quotePayment(plan, paid, !!reg.packageSelection?.includes('1,250'), customAmount);
+      if (plan === 'full' && /mentorship/i.test(reg.packageSelection || '') && !reg.packageSelection?.includes('1,250')) throw new Error('Please agree your executive mentorship fee and payment arrangements with WOW before using the bespoke payment option.');
+      const amount = quotePayment(plan, paid, !!/mentorship/i.test(reg.packageSelection || ''), customAmount);
       const returnUrl = paymentLink(reference);
       const session = await stripe.checkout.sessions.create({
         mode: 'payment', customer: customer.id, payment_method_types: ['card'],

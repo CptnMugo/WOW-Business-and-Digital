@@ -41,12 +41,12 @@ assert(form.indexOf('Preferred start time') > form.indexOf('1. Personal Details'
 assert(form.indexOf('Preferred start time') < form.indexOf('Submit application'));
 assert(form.includes('confirmation call is part of the application process'));
 assert(form.includes('confirmation-call-date') && form.includes('confirmation-call-time') && form.includes('confirmation-call-zone'));
-const mentorship=render(<TrainingRegistrationForm formData={{...initial,packageSelection:'Career Accelerator + 1-to-1 Executive Mentorship (£1,250)'}} setFormData={noOp} onSubmit={noOp}/>);
-assert(mentorship.includes('Executive mentorship package £1,250'));
+const mentorship=render(<TrainingRegistrationForm formData={{...initial,packageSelection:'Career Accelerator with optional executive mentorship add-on'}} setFormData={noOp} onSubmit={noOp}/>);
+assert(mentorship.includes('Discuss payment arrangements for the executive mentorship add-on'));
 assert(!mentorship.includes('value="Pay in full £900'));
 const application=render(<ProjectManagementRegistrationPage setActiveTab={noOp}/>);
 assert(application.includes('14 November 2026')&&application.includes('No payment is required at this stage'));
 const programme=render(<ProjectManagementCareerAcceleratorSection setActiveTab={noOp}/>);
-for(const text of ['14 November 2026','three additional private 60-minute sessions','Practise a project with WOW','Request simulation workspace access'])assert(programme.includes(text),text);
-assert(programme.indexOf('<h1')<programme.indexOf('Executive mentorship package'));
+for(const text of ['14 November 2026','three private 60-minute sessions','Practise a project with WOW','Request simulation workspace access'])assert(programme.includes(text),text);
+assert(programme.indexOf('<h1')<programme.indexOf('Optional executive mentorship add-on'));
 console.log('PASS restored homepage, About process, one contact form, compact footer, navigation, four service names, blank application, mentorship pricing and workspace route');
