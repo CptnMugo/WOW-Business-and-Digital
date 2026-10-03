@@ -118,6 +118,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
 
   return (
     <form onSubmit={onSubmit} className="space-y-8 max-w-4xl mx-auto">
+
       {/* ======================================================== */}
       {/* SECTION 1: PERSONAL DETAILS */}
       {/* ======================================================== */}
@@ -515,16 +516,7 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
       </div>
 
       {/* ======================================================== */}
-      <fieldset className="space-y-4 border border-slate-200 rounded-xl p-5">
-        <legend className="font-bold text-navy-700 px-2">10-minute confirmation call</legend>
-        <p className="text-sm text-slate-600">Please suggest a date and time for a short call before acceptance and payment. We will contact you to confirm availability or agree another time. This is a request, not a confirmed booking. We will use the phone or WhatsApp number you provided.</p>
-        <div className="grid sm:grid-cols-2 gap-4">
-          <label className="block text-sm font-semibold" htmlFor="confirmation-call-date">Preferred date *<input id="confirmation-call-date" type="date" required value={formData.confirmationCallDate || ''} onChange={e=>setFormData({...formData,confirmationCallDate:e.target.value})} className="block w-full border border-slate-300 rounded-lg p-3 mt-2"/></label>
-          <label className="block text-sm font-semibold" htmlFor="confirmation-call-time">Preferred start time *<input id="confirmation-call-time" type="time" required value={formData.confirmationCallTime || ''} onChange={e=>setFormData({...formData,confirmationCallTime:e.target.value})} className="block w-full border border-slate-300 rounded-lg p-3 mt-2"/></label>
-        </div>
-        <label className="block text-sm font-semibold" htmlFor="confirmation-call-zone">Time zone or city *<input id="confirmation-call-zone" required maxLength={100} placeholder="For example, UK time / London" value={formData.confirmationCallTimeZone || ''} onChange={e=>setFormData({...formData,confirmationCallTimeZone:e.target.value})} className="block w-full border border-slate-300 rounded-lg p-3 mt-2"/></label>
-        <label className="block text-sm font-semibold" htmlFor="confirmation-call-alternative">Alternative availability or call requirements (optional)<textarea id="confirmation-call-alternative" maxLength={500} value={formData.confirmationCallAlternative || ''} onChange={e=>setFormData({...formData,confirmationCallAlternative:e.target.value})} className="block w-full border border-slate-300 rounded-lg p-3 mt-2"/></label>
-      </fieldset>
+
 
       {/* SECTION 7: PACKAGE SELECTION & PAYMENT PREFERENCE */}
       {/* ======================================================== */}
@@ -744,6 +736,17 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
           </label>
         </div>
       </div>
+
+      <fieldset className="space-y-4 border border-slate-200 rounded-xl p-5">
+        <legend className="font-bold text-navy-700 px-2">10-minute confirmation call</legend>
+        <p className="text-sm text-slate-600">A 10-minute confirmation call is part of the application process. Please suggest a date and time so we can discuss your application and confirm the next steps before acceptance and payment. We will contact you to confirm availability or agree another time. This is a request, not a confirmed booking. We will use the phone or WhatsApp number you provided.</p>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <label className="block text-sm font-semibold" htmlFor="confirmation-call-date">Preferred date *<input id="confirmation-call-date" type="date" required value={formData.confirmationCallDate || ''} onChange={e=>setFormData({...formData,confirmationCallDate:e.target.value})} className="block w-full border border-slate-300 rounded-lg p-3 mt-2"/></label>
+          <label className="block text-sm font-semibold" htmlFor="confirmation-call-time">Preferred start time *<input id="confirmation-call-time" type="time" required value={formData.confirmationCallTime || ''} onChange={e=>setFormData({...formData,confirmationCallTime:e.target.value})} className="block w-full border border-slate-300 rounded-lg p-3 mt-2"/></label>
+        </div>
+        <label className="block text-sm font-semibold" htmlFor="confirmation-call-zone">Time zone or city *<input id="confirmation-call-zone" required maxLength={100} placeholder="For example, UK time / London" value={formData.confirmationCallTimeZone || ''} onChange={e=>setFormData({...formData,confirmationCallTimeZone:e.target.value})} className="block w-full border border-slate-300 rounded-lg p-3 mt-2"/></label>
+        <label className="block text-sm font-semibold" htmlFor="confirmation-call-alternative">Alternative availability or call requirements (optional)<textarea id="confirmation-call-alternative" maxLength={500} value={formData.confirmationCallAlternative || ''} onChange={e=>setFormData({...formData,confirmationCallAlternative:e.target.value})} className="block w-full border border-slate-300 rounded-lg p-3 mt-2"/></label>
+      </fieldset>
 
       <div className="pt-2 space-y-3">
         <button type="submit" id="btn-submit-application" disabled={submitting} className="w-full bg-[#0b2d5b] text-white rounded-xl py-4 font-bold disabled:opacity-60">

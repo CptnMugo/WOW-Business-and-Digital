@@ -37,6 +37,10 @@ assert(Object.values(initial).every(v => Array.isArray(v)?v.length===0:v===false
 const form=render(<TrainingRegistrationForm formData={initial} setFormData={noOp} onSubmit={noOp}/>);
 assert(form.includes('Submit application')&&!form.includes('Submit and Pay'));
 assert(!form.includes('checked=""'));
+assert(form.indexOf('Preferred start time') > form.indexOf('1. Personal Details'));
+assert(form.indexOf('Preferred start time') < form.indexOf('Submit application'));
+assert(form.includes('confirmation call is part of the application process'));
+assert(form.includes('confirmation-call-date') && form.includes('confirmation-call-time') && form.includes('confirmation-call-zone'));
 const mentorship=render(<TrainingRegistrationForm formData={{...initial,packageSelection:'Career Accelerator + 1-to-1 Executive Mentorship (£1,250)'}} setFormData={noOp} onSubmit={noOp}/>);
 assert(mentorship.includes('Executive mentorship package £1,250'));
 assert(!mentorship.includes('value="Pay in full £900'));
