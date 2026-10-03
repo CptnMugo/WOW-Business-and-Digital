@@ -39,8 +39,8 @@ export interface RegistrationData {
   emergencyContactPhone?: string;
   specialRequirements?: string;
   emailDelivery?: {
-    staffAlert: { sent: boolean; method: string; timestamp: string; previewHtml?: string };
-    delegateWelcome: { sent: boolean; method: string; timestamp: string; previewHtml?: string };
+    staffAlert: { sent: boolean; method: string; timestamp: string; previewHtml?: string; error?: string };
+    delegateWelcome: { sent: boolean; method: string; timestamp: string; previewHtml?: string; error?: string };
   };
   sheetsSync?: {
     synced: boolean;
@@ -258,7 +258,7 @@ export async function sendOutboundEmail(
   overrideFrom?: string
 ): Promise<{ success: boolean; method: string; error?: string }> {
   // 1. Try Resend API if RESEND_API_KEY is configured
-  if (process.env.RESEND_API_KEY) {
+  if (process.env.RESEND_API_KEY && process.env.MAIL_PROVIDER !== 'smtp') {
     try {
       let fromAddress = sanitizeResendFromAddress(overrideFrom || process.env.RESEND_FROM || process.env.SMTP_FROM);
       const replyTo = process.env.REPLY_TO_EMAIL || 'wowdigital@wowbusinessanddigital.com';
@@ -335,8 +335,9 @@ export async function sendOutboundEmail(
     }
   }
 
-  // 2. Try Standard SMTP
-  if (process.env.SMTP_HOST && process.env.SMTP_USER) {
+  // Explicit SMTP selection must not silently fall back to another provider.
+  if (process.env.MAIL_PROVIDER === 'smtp' && !(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS)) return { success: false, method: 'smtp', error: 'SMTP configuration is incomplete: host, username and mailbox password are required.' };
+  if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.MAIL_PROVIDER !== 'resend') {
     try {
       const port = Number(process.env.SMTP_PORT) || 587;
 
@@ -355,7 +356,7 @@ export async function sendOutboundEmail(
         tls: { rejectUnauthorized: true }
       });
 
-      await transporter.sendMail({
+      const delivery = await transporter.sendMail({
         from: process.env.SMTP_FROM || `"WOW Academy Admissions" <${process.env.SMTP_USER}>`,
         to,
         replyTo: process.env.REPLY_TO_EMAIL || 'wowdigital@wowbusinessanddigital.com',
@@ -364,10 +365,13 @@ export async function sendOutboundEmail(
         html,
       });
 
-      console.log(`[Email Service] Sent email via SMTP (${process.env.SMTP_HOST}) to ${to}: ${subject}`);
+      if (!delivery.accepted?.length || delivery.rejected?.length) return { success: false, method: 'smtp', error: 'SMTP server did not accept the recipient.' };
+      console.log(`[Email Service] Accepted by SMTP (${process.env.SMTP_HOST}) to ${to}: ${subject}`);
       return { success: true, method: 'smtp' };
     } catch (err: any) {
-      console.error('[Email Service] Failed sending via SMTP:', err);
+      const code = typeof err?.code === 'string' ? err.code : 'SMTP_ERROR';
+      console.error('[Email Service] SMTP delivery failed:', code);
+      return { success: false, method: 'smtp', error: `SMTP delivery failed (${code}). Check server credentials, TLS and outbound connectivity.` };
     }
   }
 
@@ -423,12 +427,14 @@ export async function processRegistrationSubmission(rawReg: RegistrationData): P
     emailDelivery: {
       staffAlert: {
         sent: staffResult.success,
+        error: staffResult.error,
         method: staffResult.method,
         timestamp: new Date().toISOString(),
         previewHtml: staffContent.html,
       },
       delegateWelcome: {
         sent: delegateResult.success,
+        error: delegateResult.error,
         method: delegateResult.method,
         timestamp: new Date().toISOString(),
         previewHtml: delegateContent.html,
@@ -444,4 +450,17 @@ export async function processRegistrationSubmission(rawReg: RegistrationData): P
 
   saveRegistration(updatedRecord);
   return updatedRecord;
+}
+
+// Operator-only recovery: no applicant mail or Sheets submission is triggered.
+export async function resendStaffApplication(reference: string, force = false) {
+  const reg = getAllRegistrations().find(r => r.referenceNumber === reference);
+  if (!reg) throw new Error('Application reference not found.');
+  if (reg.emailDelivery?.staffAlert.sent && !force) return { success: true, skipped: true, method: reg.emailDelivery.staffAlert.method };
+  const content = generateStaffAlertEmail(reg);
+  const result = await sendOutboundEmail(process.env.ADMISSIONS_EMAIL || 'wowdigital@wowbusinessanddigital.com', content.subject, content.html, content.text);
+  const current = getAllRegistrations().find(r => r.referenceNumber === reference)!;
+  current.emailDelivery = { staffAlert: { sent: result.success, method: result.method, error: result.error, timestamp: new Date().toISOString(), previewHtml: content.html }, delegateWelcome: current.emailDelivery?.delegateWelcome || { sent: false, method: 'not-attempted', timestamp: '' } };
+  saveRegistration(current);
+  return result;
 }
