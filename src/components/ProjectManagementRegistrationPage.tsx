@@ -9,6 +9,7 @@ export const initialApplication = (): TrainingFormData => ({
   previousExperience: '', ukWorkExperience: '', englishFirstLanguage: '', careerObjective: '', currentChallenge: '',
   developmentNeeds: [], developmentNeedsOther: '', successMeasure: '', weeklyAvailability: '',
   birminghamAttendance: '', inPersonProjectAttendance: '', packageSelection: '', paymentPreference: '',
+  confirmationCallDate: '', confirmationCallTime: '', confirmationCallTimeZone: '', confirmationCallAlternative: '',
   howDidYouHear: '', promoCode: '', declaration1: false, declaration2: false, declaration3: false,
   declaration4: false, declaration5: false, declaration6: false, declaration7: false,
   privacyAcknowledged: false, marketingConsent: false,
@@ -18,7 +19,7 @@ export const ProjectManagementRegistrationPage = ({ setActiveTab }: { setActiveT
   const [formData, setFormData] = useState(initialApplication);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
-  const [confirmation, setConfirmation] = useState<{ reference: string; preference: string; paymentUrl: string } | null>(null);
+  const [confirmation, setConfirmation] = useState<{ reference: string; preference: string; call: string } | null>(null);
   const pending = useRef(false);
   const submissionId = useRef(crypto.randomUUID());
 
@@ -36,7 +37,7 @@ export const ProjectManagementRegistrationPage = ({ setActiveTab }: { setActiveT
       });
       const result = await response.json();
       if (!response.ok || !result.success || !result.referenceNumber) throw new Error(result.error || 'Your application could not be saved. Please try again.');
-      setConfirmation({ reference: result.referenceNumber, preference: formData.paymentPreference, paymentUrl: result.paymentUrl || "" });
+      setConfirmation({ reference: result.referenceNumber, preference: formData.paymentPreference, call: `${formData.confirmationCallDate} at ${formData.confirmationCallTime} (${formData.confirmationCallTimeZone})` });
       setFormData(initialApplication());
       // Remove only old registration/payment draft keys, never unrelated site data.
       try { ['wow_pm_registration_draft', 'wow_pm_registration_submitted', 'wow_selected_payment_item', 'wow_payment_client_name', 'wow_payment_client_email'].forEach(key => localStorage.removeItem(key)); } catch { /* storage may be unavailable */ }
@@ -49,14 +50,15 @@ export const ProjectManagementRegistrationPage = ({ setActiveTab }: { setActiveT
     <button onClick={() => setActiveTab('pm-career-accelerator')} className="font-semibold text-navy-700">← Back to programme information</button>
     <p className="text-sm font-semibold">Starts {programme.startDate} · Six months</p>
     <h1 className="text-3xl font-bold">Career Accelerator application</h1>
-    <p>Complete your application, then continue to Stripe to pay the £50 registration deposit or your chosen programme payment. Your place is not reserved by submitting this form alone.</p>
+    <p>Submit your application and request a 10-minute confirmation call. No payment is required at this stage. If accepted, you will receive an email confirming your acceptance and requesting payment according to your agreed payment schedule.</p>
     {confirmation ? <div role="status" className="bg-emerald-50 border border-emerald-300 rounded-2xl p-7 space-y-4">
       <h2 className="text-2xl font-bold">Thank you. Your application has been received.</h2>
       <p>Your reference is <strong>{confirmation.reference}</strong>.</p>
       <p>Payment preference: {confirmation.preference}.</p>
-      <p>Your application is saved, but your place is not yet reserved. Continue to payment to pay at least £50, credited against tuition. We will review your application and confirm enrolment separately. Employer sponsorship requires written agreement.</p>
+      <p>Requested confirmation call: <strong>{confirmation.call}</strong>. We will contact you to confirm this slot or agree an alternative. This is not yet a confirmed booking.</p>
+      <p>We will review your application and arrange your 10-minute confirmation call. After the call, if accepted, you will receive an email confirming your acceptance, agreed payment schedule and payment instructions. Please make payment promptly once you receive that email. No payment is requested while your application is being reviewed.</p>
       <p>Please keep your reference. If you need to update your application, email <a className="underline" href={`mailto:${programme.email}`}>{programme.email}</a> and quote it.</p>
-      {confirmation.paymentUrl ? <a className="inline-block bg-[#0b2d5b] text-white px-5 py-3 rounded-lg" href={confirmation.paymentUrl}>Continue to secure payment</a> : <p>Contact WOW with your reference for payment instructions.</p>}
+      <p>Once accepted, you can pay £50 to reserve your place. This deposit is credited towards your total programme fee, including the first instalment where applicable. Employer sponsorship arrangements will be confirmed separately.</p>
       <button className="bg-[#0b2d5b] text-white px-5 py-3 rounded-lg" onClick={() => setActiveTab('pm-career-accelerator')}>Return to programme information</button>
     </div> : <div className="bg-white rounded-2xl p-6 border border-slate-200">
       {error && <p role="alert" className="text-red-800 mb-5">{error}</p>}

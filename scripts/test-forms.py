@@ -18,6 +18,7 @@ def request(route, payload=None, expected=200):
 
 training = dict(fullName='Test Applicant', email='test@example.invalid', mobileWhatsapp='00000000000', townCity='Test City', previousExperience='Yes, 1-3 years', careerObjective='Test objective', currentChallenge='Test challenge', successMeasure='Test measure', privacyAcknowledged=True, submissionType='SUBMIT_AND_PAY', status='AWAITING_PAYMENT')
 training.update(dict(submissionId=str(uuid.uuid4()), workStatus='Employed', rightToWorkUK='Yes', highestQualification='Undergraduate Degree', ukWorkExperience='Yes', englishFirstLanguage='Yes', weeklyAvailability='Yes - can commit weekly time', birminghamAttendance='Yes', inPersonProjectAttendance='Yes', packageSelection='WOW Career Accelerator 6-Month Programme (£1,000)', paymentPreference='Pay in full £900 by 31 October 2026', pmQualifications=['None'], developmentNeeds=['Interview skills']))
+training.update(dict(confirmationCallDate='2026-10-10', confirmationCallTime='14:00', confirmationCallTimeZone='Europe/London', confirmationCallAlternative='Next morning also possible'))
 training.update({'declaration'+str(n): True for n in range(1,8)})
 cases = {
     'general': dict(subject='Test only', message='Test enquiry'),
@@ -62,8 +63,12 @@ with tempfile.TemporaryDirectory(prefix='wbd-forms-') as folder:
         records=json.loads(register.read_text()); assert len(records)==1
         assert records[0]['status']=='APPLICATION_REVIEW_PENDING' and records[0]['submissionType']=='APPLICATION' and records[0]['cohortDate']=='14 November 2026'
         assert records[0]['paymentPreference']==training['paymentPreference']
+        assert records[0]['confirmationCallDate']=='2026-10-10' and records[0]['confirmationCallTime']=='14:00'
+        for field,value in [('confirmationCallDate','2026-02-30'),('confirmationCallTime','25:00'),('confirmationCallTimeZone','')]:
+            invalid=copy.deepcopy(training);invalid[field]=value;request('/api/registrations/submit',invalid,400)
         acknowledgement=records[0]['emailDelivery']['delegateWelcome']['previewHtml']
-        assert '14 November 2026' in acknowledgement and 'No payment has been taken' in acknowledgement and 'October 2026 Intake' not in acknowledgement
+        assert '10-minute confirmation call' in acknowledgement and '2026-10-10' in acknowledgement and 'Private payment link' not in acknowledgement
+        assert '14 November 2026' in acknowledgement and 'No payment is required at this stage' in acknowledgement and 'October 2026 Intake' not in acknowledgement
         for package, preference in [
             ('WOW Career Accelerator 6-Month Programme (£1,000)', 'Pay in full £900 by 31 October 2026'),
             ('WOW Career Accelerator 6-Month Programme (£1,000)', 'Two instalments £500 by 31 October 2026 and £500 by 30 November 2026'),

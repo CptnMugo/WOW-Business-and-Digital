@@ -197,6 +197,9 @@ app.post("/api/registrations/submit", async (req, res) => {
       res.status(400).json({ error: "Please complete the required application fields, selections, declarations and privacy acknowledgement." });
       return;
     }
+    if (typeof body.confirmationCallDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(body.confirmationCallDate) || !Number.isFinite(Date.parse(body.confirmationCallDate)) || new Date(body.confirmationCallDate).toISOString().slice(0,10) !== body.confirmationCallDate || typeof body.confirmationCallTime !== 'string' || !/^([01]\d|2[0-3]):[0-5]\d$/.test(body.confirmationCallTime) || typeof body.confirmationCallTimeZone !== 'string' || !body.confirmationCallTimeZone.trim() || body.confirmationCallTimeZone.length > 100 || (body.confirmationCallAlternative != null && (typeof body.confirmationCallAlternative !== 'string' || body.confirmationCallAlternative.length > 500))) {
+      res.status(400).json({ error: 'Please provide your preferred confirmation call date, time and time zone.' }); return;
+    }
     const duplicate = getAllRegistrations().find(record => record.submissionId === body.submissionId);
     if (duplicate) {
       if (duplicate.email !== body.email) { res.status(409).json({ error: 'Please start a new application.' }); return; }
@@ -204,7 +207,7 @@ app.post("/api/registrations/submit", async (req, res) => {
       return;
     }
     // Copy application fields only; ignore client-supplied workflow state and internal metadata.
-    const fields = ['fullName', 'email', 'mobileWhatsapp', 'townCity', ...selectFields, 'workStatusOther', 'highestQualificationOther', 'pmQualifications', 'previousExperience', 'careerObjective', 'currentChallenge', 'developmentNeeds', 'developmentNeedsOther', 'successMeasure', 'howDidYouHear', 'promoCode', 'privacyAcknowledged', 'marketingConsent', ...[1,2,3,4,5,6,7].map(n => 'declaration' + n)];
+    const fields = ['fullName', 'email', 'mobileWhatsapp', 'townCity', ...selectFields, 'workStatusOther', 'highestQualificationOther', 'pmQualifications', 'previousExperience', 'careerObjective', 'currentChallenge', 'developmentNeeds', 'developmentNeedsOther', 'successMeasure', 'howDidYouHear', 'promoCode', 'confirmationCallDate', 'confirmationCallTime', 'confirmationCallTimeZone', 'confirmationCallAlternative', 'privacyAcknowledged', 'marketingConsent', ...[1,2,3,4,5,6,7].map(n => 'declaration' + n)];
     const existingReferences = new Set(getAllRegistrations().map(record => record.referenceNumber));
     const alphabet = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
     let referenceNumber: string;

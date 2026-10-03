@@ -82,7 +82,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
         <div className="max-w-4xl rounded-2xl border border-navy-200 bg-white/90 p-5 text-slate-800">
           <p className="font-bold">Starts {CAREER_ACCELERATOR.startDate} · Six months</p>
           <p className="mt-3"><strong>Executive mentorship package £1,250.</strong> {CAREER_ACCELERATOR.mentorshipScope}</p>
-          <p className="mt-3">Apply first, then pay at least £50 through Stripe to reserve your place, subject to review. The £900 early settlement offer applies to the standard programme.</p>
+          <p className="mt-3">Apply first. Payment will be requested by email only once your application is accepted. The £900 early settlement offer applies to the standard programme.</p>
         </div>
 
           {/* Quick Spec Matrix */}
@@ -570,7 +570,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                 <span className="text-xs font-black uppercase tracking-wider text-navy-600">Programme Enrolment</span>
                 <h3 className="text-2xl font-black text-slate-900">Ready to Accelerate?</h3>
                 <p className="text-xs text-slate-600">
-                  Submit an application, then pay at least the £50 registration deposit through Stripe to reserve a place, subject to review.
+                  Submit your application for review. If accepted, you will receive an email with your agreed payment schedule and payment instructions.
                 </p>
               </div>
 
@@ -603,7 +603,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </div>
 
               <div className="text-center text-[11px] text-slate-500">
-                After submitting your application, continue to Stripe to pay the £50 registration deposit or your chosen programme payment.
+                No payment is requested while your application is being reviewed. Once accepted, follow the payment instructions in your acceptance email.
               </div>
             </div>
 
@@ -640,7 +640,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                   <span>Apply for the programme</span>
                 </div>
                 <p className="text-slate-600">
-                  Submit your details for review, then continue to Stripe to reserve your place.
+                  Submit your details for review. Payment will be requested only once accepted.
                 </p>
               </div>
 
@@ -650,7 +650,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                   <span>Choose a payment preference</span>
                 </div>
                 <p className="text-slate-600">
-                  Tell us whether you prefer full payment, instalments or the £50 registration deposit to reserve your place.
+                  Tell us whether you prefer full payment, instalments or a £50 registration deposit after acceptance, credited towards your programme fee.
                 </p>
               </div>
             </div>

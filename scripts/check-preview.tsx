@@ -41,7 +41,7 @@ const mentorship=render(<TrainingRegistrationForm formData={{...initial,packageS
 assert(mentorship.includes('Executive mentorship package £1,250'));
 assert(!mentorship.includes('value="Pay in full £900'));
 const application=render(<ProjectManagementRegistrationPage setActiveTab={noOp}/>);
-assert(application.includes('14 November 2026')&&application.includes('continue to Stripe'));
+assert(application.includes('14 November 2026')&&application.includes('No payment is required at this stage'));
 const programme=render(<ProjectManagementCareerAcceleratorSection setActiveTab={noOp}/>);
 for(const text of ['14 November 2026','three additional private 60-minute sessions','Practise a project with WOW','Request simulation workspace access'])assert(programme.includes(text),text);
 assert(programme.indexOf('<h1')<programme.indexOf('Executive mentorship package'));
