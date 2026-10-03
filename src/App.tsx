@@ -1,3 +1,4 @@
+import { AdmissionsDashboard } from "./components/AdmissionsDashboard";
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -27,7 +28,7 @@ import { ProjectManagementRegistrationPage } from './components/ProjectManagemen
 import { ProjectSimulationPage } from './components/ProjectSimulationPage';
 import { ProgrammePolicies } from './components/ProgrammePolicies';
 
-const tabs: NavTab[] = ['home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','academy','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation'];
+const tabs: NavTab[] = ['home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','academy','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation','manage-applications'];
 const readTab = (): NavTab => {
  const query = new URLSearchParams(window.location.search);
  if (query.has('payment')) return 'payments';
@@ -64,6 +65,8 @@ export default function App() {
     'training',
     'career-coaching'
   ].includes(activeTab);
+
+  if (activeTab === 'manage-applications') return <AdmissionsDashboard />;
 
   return (
     <div className="min-h-screen bg-[#f8f4ed] text-[#0b2d5b] font-sans antialiased flex flex-col justify-between selection:bg-[#0B2D5B] selection:text-white">

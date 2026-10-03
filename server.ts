@@ -1,3 +1,4 @@
+import { installAdmissionsDashboard } from "./server/admissionsDashboard.js";
 import { installPaymentWebhook, installPaymentRoutes, paymentLink, readPayments } from './server/payments.js';
 import express from "express";
 import { installWorkspaceAccess } from "./server/workspaceAccess.js";
@@ -35,6 +36,7 @@ app.use((_req, res, next) => { res.set("Referrer-Policy", "no-referrer"); next()
 installPaymentWebhook(app);
 app.use(express.json({ limit: "100kb" }));
 installWorkspaceAccess(app);
+installAdmissionsDashboard(app);
 
 const ENQUIRY_CATEGORIES = new Set(['general', 'business-consultancy', 'staffing', 'training', 'ai-solutions', 'career-coaching', 'partnership', 'associate']);
 const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char] || char));
