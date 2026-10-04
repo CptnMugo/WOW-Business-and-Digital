@@ -20,3 +20,11 @@ Compared GitHub main bca7658 with the approved morning dashboard commit. Preserv
 The public payment page previously omitted the Stripe submit button when reference/token were absent and offered an application button instead. Initial application emails correctly omit payment links, but the public page offered no link recovery. That combination left accepted applicants stuck. The correction removes the application detour, keeps a visible payment button with an explanation when locked, and provides email-link recovery only for an application recorded as Accepted.
 
 A Namecheap deployment is still required for code changes. The Stripe webhook must separately be configured and verified: without it, payments abandoned before browser return may not be recorded reliably. Do not describe the live payment journey as fully verified until an authorised end-to-end test confirms it.
+
+## 4 October: separate Career Accelerator enquiries
+
+- User confirms a successful live payment. Preserve payment, application, Resend and Google Sheets handlers.
+- Separate taster/adviser and corporate enquiry routes. Main programme CTA remains application; no payment is taken on application. November start remains 14 November 2026; limited places, no invented remaining-place count or filling-up claim.
+- Taster dates: Saturday 10 and Friday 16 October, 10am to 2pm UK time. Calls: Thursday 8 and Friday 9 October, 15-minute predefined starts from 11am through 1:45pm. Separate from the existing 10-minute application confirmation call and private 3-hour/5-day simulations.
+- New forms are request-only pending Outlook configuration. Never claim time reservation, automatic calendar entry or joining details before connected. Requests appear in a separate authenticated dashboard register, not the application Google Sheet.
+- Confirmed Outlook address: wowdigital@wowbusinessanddigital.com. No credentials or Bookings service links supplied. See career-engagement-setup.md for activation steps and current limitations.

@@ -19,7 +19,7 @@ export type NavTab =
   | 'pm-career-accelerator'
   | 'pm-registration'
   | 'privacy'
-  | 'programme-terms' | 'project-simulation' | 'manage-applications';
+  | 'programme-terms' | 'project-simulation' | 'manage-applications' | 'career-explore' | 'corporate-career';
 
 export interface ServiceItem {
   id: string;

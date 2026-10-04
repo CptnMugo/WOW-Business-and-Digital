@@ -1,3 +1,4 @@
+import { CareerExplore } from './components/CareerExplore';
 import { AdmissionsDashboard } from "./components/AdmissionsDashboard";
 /**
  * @license
@@ -28,7 +29,7 @@ import { ProjectManagementRegistrationPage } from './components/ProjectManagemen
 import { ProjectSimulationPage } from './components/ProjectSimulationPage';
 import { ProgrammePolicies } from './components/ProgrammePolicies';
 
-const tabs: NavTab[] = ['home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','academy','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation','manage-applications'];
+const tabs: NavTab[] = ['home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','academy','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation','manage-applications','career-explore','corporate-career'];
 const readTab = (): NavTab => {
  const query = new URLSearchParams(window.location.search);
  if (query.has('payment')) return 'payments';
@@ -97,6 +98,8 @@ export default function App() {
             {activeTab === 'associates' && <AssociateRegistration />}
             {activeTab === 'about' && <AboutSection setActiveTab={setActiveTab} />}
             {activeTab === 'contact' && <ContactSection initialCategory={contactCategory} />}
+            {activeTab === 'career-explore' && <CareerExplore />}
+            {activeTab === 'corporate-career' && <CareerExplore corporate />}
             {activeTab === 'payments' && <PaymentsSection setActiveTab={setActiveTab} />}
             {activeTab === 'pm-career-accelerator' && (
               <ProjectManagementCareerAcceleratorSection 

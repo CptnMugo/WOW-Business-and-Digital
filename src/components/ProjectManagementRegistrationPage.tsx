@@ -50,6 +50,7 @@ export const ProjectManagementRegistrationPage = ({ setActiveTab }: { setActiveT
     <button onClick={() => setActiveTab('pm-career-accelerator')} className="font-semibold text-navy-700">← Back to programme information</button>
     <p className="text-sm font-semibold">Starts {programme.startDate} · Six months</p>
     <h1 className="text-3xl font-bold">Apply for the Career Accelerator and request your confirmation call</h1>
+    <p className="rounded-xl border border-navy-200 bg-navy-50 p-4 font-semibold">November cohort starts 14 November 2026. Places are limited. No payment is taken when you apply. Payment is requested only after acceptance.</p>
     <p>Submit your application and request a 10-minute confirmation call. No payment is required at this stage. If accepted, you will receive an email confirming your acceptance and requesting payment according to your agreed payment schedule.</p>
     {confirmation ? <div role="status" className="bg-emerald-50 border border-emerald-300 rounded-2xl p-7 space-y-4">
       <h2 className="text-2xl font-bold">Thank you. Your application has been received.</h2>

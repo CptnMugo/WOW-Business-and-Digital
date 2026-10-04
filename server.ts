@@ -1,3 +1,4 @@
+import { installEngagement } from './server/engagement.js';
 import { installAdmissionsDashboard } from "./server/admissionsDashboard.js";
 import { installPaymentWebhook, installPaymentRoutes, paymentLink, readPayments } from './server/payments.js';
 import express from "express";
@@ -37,6 +38,7 @@ installPaymentWebhook(app);
 app.use(express.json({ limit: "100kb" }));
 installWorkspaceAccess(app);
 installAdmissionsDashboard(app);
+installEngagement(app);
 
 const ENQUIRY_CATEGORIES = new Set(['general', 'business-consultancy', 'staffing', 'training', 'ai-solutions', 'career-coaching', 'partnership', 'associate']);
 const escapeHtml = (value: string) => value.replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char] || char));

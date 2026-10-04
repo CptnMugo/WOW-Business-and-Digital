@@ -82,6 +82,8 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
         <div className="max-w-4xl rounded-2xl border border-navy-200 bg-white/90 p-5 text-slate-800">
           <p className="font-bold">Starts {CAREER_ACCELERATOR.startDate} · Six months</p>
           <p className="mt-3"><strong>Optional executive mentorship add-on.</strong> {CAREER_ACCELERATOR.mentorshipScope} Payment options and arrangements are available; please discuss these with us during your confirmation call.</p>
+          <p className="mt-3 font-bold">November cohort starts 14 November 2026. Places are limited. No payment is taken when you apply.</p>
+          <p className="mt-3"><a className="underline" href="?page=career-explore">Free taster or adviser call</a> | <a className="underline" href="?page=corporate-career">Employer sponsorship and corporate packages</a></p>
           <p className="mt-3">Apply first. Payment will be requested by email only once your application is accepted. The £900 early settlement offer applies to the standard programme.</p>
         </div>
 
@@ -130,7 +132,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               onClick={navigateToRegistration}
               className="bg-navy-600 hover:bg-navy-500 text-white font-black text-sm px-6 py-3.5 rounded-xl transition-all shadow-md hover:shadow-navy-500/20 flex items-center gap-2 cursor-pointer group"
             >
-              <span>Apply for Next Intake</span>
+              <span>Apply for the November cohort</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
 
