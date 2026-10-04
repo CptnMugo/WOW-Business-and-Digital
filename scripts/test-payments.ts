@@ -50,6 +50,19 @@ async function call(endpoint:string,body?:any,expected=200){
  assert.equal(response.status,expected,endpoint+': '+await response.clone().text());checks++;return response.json();
 }
 try{
+ const realFetch=globalThis.fetch; const messages:any[]=[];
+ process.env.RESEND_API_KEY='test-only'; process.env.MAIL_PROVIDER='resend';
+ globalThis.fetch=(async (url:any, options:any)=>String(url)==='https://api.resend.com/emails' ? (messages.push(JSON.parse(options.body)),new Response('{"id":"mock"}',{status:200})) : realFetch(url,options)) as typeof fetch;
+ try {
+  await call('request-payment-link',{reference,email:'test@example.invalid'});
+  assert.equal(messages.length,0); checks++;
+  fs.writeFileSync('data/admissions-reviews.json',JSON.stringify({[reference]:{status:'Accepted'}}));
+  await call('request-payment-link',{reference,email:'wrong@example.invalid'});
+  assert.equal(messages.length,0); checks++;
+  const recovery=await call('request-payment-link',{reference,email:'test@example.invalid'});
+  assert.equal(messages.length,1); assert.deepEqual(messages[0].to,['test@example.invalid']); assert(messages[0].text.includes(paymentLink(reference))); assert(!JSON.stringify(recovery).includes(paymentToken(reference))); checks+=4;
+  await call('request-payment-link',{reference,email:'test@example.invalid'},429);
+ } finally {globalThis.fetch=realFetch;delete process.env.RESEND_API_KEY;}
  const auth={reference,token:paymentToken(reference)};
  await call('application',{reference,token:'bad'},403);
  await call('application',{reference,token:'é'.repeat(64)},403);

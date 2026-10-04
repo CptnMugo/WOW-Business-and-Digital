@@ -1,3 +1,4 @@
+import { PaymentsSection } from '../src/components/PaymentsSection';
 import React from 'react';
 import assert from 'node:assert/strict';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -50,3 +51,11 @@ const programme=render(<ProjectManagementCareerAcceleratorSection setActiveTab={
 for(const text of ['14 November 2026','three private 60-minute sessions','Practise a project with WOW','Request simulation workspace access'])assert(programme.includes(text),text);
 assert(programme.indexOf('<h1')<programme.indexOf('Optional executive mentorship add-on'));
 console.log('PASS restored homepage, About process, one contact form, compact footer, navigation, four service names, blank application, mentorship pricing and workspace route');
+
+const payments=render(<PaymentsSection setActiveTab={noOp}/>);
+assert(payments.includes('Pay £50.00 with Stripe'));
+assert(payments.includes('Email my payment link'));
+assert(!payments.includes('New applicants: apply'));
+assert(payments.includes('Do not submit another application'));
+assert(payments.includes('type="submit"'));
+console.log('PASS public Payments entry: visible Stripe action, link recovery, no application detour');

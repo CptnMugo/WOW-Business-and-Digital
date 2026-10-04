@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import { getAllRegistrations } from './admissionsService.js';
+import { sendOutboundEmail, getAllRegistrations } from './admissionsService.js';
 
 const file = () => path.join(process.cwd(), 'data', 'payments.json');
 type Payment = { session: string; reference: string; amount: number; live: boolean; date: string; plan?: string; refunded?: number };
@@ -107,6 +107,34 @@ export function installPaymentRoutes(app: Express, createClient: () => Stripe = 
     webhookConfigured: Boolean(process.env.STRIPE_WEBHOOK_SECRET),
     publishableKey: process.env.VITE_STRIPE_PUBLISHABLE_KEY || null,
   }));
+  // Recovery sends only to the address on an accepted application; never exposes a link publicly.
+  const recoveryLimits = new Map<string, { count: number; until: number }>();
+  app.post('/api/stripe/request-payment-link', async (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    const { reference, email } = req.body || {};
+    if (typeof reference !== 'string' || reference.length > 100 || !reference.trim() || typeof email !== 'string' || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { res.status(400).json({error:'Enter your application reference and email address.'}); return; }
+    const now = Date.now();
+    for (const [key, limit] of recoveryLimits) if (limit.until < now) recoveryLimits.delete(key);
+    const keys = ['ip:' + req.ip, 'application:' + reference.trim().toUpperCase()];
+    if (recoveryLimits.size > 5000 || keys.some(key => (recoveryLimits.get(key)?.count || 0) >= 3)) { res.status(429).json({error:'Please wait 15 minutes before requesting another link, or contact WOW.'}); return; }
+    for (const key of keys) { const old = recoveryLimits.get(key); recoveryLimits.set(key,{count:(old?.count || 0)+1,until:old?.until || now+15*60_000}); }
+    const reply = {message:'If these details match an accepted application, we will send a payment link to your application email address. Check your inbox and spam folder. If it does not arrive, contact WOW quoting your reference. You do not need to apply again.'};
+    try {
+      const reg = getAllRegistrations().find(r => r.referenceNumber.toUpperCase() === reference.trim().toUpperCase() && r.email.toLowerCase() === email.trim().toLowerCase());
+      const reviewsFile = path.join(process.cwd(), 'data', 'admissions-reviews.json');
+      const reviews = fs.existsSync(reviewsFile) ? JSON.parse(fs.readFileSync(reviewsFile, 'utf8')) : {};
+      if (reg && reviews[reg.referenceNumber]?.status === 'Accepted') {
+        const link = paymentLink(reg.referenceNumber);
+        if (!link || !link.startsWith('https://')) throw new Error('Payment link configuration required');
+        const safeLink = link.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+        const text = `Your WOW Career Accelerator payment link: ${link}\n\nUse this private link to pay according to the schedule agreed in your acceptance email. The £50 deposit is credited towards tuition. Keep this link private. If you have already paid but it is not showing, contact WOW before paying again.`;
+        const result = await sendOutboundEmail(reg.email, 'Your WOW Career Accelerator payment link', `<p>Use your private payment link to pay according to your agreed acceptance and payment schedule.</p><p><a href="${safeLink}">Open your payment page</a></p><p>The £50 deposit is credited towards tuition. If you have already paid but it is not showing, contact WOW before paying again. Keep this link private.</p>`, text);
+        if (!result.success) console.error('[Payment link recovery] Email provider did not accept the message. Check mail configuration.');
+      }
+      // Same response for unmatched/unaccepted applications to avoid revealing applicant status.
+      res.json(reply);
+    } catch { res.status(503).json({error:'Payment link recovery is unavailable. Contact WOW with your reference; do not apply again.'}); }
+  });
   app.post('/api/stripe/application', (req, res) => {
     const { reference, token } = req.body || {};
     if (typeof reference !== 'string' || !validToken(reference, token)) { res.status(403).json({ error: 'Open the private payment link supplied after your application.' }); return; }

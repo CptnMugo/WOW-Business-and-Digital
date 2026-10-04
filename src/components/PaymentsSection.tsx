@@ -6,6 +6,10 @@ export const PaymentsSection = ({ setActiveTab }: { setActiveTab: (tab: NavTab) 
   const query = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search);
   const reference = query.get('reference') || '';
   const token = query.get('token') || '';
+  const [recoveryReference, setRecoveryReference] = useState(reference);
+  const [recoveryEmail, setRecoveryEmail] = useState('');
+  const [recoveryBusy, setRecoveryBusy] = useState(false);
+  const [recoveryMessage, setRecoveryMessage] = useState('');
   const [status, setStatus] = useState<{configured:boolean;mode:string} | null>(null);
   const [account, setAccount] = useState<{paid:number;reserved:boolean;mentorship:boolean;settled?:boolean} | null>(null);
   const [plan, setPlan] = useState('deposit');
@@ -74,6 +78,17 @@ export const PaymentsSection = ({ setActiveTab }: { setActiveTab: (tab: NavTab) 
     {reference && <p className="break-all">Application reference: <strong>{reference}</strong></p>}
     {account && <div className="bg-[#f8f4ed] rounded-xl p-5"><p>Verified {status?.mode === 'test' ? 'test ' : ''}payments: <strong>{money(paid)}</strong></p><p>{account.reserved ? 'A live payment of at least £50 is recorded. Your acceptance email confirms your enrolment arrangements.' : 'No live reservation payment is recorded. Please wait for acceptance, then follow your agreed payment schedule.'}</p></div>}
     {account?.mentorship && <p>Executive mentorship is an optional add-on. Payment options and arrangements are available. Please agree the additional fee and schedule with WOW before making a bespoke payment.</p>}
+    {(!reference || !token || (status && !account && message && !verificationBlocked)) && <div className="bg-[#f8f4ed] border border-[#d4a24c] rounded-xl p-5 space-y-3">
+      <h2 className="text-xl font-bold">Already applied? Get your payment link</h2>
+      <p>After your confirmation call and acceptance, use the personal payment link in your email. If it is missing, enter your application reference and the email address used to apply. We will send the link to that address if your application is recorded as accepted. Do not submit another application.</p>
+      <form className="space-y-3" onSubmit={async e => { e.preventDefault(); if(recoveryBusy)return; setRecoveryBusy(true); setRecoveryMessage(''); try { const result = await post('/api/stripe/request-payment-link',{reference:recoveryReference.trim(),email:recoveryEmail.trim()}); setRecoveryMessage(result.message); } catch(error) { setRecoveryMessage(error instanceof Error ? error.message : 'Please contact WOW for your payment link.'); } finally {setRecoveryBusy(false);} }}>
+        <label className="block font-semibold">Application reference<input required value={recoveryReference} onChange={e=>setRecoveryReference(e.target.value)} maxLength={100} className="block border rounded-lg p-3 mt-2 w-full" autoComplete="off" /></label>
+        <label className="block font-semibold">Application email address<input required type="email" value={recoveryEmail} onChange={e=>setRecoveryEmail(e.target.value)} maxLength={254} className="block border rounded-lg p-3 mt-2 w-full" autoComplete="email" /></label>
+        <button disabled={recoveryBusy} type="submit" className="bg-[#0b2d5b] text-white px-6 py-3 rounded-lg disabled:opacity-50">{recoveryBusy ? 'Requesting link...' : 'Email my payment link'}</button>
+      </form>
+      {recoveryMessage && <p role="status">{recoveryMessage}</p>}
+      <p>Still waiting for acceptance, or cannot find your reference? Contact <a className="underline" href={`mailto:${programme.email}?subject=Career%20Accelerator%20payment%20link`}>{programme.email}</a>. Payment is requested only after acceptance.</p>
+    </div>}
     <form onSubmit={checkout} className="space-y-6">
       <fieldset><legend className="font-bold text-xl mb-4">Choose your payment</legend><div className="grid md:grid-cols-2 gap-4">
         {options.map(o => <label key={o.id} className={`block bg-white border-2 rounded-2xl p-5 cursor-pointer ${plan===o.id?'border-[#b78a38]':'border-slate-200'}`}>
@@ -84,7 +99,8 @@ export const PaymentsSection = ({ setActiveTab }: { setActiveTab: (tab: NavTab) 
       </div></fieldset>
       {plan==='custom' && <label className="block font-semibold">Amount in GBP (£)<input required type="number" min="1" max={(total-paid)/100} step="0.01" value={customAmount} onChange={e=>setCustomAmount(e.target.value)} className="block border border-slate-400 rounded-lg p-3 mt-2 w-full"/><span className="text-sm font-normal">Minimum £1.</span></label>}
       <label className="flex gap-3 items-start"><input type="checkbox" required checked={accepted} onChange={e=>setAccepted(e.target.checked)} className="mt-1 accent-[#0b2d5b]"/><span>I have read the <a href="/?page=programme-terms" target="_blank" rel="noopener noreferrer" className="underline">programme terms</a>, including the fees, deposit and cancellation information. I have received my acceptance email and am paying according to my agreed payment schedule.</span></label>
-      {!reference || !token ? <div className="bg-[#f8f4ed] rounded-xl p-5 space-y-3"><p>Already applied? Please wait for your acceptance email and payment instructions. You do not need to apply again. If you have been accepted but need payment instructions, contact WOW quoting your reference.</p><button type="button" className="bg-[#0b2d5b] text-white px-6 py-3 rounded-lg" onClick={()=>setActiveTab('pm-registration')}>New applicants: apply for the programme</button></div> : <button disabled={!account || account.settled || !status?.configured || busy || verificationBlocked || amount<=0 || !Number.isFinite(amount)} className="bg-[#0b2d5b] text-white px-6 py-3 rounded-lg font-semibold disabled:opacity-50" type="submit">{account?.settled ? 'Programme fee paid in full' : busy ? 'Opening Stripe...' : `${status?.mode==='test'?'Test payment':'Pay'} ${money(Number.isFinite(amount)?Math.max(0,amount):0)} with Stripe`}</button>}
+      <button disabled={!reference || !token || !account || account.settled || !status?.configured || busy || verificationBlocked || amount<=0 || !Number.isFinite(amount)} className="bg-[#0b2d5b] text-white px-6 py-3 rounded-lg font-semibold disabled:opacity-50" type="submit">{account?.settled ? 'Programme fee paid in full' : busy ? 'Opening Stripe...' : `${status?.mode==='test'?'Test payment':'Pay'} ${money(Number.isFinite(amount)?Math.max(0,amount):0)} with Stripe`}</button>
+      {(!reference || !token) && <p>Your personal payment link unlocks this button and matches the payment to your application. Retrieve it above; you do not need to apply again.</p>}
     </form>
     {status && !status.configured && <p>Online checkout is awaiting server configuration. Contact <a className="underline" href={`mailto:${programme.email}`}>{programme.email}</a> for help. Do not send card details by email.</p>}
     <p>Employer sponsorship requires written agreement with WOW. For business invoices or other bespoke services, contact WOW for an agreed payment arrangement. All prices shown are total fees; WOW is not VAT registered.</p>
