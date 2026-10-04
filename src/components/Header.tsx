@@ -148,7 +148,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
 
   const isProgramsActive = [
     'pm-career-accelerator',
-    'academy'
+    'academy',
+    'corporate-career'
   ].includes(activeTab);
 
   return (
@@ -355,6 +356,24 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                         </div>
                       </button>
 
+                      <button
+                        onClick={() => handleNavClick('corporate-career')}
+                        className="w-full text-left p-3 rounded-xl hover:bg-navy-50/70 border border-slate-100 hover:border-navy-200 transition-all flex items-start gap-3.5 group"
+                      >
+                        <div className="p-2.5 rounded-xl bg-navy-50 border border-navy-100 text-navy-700 shrink-0 mt-0.5">
+                          <Users className="w-5 h-5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-extrabold text-xs sm:text-sm text-slate-900 group-hover:text-navy-600 flex items-center justify-between">
+                            <span>Employer-sponsored Career Accelerator</span>
+                            <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-navy-600 shrink-0 ml-1" />
+                          </div>
+                          <div className="text-[11px] text-slate-600 line-clamp-2 mt-0.5 leading-snug">
+                            Develop an employee while aligning their learning to real organisational deliverables
+                          </div>
+                        </div>
+                      </button>
+
                       {/* Secondary Link: All Academy Programs */}
                       <button
                         onClick={() => handleNavClick('academy')}
@@ -505,6 +524,17 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                       </div>
                     </div>
                     <ChevronRight className="w-3.5 h-3.5 text-navy-600 mt-1 shrink-0" />
+                  </button>
+
+                  <button
+                    onClick={() => handleNavClick('corporate-career')}
+                    className="w-full text-left p-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-navy-50 hover:text-navy-700 flex items-center justify-between"
+                  >
+                    <div>
+                      <div className="font-extrabold text-navy-800">Employer-sponsored Career Accelerator</div>
+                      <div className="text-[11px] text-slate-500 font-normal mt-0.5">Workplace projects and employee development</div>
+                    </div>
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                   </button>
 
                   <button
