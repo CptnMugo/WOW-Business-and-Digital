@@ -142,7 +142,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     'career-coaching',
     'consulting',
     'wow-assistant',
-    'products'
+    'products',
+    'health-social-care'
   ].includes(activeTab);
 
   const isProgramsActive = [
@@ -231,6 +232,24 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     </div>
 
                     <div className="grid grid-cols-1 gap-1.5">
+                      <button
+                        onClick={() => handleNavClick('health-social-care')}
+                        className="w-full text-left p-2.5 rounded-xl hover:bg-navy-50/60 border border-transparent hover:border-navy-200 transition-all flex items-start gap-3 group"
+                      >
+                        <div className="p-2 rounded-lg bg-navy-50 border border-navy-100 text-navy-600 group-hover:bg-navy-600 group-hover:text-white transition-all shrink-0 mt-0.5 shadow-xs">
+                          <Users className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-xs text-slate-900 group-hover:text-navy-600 flex items-center gap-1.5">
+                            <span>Health and Social Care</span>
+                            <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-navy-600" />
+                          </div>
+                          <div className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                            Project delivery and transformation support for health and care organisations
+                          </div>
+                        </div>
+                      </button>
+
                       {CORE_FIVE_SERVICES.map((service) => {
                         const IconComponent = {
                           Layers,
@@ -430,6 +449,13 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               
               {mobileServicesOpen && (
                 <div className="p-2 space-y-1 bg-white border-t border-slate-200">
+                  <button
+                    onClick={() => handleNavClick('health-social-care')}
+                    className="w-full text-left p-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-navy-50 hover:text-navy-700 flex items-center justify-between"
+                  >
+                    <span>Health and Social Care</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                  </button>
                   {CORE_FIVE_SERVICES.map((s) => (
                     <button
                       key={s.id}
