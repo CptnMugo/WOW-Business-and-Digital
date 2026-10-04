@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-export type EnquiryCategory = 'business-consultancy' | 'staffing' | 'training' | 'ai-solutions' | 'career-coaching' | 'partnership' | 'general';
+export type EnquiryCategory = 'business-consultancy' | 'staffing' | 'training' | 'ai-solutions' | 'career-coaching' | 'partnership' | 'general' | 'health-social-care';
 export interface ContactSectionProps { initialCategory?: EnquiryCategory; }
 const topics: Record<EnquiryCategory, string> = {
+  'health-social-care': 'Health and social care project or programme',
   general: 'General enquiry / not sure yet',
   'business-consultancy': 'Transformation, services or project delivery',
   staffing: 'Specialist support or associates',
@@ -44,7 +45,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
   };
   const field = 'block w-full mt-2 rounded-lg border border-[#b9c5d0] p-3 bg-white text-[#0b2d5b] focus:outline-2 focus:outline-[#0b2d5b]';
   return <section className="max-w-4xl mx-auto px-5 py-12">
-    <h1 className="text-3xl sm:text-5xl font-bold text-[#0b2d5b]">How can we help you?</h1>
+    <h1 className="text-3xl sm:text-5xl font-bold text-[#0b2d5b]">{initialCategory === 'health-social-care' ? 'Discuss your health and social care project' : 'How can we help you?'}</h1>
     <p className="mt-4 text-base leading-relaxed max-w-2xl">Tell us what you need help with. We welcome individuals, small businesses and larger organisations, in the UK and internationally.</p>
     <div className="my-6 flex flex-col gap-2 text-sm">
       <a className="underline break-all" href="mailto:wowdigital@wowbusinessanddigital.com">wowdigital@wowbusinessanddigital.com</a>
@@ -70,7 +71,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
         <label htmlFor="enquiry-phone" className="block">Phone (optional)<input id="enquiry-phone" name="telephone" type="tel" autoComplete="tel" maxLength={50} className={field} /></label>
       </div>
       <label htmlFor="enquiry-org" className="block">Organisation (optional)<input id="enquiry-org" name="organisationName" autoComplete="organization" maxLength={200} className={field} /></label>
-      <label htmlFor="enquiry-message" className="block">How can we help? *<textarea id="enquiry-message" name="message" rows={5} maxLength={10000} required className={field} placeholder="Tell us what you would like to achieve. It is fine if you are still exploring your options." /></label>
+      <label htmlFor="enquiry-message" className="block">How can we help? *<textarea id="enquiry-message" name="message" rows={5} maxLength={10000} required className={field} placeholder={initialCategory === 'health-social-care' ? 'Tell us what needs to change, your desired timescale and the support you need. It is fine if you are still exploring your options.' : 'Tell us what you would like to achieve. It is fine if you are still exploring your options.'} /></label>
       <label className="flex items-start gap-3 text-sm leading-relaxed" htmlFor="enquiry-privacy"><input id="enquiry-privacy" name="privacy" type="checkbox" required className="mt-1 accent-[#0b2d5b]" />I understand WOW Business &amp; Digital will use these details to respond to my enquiry. *</label>
       <p className="text-sm">Read our <a className="underline" href="?page=privacy">privacy notice</a>.</p>
       {error && <p role="alert" className="text-red-800">{error}</p>}

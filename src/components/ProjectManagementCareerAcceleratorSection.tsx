@@ -83,9 +83,15 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
           <p className="font-bold">Starts {CAREER_ACCELERATOR.startDate} · Six months</p>
           <p className="mt-3"><strong>Optional executive mentorship add-on.</strong> {CAREER_ACCELERATOR.mentorshipScope} Payment options and arrangements are available; please discuss these with us during your confirmation call.</p>
           <p className="mt-3 font-bold">November cohort starts 14 November 2026. Places are limited. No payment is taken when you apply.</p>
-          <p className="mt-3"><a className="underline" href="?page=career-explore">Free taster or adviser call</a> | <a className="underline" href="?page=corporate-career">Employer sponsorship and corporate packages</a></p>
+          <p className="mt-3"><a className="underline" href="?page=career-explore">Free taster or adviser call</a> | <a className="underline" href="?page=corporate-career">Employer-sponsored places and workplace projects</a></p>
           <p className="mt-3">Apply first. Payment will be requested by email only once your application is accepted. The £900 early settlement offer applies to the standard programme.</p>
         </div>
+
+          <section className="max-w-4xl rounded-2xl border border-navy-200 bg-white/90 p-5 text-slate-800">
+            <h2 className="text-xl font-bold mb-3">Grounded in the realities of delivering change</h2>
+            <p className="leading-relaxed">The programme draws on founder Rennie Mudzi’s extensive experience in NHS, healthcare and social care transformation, alongside coaching professionals in these settings through career progression. It is particularly relevant if you are moving from clinical, operational or administrative responsibilities into project delivery, service improvement or transformation.</p>
+            <p className="mt-3 leading-relaxed">Practise bringing colleagues with you, navigating competing priorities and communicating change—skills that matter across health and care and beyond. Professionals from other sectors are equally welcome.</p>
+          </section>
 
           {/* Quick Spec Matrix */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl pt-2">

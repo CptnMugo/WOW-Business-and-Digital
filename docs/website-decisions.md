@@ -28,3 +28,18 @@ A Namecheap deployment is still required for code changes. The Stripe webhook mu
 - Taster dates: Saturday 10 and Friday 16 October, 10am to 2pm UK time. Calls: Thursday 8 and Friday 9 October, 15-minute predefined starts from 11am through 1:45pm. Separate from the existing 10-minute application confirmation call and private 3-hour/5-day simulations.
 - New forms are request-only pending Outlook configuration. Never claim time reservation, automatic calendar entry or joining details before connected. Requests appear in a separate authenticated dashboard register, not the application Google Sheet.
 - Confirmed Outlook address: wowdigital@wowbusinessanddigital.com. No credentials or Bookings service links supplied. See career-engagement-setup.md for activation steps and current limitations.
+
+## 4 October: employer-sponsored workplace deliverables
+
+- Corporate offer is sponsorship on the six-month Career Accelerator, with employee learning aligned to defined deliverables within their employer organisation. It is not a promise of standalone outsourced consultancy.
+- Examples: PMO foundations, workflow improvement, a defined project delivery plan, and action/risk/progress oversight. Agree scope, expected outputs, employee time and WOW guidance before starting.
+- Explain cost-effectiveness through simplified methods, reusable tools and combining learning with practical work; do not claim unsupported percentage savings or guaranteed delivery.
+- Corporate enquiry retains its existing handler and optional message field, now labelled for workplace projects/deliverables. Preserve all application, payment, taster, email and calendar behaviour.
+- Programme positioning should reflect Rennie’s healthcare, NHS and social care transformation and career-coaching experience, with particular relevance to these professionals while welcoming other sectors. Attribute prior experience to the founder; do not imply NHS endorsement or guaranteed progression.
+
+## 4 October: direct health and social care delivery
+
+- Dedicated health-social-care route linked from Services and corporate Career Accelerator page. Covers simple operational improvements through complex programmes, with concrete examples.
+- Separate direct delivery offer from employer-sponsored learning; attribute previous NHS/independent care experience to Rennie, not historical WOW contracts. No implied NHS endorsement.
+- Reuse general enquiry submission and email handlers. Health and social care topic travels in existing details.reason/subject; prompt for desired change, timescale and support in existing message field.
+- GitHub publication authorised by user. Namecheap deployment remains separate.
