@@ -1,1 +1,57 @@
 .career-explore{background:#f8f4ed;color:#0b2d5b;padding:48px 20px}.ce-wrap{max-width:1060px;margin:auto}.career-explore a{text-decoration:underline;text-underline-offset:3px}.ce-eyebrow{margin-top:32px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:13px}.career-explore h1{font-size:clamp(32px,5vw,58px);line-height:1.1;font-weight:800;max-width:850px;margin:18px 0}.ce-lead{font-size:20px;max-width:760px}.ce-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:32px 0}.ce-cards section,.ce-form{background:white;border:1px solid #d7dce3;border-radius:18px;padding:28px}.career-explore h2{font-size:24px;font-weight:700;margin-bottom:12px}.career-explore p{margin-bottom:16px;line-height:1.7}.ce-notice{padding:28px;border-left:5px solid #d4a24c;background:#0b2d5b;color:white;border-radius:12px;margin:28px 0}.ce-button{display:inline-block!important;background:#d4a24c!important;color:#0b2d5b!important;border:0;border-radius:8px;padding:14px 20px;font-weight:750;text-decoration:none!important;margin-bottom:14px;cursor:pointer}.ce-button:disabled{opacity:.65}.ce-form{max-width:760px;margin:32px 0}.ce-form label{display:block;margin:0 0 20px;font-weight:600}.ce-form input:not([type=checkbox]),.ce-form select,.ce-form textarea{display:block;width:100%;min-width:0;max-width:100%;margin-top:8px;border:1px solid #8091a6;border-radius:8px;padding:12px;background:#fff;font:inherit;color:#0b2d5b}.ce-form .ce-check{display:flex;gap:12px;align-items:flex-start}.ce-check input{margin-top:6px}.ce-reference{overflow-wrap:anywhere}.career-explore :focus-visible{outline:3px solid #b88028;outline-offset:3px}@media(max-width:650px){.ce-cards{grid-template-columns:1fr}.ce-form,.ce-cards section,.ce-notice{padding:20px}.career-explore{padding:32px 16px}.ce-form select{font-size:14px}}
+
+
+/* Health & social care page */
+.health-care-page .ce-wrap>section{margin:44px 0}
+.health-hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin:24px 0 8px}
+.health-secondary-button{display:inline-block;background:white;color:#0b2d5b!important;border:2px solid #0b2d5b;border-radius:8px;padding:12px 18px;font-weight:800;text-decoration:none!important}
+.health-secondary-button:hover{background:#eef3f7}
+.health-focus{background:#0b2d5b;color:white;border-radius:18px;padding:24px 28px;margin:28px 0;display:grid;grid-template-columns:1.15fr 1fr;gap:24px;align-items:center}
+.health-focus strong{display:block;font-size:20px;line-height:1.3}
+.health-focus span{display:inline-block;margin-top:12px;background:#d4a24c;color:#0b2d5b;border-radius:999px;padding:8px 14px;font-weight:800}
+.health-focus p{margin:0;font-weight:600}
+.health-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:center;margin:26px 0 10px}
+.health-scale div{position:relative;text-align:center;padding:14px 6px;background:white;border:1px solid #d7dce3;border-radius:14px}
+.health-scale div:not(:last-child)::after{content:"";position:absolute;top:50%;right:-9px;width:10px;height:3px;background:#d4a24c}
+.health-scale strong{display:block;font-size:22px}
+.health-scale span{font-size:13px;color:#475569}
+.health-scale-caption{font-weight:650;color:#475569;max-width:900px}
+.health-three{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
+.health-three>div{background:white;border:1px solid #d7dce3;border-radius:16px;padding:22px}
+.health-three>div:nth-child(2){background:#fbf6e8}
+.health-help-list{display:grid;gap:14px;margin:26px 0}
+.health-help-list article{display:grid;grid-template-columns:54px 1fr;gap:18px;background:white;border:1px solid #d7dce3;border-radius:16px;padding:20px 22px}
+.health-number{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#0b2d5b;color:white;font-weight:800;font-size:18px}
+.health-help-list article:nth-child(2) .health-number{background:#1e63f3}
+.health-help-list article:nth-child(3) .health-number{background:#11b7e6}
+.health-help-list article:nth-child(4) .health-number{background:#d4a24c;color:#0b2d5b}
+.health-result{font-weight:800;color:#1e63f3;margin-bottom:0!important}
+.health-start{background:white;border:1px solid #d4a24c;border-radius:18px;padding:28px}
+.health-adoption{background:#0b2d5b;color:white;border-radius:18px;padding:30px}
+.health-adoption h2{color:white}
+.health-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.health-benefits article{background:white;border:1px solid #d7dce3;border-radius:16px;padding:22px}
+.health-capability{background:#fbf6e8;border-left:5px solid #d4a24c;border-radius:14px;padding:28px}
+.health-solutions{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:26px}
+.health-solutions article{background:white;border:1px solid #d7dce3;border-radius:18px;padding:26px}
+.health-solutions h4{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin:18px 0 7px;color:#1e63f3}
+.health-experience section{padding:22px}
+.health-recognise{background:#fbf6e8;border-radius:18px;padding:28px}
+.health-recognise p:first-of-type{font-size:18px;font-weight:750;color:#223047}
+
+@media(max-width:800px){
+  .health-focus,.health-three,.health-benefits,.health-solutions{grid-template-columns:1fr}
+  .health-scale{grid-template-columns:repeat(5,minmax(92px,1fr));overflow-x:auto;padding-bottom:6px}
+  .health-scale div:not(:last-child)::after{display:none}
+  .health-help-list article{grid-template-columns:46px 1fr}
+  .health-care-page .ce-wrap>section{margin:34px 0}
+}
+@media(max-width:650px){
+  .health-focus{padding:20px}
+  .health-benefits article,.health-solutions article,.health-start,.health-adoption,.health-capability,.health-recognise{padding:20px}
+  .health-help-list article{padding:18px 16px;gap:12px}
+  .health-result{font-size:14px}
+  .health-scale{margin-left:-4px;margin-right:-4px}
+  .health-hero-actions{flex-direction:column;align-items:stretch}
+  .health-hero-actions a{text-align:center}
+}
