@@ -203,7 +203,7 @@ export function generateStaffAlertEmail(reg: RegistrationData): { subject: strin
 }
 export function generateDelegateWelcomeEmail(reg: RegistrationData): { subject: string; text: string; html: string } {
   const subject = `Application received — ${reg.referenceNumber}`;
-  const text = `Hello ${reg.firstName},\n\nThank you for applying to the six-month Project Management Career Accelerator, starting 14 November 2026.\n\nReference: ${reg.referenceNumber}\nPayment preference: ${reg.paymentPreference || 'To discuss'}\n\nYour application is awaiting review. We will contact you to arrange your 10-minute confirmation call before acceptance and payment. Requested slot: ${reg.confirmationCallDate || "To agree"} at ${reg.confirmationCallTime || "To agree"} (${reg.confirmationCallTimeZone || "Time zone to confirm"}). This is a request, not a confirmed booking.\n\nNo payment is required at this stage and this acknowledgement is not confirmation of acceptance. After the call, if accepted, you will receive an email confirming your acceptance, agreed payment schedule and payment instructions. Please make payment promptly once you receive that email.\n\nOnce accepted, you can pay £50 to reserve your place. This deposit is credited towards your total programme fee, including the first instalment where applicable. Employer sponsorship arrangements will be confirmed separately.\n\nFor updates, email wowdigital@wowbusinessanddigital.com and quote your reference.\n\nWOW Business and Digital Ltd`;
+  const text = `Hello ${reg.firstName},\n\nThank you for applying to the six-month Project Management Career Accelerator, starting 14 November 2026.\n\nReference: ${reg.referenceNumber}\nPayment preference: ${reg.paymentPreference || 'To discuss'}\n\nYour application is awaiting review. We will contact you to arrange your 10-minute confirmation call before acceptance and payment. Requested slot: ${reg.confirmationCallDate || "To agree"} at ${reg.confirmationCallTime || "To agree"} (${reg.confirmationCallTimeZone || "Time zone to confirm"}). This is a request, not a confirmed booking.\n\nNo payment is required at this stage and this acknowledgement is not confirmation of acceptance. After the call, if accepted, you will receive an email confirming your acceptance, agreed payment schedule and payment instructions. Please make payment promptly once you receive that email.\n\nOnce accepted, you can pay £50 to reserve your place. This deposit is credited towards your total programme fee, including the first instalment where applicable. Employer sponsorship arrangements will be confirmed separately.\n\nFor updates, email wowdigital@wowbusinessanddigital.com and quote your reference.\n\nWarm regards,\nWOW Business & Digital`;
   return { subject, text, html: `<div style="font-family:Arial,sans-serif;max-width:650px"><h1>Application received</h1><p>${escape(text).replace(/\n/g, '<br>')}</p></div>` };
 }
 
@@ -357,7 +357,7 @@ export async function sendOutboundEmail(
       });
 
       const delivery = await transporter.sendMail({
-        from: process.env.SMTP_FROM || `"WOW Academy Admissions" <${process.env.SMTP_USER}>`,
+        from: overrideFrom || process.env.SMTP_FROM || `"WOW Academy Admissions" <${process.env.SMTP_USER}>`,
         to,
         replyTo: process.env.REPLY_TO_EMAIL || 'wowdigital@wowbusinessanddigital.com',
         subject,

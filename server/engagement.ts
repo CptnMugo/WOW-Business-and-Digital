@@ -1,3 +1,4 @@
+import { businessSender } from './websiteEnquiries.js';
 import type { Express } from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -26,9 +27,9 @@ export function installEngagement(app: Express) {
    write([...readEngagements(), record]);
   } catch { res.status(503).json({ error: 'Your request could not be saved. Please try again later.' }); return; }
   const acknowledgment = record.kind === 'corporate' ? 'Thank you for your corporate enquiry. WOW will contact you to discuss employee sponsorship and support.' : 'Thank you. Your request has been received, but your place or call is not yet confirmed. WOW will email confirmation and joining details separately. Please do not attend without confirmation.';
-  const detail = [record.reference, record.name, record.email, record.phone, record.company, record.employees, record.session, record.message].filter(Boolean).join('\n');
-  const send = async (to: string, subject: string, text: string) => { try { return (await sendOutboundEmail(to, subject, `<div style="white-space:pre-wrap">${escape(text)}</div>`, text)).success; } catch { return false; } };
-  const [staff, visitor] = await Promise.all([send(process.env.ADMISSIONS_EMAIL || 'wowdigital@wowbusinessanddigital.com', `Career ${record.kind} request: ${record.name}`, detail), send(record.email, 'WOW: request received', acknowledgment + '\n\n' + record.reference + '\n' + record.session + '\n\nNo payment has been taken. This is not a programme application or a reservation for the November cohort.')]);
+  const detail = [`Reference: ${record.reference}`, `Name: ${record.name}`, `Email: ${record.email}`, `Phone: ${record.phone}`, `Company: ${record.company}`, `Employees: ${record.employees}`, `Session: ${record.session}`, `Message: ${record.message}`].filter(Boolean).join('\n');
+  const send = async (to: string, subject: string, text: string) => { try { return (await sendOutboundEmail(to, subject, `<div style="white-space:pre-wrap">${escape(text)}</div>`, text, record.kind === 'corporate' ? businessSender() : undefined)).success; } catch { return false; } };
+  const [staff, visitor] = await Promise.all([send(process.env.ADMISSIONS_EMAIL || 'wowdigital@wowbusinessanddigital.com', `Career ${record.kind} request: ${record.name}`, detail), send(record.email, 'WOW: request received', acknowledgment + '\n\n' + record.reference + '\n' + record.session + '\n\nNo payment has been taken. This is not a programme application or a reservation for the November cohort.\n\nWarm regards,\nWOW Business & Digital')]);
   try { const rows = readEngagements(); const saved = rows.find(r => r.reference === record.reference); if (saved) saved.emailStatus = { staff, visitor }; write(rows); } catch { /* Persisted request remains available even if email audit update fails. */ }
   res.status(201).json({ reference: record.reference, message: acknowledgment, emailAccepted: visitor });
  });

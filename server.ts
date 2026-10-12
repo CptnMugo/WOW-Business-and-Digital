@@ -1,3 +1,4 @@
+import { businessSender, enquiryEmail } from './server/websiteEnquiries.js';
 import { installEngagement } from './server/engagement.js';
 import { installAdmissionsDashboard } from "./server/admissionsDashboard.js";
 import { installPaymentWebhook, installPaymentRoutes, paymentLink, readPayments } from './server/payments.js';
@@ -78,9 +79,10 @@ app.post('/api/enquiries', async (req, res) => {
     fs.mkdirSync('data', { recursive: true });
     fs.appendFileSync('data/enquiries.jsonl', JSON.stringify(record) + '\n', { mode: 0o600 });
     const staff = process.env.ENQUIRIES_EMAIL || process.env.ADMISSIONS_EMAIL || 'wowdigital@wowbusinessanddigital.com';
-    const summary = JSON.stringify(record, null, 2);
-    const staffMail = await sendOutboundEmail(staff, `WBD ${category} enquiry ${record.id}`, `<pre>${escapeHtml(summary)}</pre>`, summary);
-    const customerMail = await sendOutboundEmail(contact.email, `We received your enquiry (${record.id})`, `<p>Thank you for contacting WOW Business & Digital. We have received your enquiry and will respond after reviewing it.</p><p>Reference: ${record.id}</p>`, `Thank you for contacting WOW Business & Digital. We have received your enquiry. Reference: ${record.id}`);
+    const summary = enquiryEmail(record);
+    const sender = category === 'training' ? undefined : businessSender();
+    const staffMail = await sendOutboundEmail(staff, summary.subject, summary.html, summary.text, sender);
+    const customerMail = await sendOutboundEmail(contact.email, `We received your enquiry (${record.id})`, `<p>Thank you for contacting WOW Business & Digital. We have received your enquiry and will respond after reviewing it.</p><p>Reference: ${record.id}</p><p>Warm regards,<br />WOW Business &amp; Digital</p>`, `Thank you for contacting WOW Business & Digital. We have received your enquiry. Reference: ${record.id}\n\nWarm regards,\nWOW Business & Digital`, sender);
     res.status(201).json({ success: true, reference: record.id, staffEmailSent: staffMail.success && staffMail.method !== 'simulated-preview', acknowledgementSent: customerMail.success && customerMail.method !== 'simulated-preview' });
   } catch (error) {
     console.error('Enquiry processing failed:', error);

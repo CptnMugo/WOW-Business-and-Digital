@@ -43,3 +43,10 @@ A Namecheap deployment is still required for code changes. The Stripe webhook mu
 - Separate direct delivery offer from employer-sponsored learning; attribute previous NHS/independent care experience to Rennie, not historical WOW contracts. No implied NHS endorsement.
 - Reuse general enquiry submission and email handlers. Health and social care topic travels in existing details.reason/subject; prompt for desired change, timescale and support in existing message field.
 - GitHub publication authorised by user. Namecheap deployment remains separate.
+
+## 12 October: website enquiries and email clarity
+
+- Add a separate authenticated Website enquiries register reading the existing data/enquiries.jsonl without migration or deletion. Retain the original server data folder on deployment so historical submissions remain available.
+- General/business and employer-sponsorship emails use WOW Business & Digital as the display name while preserving the configured sending mailbox. Training continues to use the admissions identity.
+- General enquiry alerts use labelled HTML and plain text rather than raw JSON. Client acknowledgements close with Warm regards, WOW Business & Digital.
+- Verified build, TypeScript, 66 isolated form HTTP checks, and targeted historical-register/authentication/escaping checks. No real emails sent. GitHub update requires separate Namecheap deployment.
