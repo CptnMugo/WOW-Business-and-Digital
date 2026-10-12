@@ -35,6 +35,10 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
               <button onClick={() => navigate('consulting')} className="wbd-button wbd-button-primary">Explore our approach <ArrowRight size={18} /></button>
               <button onClick={() => contact('business-consultancy')} className="wbd-button wbd-button-secondary">Discuss a project</button>
             </div>
+            <p className="mt-6 text-sm">
+              Interested in working with WOW?{' '}
+              <a href="?page=associates" className="font-bold underline underline-offset-4 hover:text-[#1e63f3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d4a24c]">Become an associate</a>
+            </p>
           </div>
         </div>
       </section>
