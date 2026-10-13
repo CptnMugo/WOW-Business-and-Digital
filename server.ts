@@ -1,3 +1,4 @@
+import { validateCv, saveCv } from './server/associateCv.js';
 import { businessSender, enquiryEmail } from './server/websiteEnquiries.js';
 import { installEngagement } from './server/engagement.js';
 import { installAdmissionsDashboard } from "./server/admissionsDashboard.js";
@@ -36,6 +37,16 @@ app.set("trust proxy", "loopback");
 app.use((_req, res, next) => { res.set("Referrer-Policy", "no-referrer"); next(); });
 
 installPaymentWebhook(app);
+const associateAttempts = new Map<string, { count: number; expires: number }>();
+app.post('/api/associate-enquiries', (req, res, next) => {
+  for (const [key, value] of associateAttempts) if (value.expires < Date.now()) associateAttempts.delete(key);
+  const key = req.ip || 'unknown';
+  const attempt = associateAttempts.get(key) || { count: 0, expires: Date.now() + 3600000 };
+  if (attempt.count >= 10 || associateAttempts.size >= 10000) { res.status(429).json({error:'Please wait before submitting another registration.'}); return; }
+  attempt.count++; associateAttempts.set(key, attempt); next();
+}, express.json({ limit: '7mb' }), (error: any, _req: express.Request, res: express.Response, next: express.NextFunction) => {
+  if (error) { res.status(error.status === 413 ? 413 : 400).json({error:'Please upload a valid CV up to 5 MB.'}); return; } next();
+});
 app.use(express.json({ limit: "100kb" }));
 installWorkspaceAccess(app);
 installAdmissionsDashboard(app);
@@ -57,8 +68,10 @@ const validTraining = (data: any) => data &&
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) && data.privacyAcknowledged === true &&
   [1, 2, 3, 4, 5, 6, 7].every(number => data['declaration' + number] === true);
 
-app.post('/api/enquiries', async (req, res) => {
+app.post(['/api/enquiries', '/api/associate-enquiries'], async (req, res) => {
   const { category, contact, details } = req.body || {};
+  if (req.path === '/api/associate-enquiries' && category !== 'associate') { res.status(400).json({error:'This form is for associate registrations.'}); return; }
+  if (req.body?.cv && (category !== 'associate' || req.path !== '/api/associate-enquiries')) { res.status(400).json({error:'CV uploads are only available on the associate form.'}); return; }
   if (!ENQUIRY_CATEGORIES.has(category) || !contact || typeof contact.firstName !== 'string' || !contact.firstName.trim() || typeof contact.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email) || contact.privacyAcknowledged !== true || !details || typeof details !== 'object') {
     res.status(400).json({ error: 'Please complete the required contact and privacy fields.' });
     return;
@@ -74,10 +87,18 @@ app.post('/api/enquiries', async (req, res) => {
     res.status(400).json({ error: 'Please complete your professional details and consent to being contacted about associate opportunities.' });
     return;
   }
-  const record = { id: `WBD-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, receivedAt: new Date().toISOString(), category, contact, details };
+  let cv: ReturnType<typeof validateCv>;
+  try {
+    if (category === 'associate' && details.coverNote !== undefined && (typeof details.coverNote !== 'string' || details.coverNote.length > 5000)) throw new Error('Please keep your cover note within 5,000 characters.');
+    if (Buffer.byteLength(JSON.stringify({contact,details})) > 100 * 1024) throw new Error('Please shorten your registration details.');
+    cv = validateCv(req.body?.cv);
+  } catch (error) { res.status(400).json({error:(error as Error).message}); return; }
+  const record = { id: `WBD-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, receivedAt: new Date().toISOString(), category, contact, details, cv: undefined as ReturnType<typeof saveCv> };
   try {
     fs.mkdirSync('data', { recursive: true });
-    fs.appendFileSync('data/enquiries.jsonl', JSON.stringify(record) + '\n', { mode: 0o600 });
+    record.cv = saveCv(cv);
+    try { fs.appendFileSync('data/enquiries.jsonl', JSON.stringify(record) + '\n', { mode: 0o600 }); }
+    catch (error) { if (record.cv) fs.unlinkSync(path.join('data/associate-cvs',record.cv.storageName)); throw error; }
     const staff = process.env.ENQUIRIES_EMAIL || process.env.ADMISSIONS_EMAIL || 'wowdigital@wowbusinessanddigital.com';
     const summary = enquiryEmail(record);
     const sender = category === 'training' ? undefined : businessSender();

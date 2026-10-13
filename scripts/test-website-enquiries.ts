@@ -1,3 +1,4 @@
+import { validateCv, saveCv, CV_MAX } from '../server/associateCv.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -13,6 +14,21 @@ try {
  await createAdmissionsUser('staff@example.com','Staff','long-password-for-tests-123');const login=await fetch(root+'/api/admissions-dashboard/login',{method:'POST',headers:{'Content-Type':'application/json',Origin:'http://localhost:3000'},body:JSON.stringify({email:'staff@example.com',password:'long-password-for-tests-123'})});assert.equal(login.status,200);const cookie=login.headers.get('set-cookie')!.split(';')[0];
  const list=await fetch(root+'/api/admissions-dashboard/website-enquiries',{headers:{Cookie:cookie}});assert.equal(list.status,200);assert.deepEqual((await list.json()).records,[record]);assert.match(list.headers.get('cache-control')!,/no-store/);
  const email=enquiryEmail(record);assert.ok(!email.html.includes('<script>'));assert.ok(email.html.includes('&lt;script&gt;'));assert.match(email.text,/Message:/);assert.match(email.subject,/Website enquiry — Test/);assert.equal(businessSender(),'WOW Business & Digital <WowAcademy@contact.wowbusinessanddigital.com>');
+ const bytes=Buffer.from('%PDF-1.4\nTest CV');
+ const cv=saveCv(validateCv({name:'../../CV.pdf',base64:bytes.toString('base64')}))!;
+ assert.equal(cv.name,'CV.pdf');
+ const associate={...record,id:'TEST-CV',category:'associate',cv};
+ fs.appendFileSync('data/enquiries.jsonl',JSON.stringify(associate)+'\n');
+ const route=root+'/api/admissions-dashboard/website-enquiries/TEST-CV/cv';
+ assert.equal((await fetch(route)).status,401);
+ const download=await fetch(route,{headers:{Cookie:cookie}});assert.equal(download.status,200);assert.match(download.headers.get('content-disposition')!,/attachment/);assert.deepEqual(Buffer.from(await download.arrayBuffer()),bytes);
+ const records=(await (await fetch(root+'/api/admissions-dashboard/website-enquiries',{headers:{Cookie:cookie}})).json()).records;
+ assert.equal(records[1].cv.storageName,undefined);
+ assert.equal((await fetch(root+'/api/admissions-dashboard/website-enquiries/UNKNOWN/cv',{headers:{Cookie:cookie}})).status,404);
+ assert.equal(validateCv(undefined),undefined);
+ assert.throws(()=>validateCv({name:'bad.pdf',base64:Buffer.from('<script>bad</script>').toString('base64')}));
+ assert.throws(()=>validateCv({name:'bad.exe',base64:bytes.toString('base64')}));
+ assert.throws(()=>validateCv({name:'large.pdf',base64:Buffer.alloc(CV_MAX+1).toString('base64')}));
  fs.appendFileSync('data/enquiries.jsonl','invalid');assert.equal((await fetch(root+'/api/admissions-dashboard/website-enquiries',{headers:{Cookie:cookie}})).status,503);
  console.log('PASS: private access, historical records, no-store, escaped readable email, business display name, corrupt-store error. No external emails.');
 } finally {server.close();process.chdir(cwd);fs.rmSync(temp,{recursive:true,force:true});}

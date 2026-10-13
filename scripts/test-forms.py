@@ -53,6 +53,24 @@ with tempfile.TemporaryDirectory(prefix='wbd-forms-') as folder:
         saved=[json.loads(line) for line in (pathlib.Path(folder)/'data/enquiries.jsonl').read_text().splitlines()]
         assert len(saved)==8 and {x['category'] for x in saved}==set(cases)
         passed.append('All eight successful enquiry payloads persisted exactly once; rejected submissions not saved')
+        import base64
+        associate=dict(category='associate',contact=dict(firstName='CV Tester',email='test@example.invalid',privacyAcknowledged=True),details=copy.deepcopy(cases['associate']))
+        associate['details']['coverNote']='I would like to support delivery projects.'
+        cvbytes=b'%PDF-1.4\nTest CV'
+        associate['cv']=dict(name='CV.pdf',base64=base64.b64encode(cvbytes).decode())
+        request('/api/associate-enquiries',associate,201)
+        records=[json.loads(line) for line in (pathlib.Path(folder)/'data/enquiries.jsonl').read_text().splitlines()]
+        latest=records[-1]
+        assert latest['details']['coverNote']==associate['details']['coverNote']
+        assert (pathlib.Path(folder)/'data/associate-cvs'/latest['cv']['storageName']).read_bytes()==cvbytes
+        assert 'base64' not in latest['cv']
+        del associate['cv'];del associate['details']['coverNote']
+        request('/api/associate-enquiries',associate,201)
+        associate['cv']=dict(name='bad.pdf',base64=base64.b64encode(b'not a PDF').decode())
+        request('/api/associate-enquiries',associate,400)
+        del associate['cv'];associate['details']['coverNote']='x'*5001
+        request('/api/associate-enquiries',associate,400)
+        passed.append('Associate CV and cover note saved; both optional; invalid file and oversized note rejected')
         result=request('/api/registrations/submit',training)
         assert __import__('re').fullmatch(r'WOW-CA-26-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}', result['referenceNumber'])
         assert result['success'] and not result['emailAlertSent'] and not result['delegateWelcomeSent']

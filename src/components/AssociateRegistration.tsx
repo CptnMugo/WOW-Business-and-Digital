@@ -20,12 +20,21 @@ export const AssociateRegistration: React.FC = () => {
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (busy) return;
-    const data = Object.fromEntries(new FormData(event.currentTarget));
+    const formData = new FormData(event.currentTarget);
+    const file = formData.get('cv') as File | null;
+    formData.delete('cv');
+    const data = Object.fromEntries(formData);
     setBusy(true); setError('');
     try {
-      const response = await fetch('/api/enquiries', {
+      let cv: { name: string; base64: string } | undefined;
+      if (file && file.size) {
+        if (file.size > 5 * 1024 * 1024 || !/\.(pdf|doc|docx)$/i.test(file.name)) throw new Error('Please choose a PDF or Word CV up to 5 MB.');
+        const encoded = await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result).split(',')[1]); reader.onerror = () => reject(new Error('Your CV could not be read. Please select it again.')); reader.readAsDataURL(file); });
+        cv = { name:file.name, base64:encoded };
+      }
+      const response = await fetch('/api/associate-enquiries', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ category: 'associate', contact: {
+        body: JSON.stringify({ category: 'associate', cv, contact: {
           firstName: String(data.fullName || '').trim(), email: data.email,
           telephone: data.phone, privacyAcknowledged: data.consent === 'on',
         }, details: { ...data, retainForOpportunities: data.consent === 'on', status: 'EXPRESSION_OF_INTEREST' } }),
@@ -57,7 +66,14 @@ export const AssociateRegistration: React.FC = () => {
       <label className="block text-sm font-semibold">Relevant experience and examples of your work *
         <textarea name="experience" required minLength={20} maxLength={5000} rows={5} className="mt-2 block w-full rounded-xl border border-slate-300 p-3 font-normal bg-navy-50" />
       </label>
-      <p className="text-sm text-slate-600">Share a brief professional summary and public links. We can request a CV later. Please do not include confidential client information.</p>
+      <p className="text-sm text-slate-600">Share a brief professional summary and public links. You can also attach your CV and add a cover note below. Please do not include confidential client information.</p>
+      <label className="block text-sm font-semibold">Upload your CV (optional)
+        <input type="file" name="cv" accept=".pdf,.doc,.docx" className="mt-2 block w-full" aria-describedby="cv-help" />
+        <span id="cv-help" className="block mt-2 font-normal">PDF or Word (.doc or .docx), up to 5 MB. Your CV is available only to authorised staff.</span>
+      </label>
+      <label className="block text-sm font-semibold">Cover note (optional)
+        <textarea name="coverNote" maxLength={5000} rows={4} className="mt-2 block w-full rounded-xl border border-slate-300 p-3 font-normal bg-navy-50" placeholder="Tell us why you would like to work with WOW and what you could bring to our projects." />
+      </label>
       <label className="flex items-start gap-3 text-sm"><input type="checkbox" name="consent" required className="mt-1" />
         <span>I agree that WBD may retain these details to assess my expression of interest and contact me about suitable associate opportunities. I can request removal by emailing wowdigital@wowbusinessanddigital.com. *</span>
       </label>

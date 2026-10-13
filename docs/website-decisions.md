@@ -50,3 +50,11 @@ A Namecheap deployment is still required for code changes. The Stripe webhook mu
 - General/business and employer-sponsorship emails use WOW Business & Digital as the display name while preserving the configured sending mailbox. Training continues to use the admissions identity.
 - General enquiry alerts use labelled HTML and plain text rather than raw JSON. Client acknowledgements close with Warm regards, WOW Business & Digital.
 - Verified build, TypeScript, 66 isolated form HTTP checks, and targeted historical-register/authentication/escaping checks. No real emails sent. GitHub update requires separate Namecheap deployment.
+
+## 13 October: optional associate CV and cover note
+
+- Associate registration accepts one optional PDF/DOC/DOCX CV up to 5 MiB and an optional cover note up to 5,000 characters. Existing experience and consent requirements remain.
+- Dedicated bounded associate request endpoint; file extension and signature validation; private generated filenames under data/associate-cvs. Validation is not malware scanning. Download requires existing staff authentication and returns an attachment, never an inline public document.
+- Keep data/enquiries.jsonl and data/associate-cvs together in persistent private storage and backups on deployment. Do not expose data via the web server. Proxy must permit the 7 MB encoded associate request. Deleting an associate record must also remove its associated CV under the existing retention process.
+- Staff register provides Download CV and the cover note. Notification identifies CV availability without emailing the binary attachment.
+- Verified production build, TypeScript, 70 isolated HTTP checks, and authenticated/unauthenticated downloads, format/size rejection, storage and optional fields. No real emails sent. Deploy to Namecheap separately.
