@@ -1,4 +1,4 @@
-import type { Express } from 'express';
+import express, { type Express } from 'express';
 import Stripe from 'stripe';
 import fs from 'node:fs';
 import path from 'node:path';
