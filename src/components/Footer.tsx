@@ -35,7 +35,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
             <ul className="text-sm text-[#dbe4ec] space-y-1">{links([
               ['about', 'About & Experience'], ['services', 'Our services'],
               ['pm-career-accelerator', 'Career Accelerator'],
-              ['health-social-care', 'Health & social care'], ['case-studies', 'Experience examples'],
+              ['health-social-care', 'Health & social care'], ['health-care-diagnostic','Business Improvement Diagnostic'], ['case-studies', 'Experience examples'],
             ])}</ul>
           </nav>
           <nav aria-label="Footer connect">
