@@ -2,6 +2,7 @@ import { validateCv, saveCv } from './server/associateCv.js';
 import { businessSender, enquiryEmail } from './server/websiteEnquiries.js';
 import { installEngagement } from './server/engagement.js';
 import { installAdmissionsDashboard } from "./server/admissionsDashboard.js";
+import { installDiagnosticPaymentRoutes } from './server/diagnosticPayments.js';
 import { installPaymentWebhook, installPaymentRoutes, paymentLink, readPayments } from './server/payments.js';
 import express from "express";
 import { installWorkspaceAccess } from "./server/workspaceAccess.js";
@@ -210,6 +211,7 @@ app.post("/api/ai-assistant", async (req, res) => {
 });
 
 installPaymentRoutes(app);
+installDiagnosticPaymentRoutes(app);
 
 // -------------------------------------------------------------
 // ADMISSIONS & REGISTRATION PIPELINE (Option 2 & Option 3)
