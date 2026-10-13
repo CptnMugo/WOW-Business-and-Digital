@@ -86,6 +86,7 @@ export function HealthSocialCare() {
         </div>
         <p className="health-scale-caption">Experience from hands-on small teams to large, complex organisations — bringing strong delivery discipline without unnecessary bureaucracy.</p>
 
+        <div className="bg-white rounded-xl border-2 border-[#d4a24c] p-6 my-8"><p className="uppercase text-xs font-bold tracking-wider text-[#1e63f3]">October introductory offer</p><h2 className="text-2xl font-bold mt-2">Business Improvement Diagnostic for Health &amp; Care Organisations</h2><p className="my-3">A holistic business review with a prioritised improvement scorecard and 30/60/90-day action plan. Introductory fee £1,000; initial appointments 26–30 October. Promotional checkout closes at midnight on 26 October.</p><a href="?page=health-care-diagnostic" className="ce-button inline-block">Explore the diagnostic and payment options</a></div>
         <div className="health-hero-actions">
           <a className="ce-button" href="#health-enquiry">Tell us what you need help with</a>
           <a className="health-secondary-button" href="#health-enquiry">Ask us to call you</a>
