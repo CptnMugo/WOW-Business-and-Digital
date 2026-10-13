@@ -1,3 +1,4 @@
+import { WebsiteLinks } from './components/WebsiteLinks';
 import { HealthSocialCare } from './components/HealthSocialCare';
 import { CareerExplore } from './components/CareerExplore';
 import { AdmissionsDashboard } from "./components/AdmissionsDashboard";
@@ -30,7 +31,7 @@ import { ProjectManagementRegistrationPage } from './components/ProjectManagemen
 import { ProjectSimulationPage } from './components/ProjectSimulationPage';
 import { ProgrammePolicies } from './components/ProgrammePolicies';
 
-const tabs: NavTab[] = ['home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','academy','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation','manage-applications','career-explore','corporate-career','health-social-care'];
+const tabs: NavTab[] = ['website-links','home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','academy','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation','manage-applications','career-explore','corporate-career','health-social-care'];
 const readTab = (): NavTab => {
  const query = new URLSearchParams(window.location.search);
  if (query.has('payment')) return 'payments';
@@ -93,6 +94,7 @@ export default function App() {
           />
         ) : (
           <>
+            {activeTab === 'website-links' && <WebsiteLinks />}
             {isServicesTab && <ServicesSection activeTab={activeTab} setActiveTab={setActiveTab} />}
             {(activeTab === 'privacy' || activeTab === 'programme-terms') && <ProgrammePolicies privacy={activeTab === 'privacy'} />}
             {activeTab === 'project-simulation' && <ProjectSimulationPage setActiveTab={setActiveTab} />}

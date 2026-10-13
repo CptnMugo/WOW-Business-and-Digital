@@ -34,14 +34,18 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
             <h2 className="text-sm font-bold text-[#f0c474] mb-3">Explore</h2>
             <ul className="text-sm text-[#dbe4ec] space-y-1">{links([
               ['about', 'About & Experience'], ['services', 'Our services'],
-              ['pm-career-accelerator', 'Career Accelerator'], ['case-studies', 'Experience examples'],
+              ['pm-career-accelerator', 'Career Accelerator'],
+              ['health-social-care', 'Health & social care'], ['case-studies', 'Experience examples'],
             ])}</ul>
           </nav>
           <nav aria-label="Footer connect">
             <h2 className="text-sm font-bold text-[#f0c474] mb-3">Connect</h2>
             <ul className="text-sm text-[#dbe4ec] space-y-1">{links([
               ['contact', 'Contact us'], ['associates', 'Become an associate'],
+              ['corporate-career', 'Sponsor an employee'],
+              ['career-explore', 'Tasters & adviser enquiries'],
               ['payments', 'Fees and payments'],
+              ['website-links', 'All pages, forms & logins'],
               ['manage-applications', 'Staff login'],
             ])}</ul>
             <p className="text-xs text-[#dbe4ec] mt-4 leading-relaxed max-w-xs">UK and international enquiries welcome.</p>

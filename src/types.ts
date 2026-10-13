@@ -1,4 +1,4 @@
-export type NavTab = 
+export type NavTab = 'website-links'
   | 'home' 
   | 'services'
   | 'associates'

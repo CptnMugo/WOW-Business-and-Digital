@@ -58,3 +58,10 @@ A Namecheap deployment is still required for code changes. The Stripe webhook mu
 - Keep data/enquiries.jsonl and data/associate-cvs together in persistent private storage and backups on deployment. Do not expose data via the web server. Proxy must permit the 7 MB encoded associate request. Deleting an associate record must also remove its associated CV under the existing retention process.
 - Staff register provides Download CV and the cover note. Notification identifies CV availability without emailing the binary attachment.
 - Verified production build, TypeScript, 70 isolated HTTP checks, and authenticated/unauthenticated downloads, format/size rejection, storage and optional fields. No real emails sent. Deploy to Namecheap separately.
+
+## 13 October: discoverable feature directory
+
+- Footer now links to All pages, forms & logins, a grouped directory covering all 25 existing feature routes, with copyable public route URLs. Direct footer access added for health/social care, employer sponsorship and taster/adviser enquiries.
+- Staff tools remain behind the existing staff login. Simulation entry preserves request-and-login flow. Private CV files and payment credentials are not included in the public directory.
+- Verified every directory destination against the supported route list, TypeScript and production build. No forms submitted or authentication changed for this navigation update.
+- Audit found January cohort and revised October/November tasters still pending the earlier preview approval; no automatic calendar connection or new date availability is claimed by this navigation change. Live bundle at audit had Staff login and Website enquiries, but not the CV upload field.
