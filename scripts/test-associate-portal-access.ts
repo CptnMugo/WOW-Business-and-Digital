@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import { issueInvitation, canRedeem, approveInduction, type AssociateAccount } from '../server/associatePortalAccess.js';
+const account: AssociateAccount = {registrationId:'TEST-1',email:'Test@Example.org',eligibility:{status:'approved',induction:'not-started',approvedCategories:['Digital'],clientAccreditation:'not-assessed'}};
+const now = Date.parse('2026-10-14T12:00:00Z');
+const {token,invitation} = issueInvitation(account,now);
+assert.equal(canRedeem(invitation,token,account,now),true);
+assert.equal(canRedeem(invitation,'bad',account,now),false);
+assert.equal(canRedeem(invitation,token,account,now+30*60_000),false);
+assert.equal(canRedeem({...invitation,revokedAt:now},token,account,now),false);
+assert.equal(canRedeem({...invitation,redeemedAt:now},token,account,now),false);
+assert.equal(canRedeem(invitation,token,{...account,eligibility:{...account.eligibility,status:'revoked'}},now),false);
+assert.throws(()=>issueInvitation({...account,eligibility:{...account.eligibility,status:'applicant'}},now));
+assert.throws(()=>approveInduction(account,{assessor:'',completedAt:'2026-10-14T12:00:00Z',reference:'IND-1'}));
+const updated=approveInduction(account,{assessor:'Director',completedAt:'2026-10-14T12:00:00Z',reference:'IND-1'});
+assert.equal(updated.eligibility.induction,'passed');
+assert.equal(account.eligibility.induction,'not-started');
+console.log('Associate invitation and induction checks passed');
