@@ -47,7 +47,7 @@ export function installAdmissionsDashboard(app: Express) {
  app.use(base, (req, res, next) => {
   if (['GET', 'HEAD'].includes(req.method)) return next();
   let expected: string;
-  try { expected = new URL(process.env.APP_URL || (production() ? '' : 'http://localhost:3000')).origin; } catch { res.status(503).json({ error: 'Admissions origin is not configured.' }); return; }
+  try { expected = new URL(process.env.APP_URL || (production() ? 'https://www.wowbusinessanddigital.com' : 'http://localhost:3000')).origin; } catch { res.status(503).json({ error: 'Admissions origin is not configured.' }); return; }
   const allowed = new Set([expected]);
   if (production()) {
     allowed.add('https://www.wowbusinessanddigital.com');
