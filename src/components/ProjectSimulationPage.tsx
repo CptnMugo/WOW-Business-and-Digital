@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { readApiJson } from '../utils/readApiJson';
 import { NavTab } from '../types';
 export const ProjectSimulationPage = ({ setActiveTab }: { setActiveTab: (tab: NavTab) => void }) => {
   const [authenticated,setAuthenticated]=useState(false);
@@ -14,7 +15,7 @@ export const ProjectSimulationPage = ({ setActiveTab }: { setActiveTab: (tab: Na
     try {
       const payload=view==='request' ? {name:data.get('name'),email:data.get('email'),reason:data.get('reason'),privacyAcknowledged:data.get('privacy')==='on'} : {email:data.get('email'),code:data.get('code')};
       const response=await fetch('/api/workspace/'+view,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-      const result=await response.json();if(!response.ok)throw new Error(result.error||'Please try again.');
+      const result=await readApiJson<{reference?: string}>(response, 'Your request could not be confirmed.');
       form.reset();
       if(view==='login')setAuthenticated(true);
       else setNotice(`Thank you. Your access request has been recorded. Reference: ${result.reference}. WOW will review your request and contact you using the email supplied. Access is not automatic.`);
