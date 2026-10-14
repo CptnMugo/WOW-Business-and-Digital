@@ -23,7 +23,7 @@ const isObject = (v: unknown): v is Record<string,unknown> => Boolean(v) && type
 function parseAction(body: unknown): Action {
   if (!isObject(body) || typeof body.registrationId !== 'string' || !body.registrationId.trim() || body.registrationId.length > 150) throw new Error('Invalid Associate reference');
   if (body.action === 'membership' && typeof body.reason === 'string' && body.reason.trim() && body.reason.length <= 2000 && ['applicant','approved','suspended','revoked'].includes(String(body.status)))
-    return {action:'membership', registrationId:body.registrationId, reason:body.reason, status:body.status as Action & any};
+    return {action:'membership', registrationId:body.registrationId, reason:body.reason, status:body.status as 'applicant'|'approved'|'suspended'|'revoked'};
   if (body.action === 'categories' && Array.isArray(body.categories) && body.categories.length <= 30 && body.categories.every(x=>typeof x==='string' && x.length<=100))
     return {action:'categories',registrationId:body.registrationId,categories:body.categories};
   if (body.action === 'induction' && typeof body.reference==='string' && body.reference.trim() && body.reference.length<=200 && typeof body.completedAt==='string' && body.completedAt.length<=50)
