@@ -52,5 +52,5 @@ export function recordInductionApproval(store: PortalStore, actor: DirectorConte
 export function prepareAssociateInvitation(store: PortalStore, actor: DirectorContext, id: string, now = Date.now()) {
   authorised(actor);
   const {token,invitation}=issueInvitation(find(store,id),now);
-  return {store:appendInvitation(store,invitation),token};
+  return {store:appendInvitation(store,invitation,now),token};
 }
