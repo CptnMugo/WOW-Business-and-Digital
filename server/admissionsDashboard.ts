@@ -48,7 +48,12 @@ export function installAdmissionsDashboard(app: Express) {
   if (['GET', 'HEAD'].includes(req.method)) return next();
   let expected: string;
   try { expected = new URL(process.env.APP_URL || (production() ? '' : 'http://localhost:3000')).origin; } catch { res.status(503).json({ error: 'Admissions origin is not configured.' }); return; }
-  if (req.headers.origin !== expected || !req.is('application/json')) { res.status(403).json({ error: 'Please use the dashboard on the website.' }); return; }
+  const allowed = new Set([expected]);
+  if (production()) {
+    allowed.add('https://www.wowbusinessanddigital.com');
+    allowed.add('https://wowbusinessanddigital.com');
+  }
+  if (!req.headers.origin || !allowed.has(req.headers.origin) || !req.is('application/json')) { res.status(403).json({ error: 'Please use the dashboard on the website.' }); return; }
   next();
  });
  const current = (req: Request) => {
