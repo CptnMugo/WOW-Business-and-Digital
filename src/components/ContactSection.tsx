@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { readApiJson } from '../utils/readApiJson';
 export type EnquiryCategory = 'business-consultancy' | 'staffing' | 'training' | 'ai-solutions' | 'career-coaching' | 'partnership' | 'general' | 'health-social-care';
 export interface ContactSectionProps { initialCategory?: EnquiryCategory; }
 const topics: Record<EnquiryCategory, string> = {
@@ -34,8 +35,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialCategory 
         contact: { firstName: value('firstName'), surname: value('surname'), email: value('email'), telephone: value('telephone'), organisationName: value('organisationName'), privacyAcknowledged: data.get('privacy') === 'on', marketingConsent: false },
         details: { reason, subject: reason, message: value('message') },
       }) });
-      if (!response.ok) throw new Error('Your enquiry could not be saved. Please try again or email us directly.');
-      const result = await response.json();
+      const result = await readApiJson<{success: boolean; reference: string; staffEmailSent: boolean; acknowledgementSent: boolean}>(response, 'Your enquiry could not be confirmed.');
       if (!result.success || !result.reference) throw new Error('Your enquiry could not be confirmed. Please try again.');
       setReference(result.reference);
       setDeliveryWarning(!result.staffEmailSent || !result.acknowledgementSent);

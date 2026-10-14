@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { readApiJson } from '../utils/readApiJson';
 import { NavTab } from '../types';
 import { TrainingRegistrationForm, TrainingFormData } from './TrainingRegistrationForm';
 import { CAREER_ACCELERATOR as programme } from '../data/careerAccelerator';
@@ -35,8 +36,8 @@ export const ProjectManagementRegistrationPage = ({ setActiveTab }: { setActiveT
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, submissionId: submissionId.current, submissionType: 'APPLICATION', cohortDate: programme.startDate }),
       });
-      const result = await response.json();
-      if (!response.ok || !result.success || !result.referenceNumber) throw new Error(result.error || 'Your application could not be saved. Please try again.');
+      const result = await readApiJson<{success: boolean; referenceNumber: string}>(response, 'Your application could not be confirmed.');
+      if (!result.success || !result.referenceNumber) throw new Error('Your application could not be confirmed. Please contact WOW before submitting again.');
       setConfirmation({ reference: result.referenceNumber, preference: formData.paymentPreference, call: `${formData.confirmationCallDate} at ${formData.confirmationCallTime} (${formData.confirmationCallTimeZone})` });
       setFormData(initialApplication());
       // Remove only old registration/payment draft keys, never unrelated site data.

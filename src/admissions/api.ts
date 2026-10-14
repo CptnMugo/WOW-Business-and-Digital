@@ -1,8 +1,10 @@
 import type { AdmissionsAPI } from './model';
+import { readApiJson } from '../utils/readApiJson';
 const base = '/api/admissions-dashboard';
 async function request(path: string, method = 'GET', body?: unknown) {
  const response = await fetch(base + path, { method, credentials: 'same-origin', headers: body ? { 'Content-Type': 'application/json' } : undefined, body: body ? JSON.stringify(body) : undefined, cache: 'no-store' });
- if (!response.ok) { const message = await response.json().catch(() => ({})); const error = new Error(message.error || 'The request failed. Please try again.'); Object.assign(error, { status: response.status }); throw error; }
+ if (!response.ok) { let error: Error; try { await readApiJson(response, 'Staff dashboard request failed.'); error = new Error('Staff dashboard request failed.'); } catch (e) { error = e instanceof Error ? e : new Error('Staff dashboard request failed.'); } Object.assign(error, { status: response.status }); throw error; }
+ if (response.headers.get('content-type')?.includes('text/html')) throw new Error('Staff dashboard API is returning a website page instead of data. Contact technical support to check the server deployment.');
  return response;
 }
 export const admissionsAPI: AdmissionsAPI = {

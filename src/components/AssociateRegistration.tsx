@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { readApiJson } from '../utils/readApiJson';
 
 export const AssociateRegistration: React.FC = () => {
   const [busy, setBusy] = useState(false);
@@ -39,8 +40,8 @@ export const AssociateRegistration: React.FC = () => {
           telephone: data.phone, privacyAcknowledged: data.consent === 'on',
         }, details: { ...data, retainForOpportunities: data.consent === 'on', status: 'EXPRESSION_OF_INTEREST' } }),
       });
-      const body = await response.json();
-      if (!response.ok) throw new Error(body.error || 'Your expression of interest could not be saved.');
+      const body = await readApiJson<{reference: string; acknowledgementSent: boolean; staffEmailSent: boolean; success?: boolean}>(response, 'Your expression of interest could not be confirmed.');
+      if (!body.reference) throw new Error('The website did not confirm receipt. Please contact wowdigital@wowbusinessanddigital.com before submitting again.');
       setResult(body);
     } catch (err) { setError(err instanceof Error ? err.message : 'Please try again or email wowdigital@wowbusinessanddigital.com.'); }
     finally { setBusy(false); }

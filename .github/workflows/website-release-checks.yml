@@ -1,0 +1,35 @@
+name: Website release checks
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "server/**"
+      - "server.ts"
+      - "scripts/**"
+      - "package.json"
+      - "bun.lock"
+      - ".github/workflows/website-release-checks.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Install dependencies (locked)
+        run: bun install --frozen-lockfile
+      - name: Validate TypeScript
+        run: bun run lint
+      - name: Build website
+        run: bun run build
+      - name: Form API regression checks
+        run: python3 scripts/test-forms.py
+      - name: Staff dashboard security and application checks
+        run: bunx tsx scripts/test-admissions-dashboard.ts
+      - name: Career enquiry checks
+        run: bunx tsx scripts/test-career-enquiries.ts
