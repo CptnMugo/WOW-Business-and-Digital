@@ -43,13 +43,13 @@ export function upsertAccount(store: PortalStore, account: AssociateAccount): Po
     throw new Error('Changing registered email requires separately verified identity');
   return {...store, accounts:[...store.accounts.filter(a=>a.registrationId!==account.registrationId), {...account,email:normalized}]};
 }
-export function appendInvitation(store: PortalStore, invitation: Invitation): PortalStore {
+export function appendInvitation(store: PortalStore, invitation: Invitation, now = Date.now()): PortalStore {
   if (!store.accounts.some(a=>a.registrationId===invitation.registrationId && a.email===invitation.email))
     throw new Error('Invitation must refer to existing Associate');
   // Supersede existing unused invitations to prevent multiple live invite links.
   return {...store,invitations:[
     ...store.invitations.map(i=>i.registrationId===invitation.registrationId && i.redeemedAt===null && i.revokedAt===null
-      ? {...i,revokedAt:Date.now()} : i),
+      ? {...i,revokedAt:now} : i),
     invitation,
   ]};
 }
