@@ -42,3 +42,4 @@ jobs:
           bunx tsx scripts/test-associate-portal-director.ts
           bunx tsx scripts/test-associate-portal-director-api.ts
           bunx tsx scripts/test-associate-portal-transactions.ts
+          bunx tsx scripts/test-associate-portal-write-api.ts
