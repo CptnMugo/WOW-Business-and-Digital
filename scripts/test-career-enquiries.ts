@@ -17,7 +17,11 @@ try {
  assert.equal((await post({...body, website:'spam'})).status,400);
  assert.equal((await post({...body, kind:'call',session:'invented'})).status,400);
  let response=await post(body); assert.equal(response.status,201); assert.equal((await response.json()).emailAccepted,true);
- fail=true; response=await post({...body,kind:'call',session:'call:2026-10-08:11:00'}); assert.equal(response.status,201); const result=await response.json(); assert.equal(result.emailAccepted,false); assert.match(result.message,/not yet confirmed/);
+ // Past sessions must be rejected, even when they appear in historical test fixtures.
+ assert.equal((await post({...body,kind:'call',session:'call:2026-10-08:11:00'})).status,400);
+ fail=true; response=await post({...body,name:'Second Corporate Contact'}); assert.equal(response.status,201);
+ const result=await response.json(); assert.equal(result.emailAccepted,false);
+ assert.match(result.message,/corporate enquiry/);
  await createAdmissionsUser('staff@example.com','Test Staff','a-long-test-password-1234');
  const login = await fetch(root+'/api/admissions-dashboard/login', {method:'POST',headers:{'Content-Type':'application/json',Origin:'http://localhost:3000'},body:JSON.stringify({email:'staff@example.com',password:'a-long-test-password-1234'})});
  assert.equal(login.status,200); const cookie=login.headers.get('set-cookie')!.split(';')[0];
