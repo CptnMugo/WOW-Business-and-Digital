@@ -19,18 +19,25 @@ try {
  let response=await post(body); assert.equal(response.status,201); assert.equal((await response.json()).emailAccepted,true);
  // Past sessions must be rejected, even when they appear in historical test fixtures.
  assert.equal((await post({...body,kind:'call',session:'call:2026-10-08:11:00'})).status,400);
+ const {sessions,sessionOpen}=await import('../src/engagement/options.js');
+ assert.equal(sessions.length,1);assert.equal(sessions[0].id,'taster:2026-11-28:10:00');
+ assert.equal(sessionOpen(sessions[0],Date.parse('2026-11-28T09:59:59Z')),true);
+ assert.equal(sessionOpen(sessions[0],Date.parse('2026-11-28T10:00:00Z')),false);
+ // Isolated taster check with a fixed clock, independent of when CI runs.
+ const realNow=Date.now;Date.now=()=>Date.parse('2026-10-15T12:00:00Z');
+ try {assert.equal((await post({...body,kind:'taster',session:sessions[0].id})).status,201);}finally{Date.now=realNow;}
  fail=true; response=await post({...body,name:'Second Corporate Contact'}); assert.equal(response.status,201);
  const result=await response.json(); assert.equal(result.emailAccepted,false);
  assert.match(result.message,/corporate enquiry/);
  await createAdmissionsUser('staff@example.com','Test Staff','a-long-test-password-1234');
  const login = await fetch(root+'/api/admissions-dashboard/login', {method:'POST',headers:{'Content-Type':'application/json',Origin:'http://localhost:3000'},body:JSON.stringify({email:'staff@example.com',password:'a-long-test-password-1234'})});
  assert.equal(login.status,200); const cookie=login.headers.get('set-cookie')!.split(';')[0];
- const list=await fetch(root+'/api/admissions-dashboard/career-enquiries',{headers:{Cookie:cookie}}); assert.equal(list.status,200); assert.equal((await list.json()).records.length,2);
+ const list=await fetch(root+'/api/admissions-dashboard/career-enquiries',{headers:{Cookie:cookie}}); assert.equal(list.status,200); assert.equal((await list.json()).records.length,3);
  const reviewURL=root+'/api/admissions-dashboard/career-enquiries/'+result.reference;
  const options={method:'PATCH',headers:{'Content-Type':'application/json',Origin:'http://localhost:3000',Cookie:cookie},body:JSON.stringify({status:'Contacted',notes:'Test note',version:0})};
  assert.equal((await fetch(reviewURL,options)).status,200); assert.equal((await fetch(reviewURL,options)).status,409);
  assert.equal((await fetch(reviewURL,{...options,headers:{...options.headers,Origin:'https://wrong.example'}})).status,403);
- assert.equal(readEngagements().length,2); assert.equal(readEngagements()[1].emailStatus.visitor,false);
+ assert.equal(readEngagements().length,3); assert.equal(readEngagements()[2].emailStatus.visitor,false);
  assert.equal(fs.existsSync('data/registrations.json'),false);
  console.log('PASS: new enquiries validate, save independently, survive email failure and require staff authentication. No live email/calendar calls.');
 } finally { server.close(); process.chdir(cwd); fs.rmSync(temp,{recursive:true,force:true}); }

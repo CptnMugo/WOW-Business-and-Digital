@@ -65,3 +65,9 @@ A Namecheap deployment is still required for code changes. The Stripe webhook mu
 - Staff tools remain behind the existing staff login. Simulation entry preserves request-and-login flow. Private CV files and payment credentials are not included in the public directory.
 - Verified every directory destination against the supported route list, TypeScript and production build. No forms submitted or authentication changed for this navigation update.
 - Audit found January cohort and revised October/November tasters still pending the earlier preview approval; no automatic calendar connection or new date availability is claimed by this navigation change. Live bundle at audit had Staff login and Website enquiries, but not the CV upload field.
+
+
+## 15 October: January intake and November taster
+- November 2026 applications closed, displayed with strike-through; January 2027 applications open, exact start date unconfirmed. New server records are January; existing records are not migrated.
+- Remove October taster/adviser slots. New taster Saturday 28 November 2026, 10:00–14:00 UK GMT, request-only. Adviser calls arranged by contact until new slots agreed.
+- Standard £1,000, two £500 instalments and £50 credited deposit retained. No invented January discount or payment deadlines; existing accepted November payment arrangements retained.

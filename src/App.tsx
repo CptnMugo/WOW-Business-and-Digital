@@ -1,3 +1,4 @@
+import { AssociateWorkspace } from './components/AssociateWorkspace';
 import { AssociatePortalPreview } from './components/AssociatePortalPreview';
 import { WebsiteLinks } from './components/WebsiteLinks';
 import { HealthSocialCare } from './components/HealthSocialCare';
@@ -32,10 +33,11 @@ import { ProjectManagementRegistrationPage } from './components/ProjectManagemen
 import { ProjectSimulationPage } from './components/ProjectSimulationPage';
 import { ProgrammePolicies } from './components/ProgrammePolicies';
 
-const tabs: NavTab[] = ['website-links','home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','academy','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation','manage-applications','career-explore','corporate-career','health-social-care','associate-portal-preview'];
+const tabs: NavTab[] = ['associate-portal','website-links','home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','academy','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation','manage-applications','career-explore','corporate-career','health-social-care','associate-portal-preview'];
 const readTab = (): NavTab => {
  const query = new URLSearchParams(window.location.search);
  if (query.has('payment')) return 'payments';
+ if (window.location.pathname.startsWith('/associate/')) return 'associate-portal';
  const page = query.get('page');
  return tabs.includes(page as NavTab) ? page as NavTab : 'home';
 };
@@ -71,6 +73,7 @@ export default function App() {
   ].includes(activeTab);
 
   if (activeTab === 'associate-portal-preview') return <AssociatePortalPreview />;
+  if (activeTab === 'associate-portal') return <AssociateWorkspace />;
   if (activeTab === 'manage-applications') return <AdmissionsDashboard />;
 
   return (

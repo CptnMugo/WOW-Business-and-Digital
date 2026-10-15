@@ -562,8 +562,8 @@ export const TrainingRegistrationForm: React.FC<TrainingRegistrationFormProps> =
                 <option value="Discuss payment arrangements for the executive mentorship add-on">Discuss payment arrangements for the executive mentorship add-on</option>
                 <option value="Discuss instalments for executive mentorship">Discuss instalments for executive mentorship</option>
               </> : <>
-                <option value="Pay in full £900 by 31 October 2026">Pay in full £900 by 31 October 2026</option>
-                <option value="Two instalments £500 by 31 October 2026 and £500 by 30 November 2026">Two instalments £500 by 31 October 2026 and £500 by 30 November 2026</option>
+                <option value="Pay in full £1,000 after acceptance (January dates to be agreed)">Pay in full £1,000 after acceptance (January dates to be agreed)</option>
+                <option value="Two instalments of £500 (January dates to be agreed)">Two instalments of £500 (January dates to be agreed)</option>
               </>}
               <option value="£50 registration deposit after acceptance">
                 £50 registration deposit after acceptance (credited against tuition)

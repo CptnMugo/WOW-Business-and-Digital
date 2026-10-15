@@ -1,3 +1,5 @@
+> Superseded implementation status (15 October 2026): the integrated source release and actual entry points are documented in [January and Associate release](january-and-associate-release-2026-10-15.md). The original design below is retained for context; it is not a statement that the portal is live.
+
 # WBD Associate Portal — implementation plan (not yet live)
 
 ## Goal

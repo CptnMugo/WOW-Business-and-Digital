@@ -142,7 +142,7 @@ export function installPaymentRoutes(app: Express, createClient: () => Stripe = 
     if (!reg) { res.status(404).json({ error: 'Application not found.' }); return; }
     const live = mode() === 'live';
     const paid = readPayments().filter(p => p.reference === reference && p.live === live).reduce((n,p) => n + p.amount - (p.refunded || 0), 0);
-    res.set('Cache-Control','no-store').json({ paid, reserved: live && paid >= 5000, settled: paid >= (/mentorship/i.test(reg.packageSelection || '') ? 125000 : readPayments().some(p=>p.reference===reference && p.live===live && p.plan==='early') ? 90000 : 100000), mentorship: /mentorship/i.test(reg.packageSelection || ''), mode: mode() });
+    res.set('Cache-Control','no-store').json({ cohortDate: reg.cohortDate, paid, reserved: live && paid >= 5000, settled: paid >= (/mentorship/i.test(reg.packageSelection || '') ? 125000 : readPayments().some(p=>p.reference===reference && p.live===live && p.plan==='early') ? 90000 : 100000), mentorship: /mentorship/i.test(reg.packageSelection || ''), mode: mode() });
   });
   app.post('/api/stripe/create-checkout-session', async (req, res) => {
     const { reference, token, plan, customAmount, termsAccepted } = req.body || {};
@@ -154,6 +154,7 @@ export function installPaymentRoutes(app: Express, createClient: () => Stripe = 
     try {
       const reg = getAllRegistrations().find(r => r.referenceNumber === reference);
       if (!reg) throw new Error('Application not found.');
+      if (plan === 'early' && /January 2027/.test(reg.cohortDate || '')) throw new Error('No January early settlement offer has been confirmed. Follow your agreed payment schedule.');
       const stripe = createClient();
       // One reusable Stripe customer per application; inspect sessions across process restarts.
       const customersFile = path.join(path.dirname(file()), 'payment-customers.json');

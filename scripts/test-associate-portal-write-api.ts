@@ -15,12 +15,14 @@ installAssociateDirectorWriteApi(app,{
   verifyCsrf:async req=>req.get('x-test-csrf')==='valid',
 });
 const server=app.listen(0,'127.0.0.1');
+await new Promise<void>(resolve=>server.once('listening',resolve));
 try {
   savePortalStore(folder,{version:1,accounts:[{registrationId:'DEMO-1',email:'demo@example.org',eligibility:{status:'applicant',induction:'not-started',approvedCategories:[],clientAccreditation:'not-assessed'}}],invitations:[]});
   const address=server.address();
   if(!address||typeof address==='string')throw new Error('Missing test port');
+  const port=address.port;
   async function send(body:unknown,headers:Record<string,string>={}){
-    const res=await fetch('http://127.0.0.1:'+address.port+'/api/associate-director/actions',{method:'POST',headers:{'Content-Type':'application/json',origin,'x-test-director':'yes','x-test-csrf':'valid',...headers},body:JSON.stringify(body)});
+    const res=await fetch('http://127.0.0.1:'+port+'/api/associate-director/actions',{method:'POST',headers:{'Content-Type':'application/json',origin,'x-test-director':'yes','x-test-csrf':'valid',...headers},body:JSON.stringify(body)});
     return res.status;
   }
   const cmd={action:'membership',registrationId:'DEMO-1',status:'approved',reason:'Checked'};

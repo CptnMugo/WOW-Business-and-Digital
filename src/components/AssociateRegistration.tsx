@@ -49,7 +49,7 @@ export const AssociateRegistration: React.FC = () => {
 
   return <section className="max-w-4xl mx-auto px-4 py-12 space-y-7">
     <div className="space-y-3"><p className="wbd-eyebrow">WORK WITH WBD</p>
-      <h1 className="text-4xl font-black text-navy-900">Become an Associate</h1>
+      <h1 className="text-4xl font-black text-navy-900">Become an Associate</h1><p><a className="underline font-bold" href="?page=associate-portal">Already invited? Sign in to the Associate portal</a></p>
       <p className="text-slate-700 leading-relaxed">We bring together specialists around client needs, with WBD leading and coordinating delivery. Tell us about your expertise in technology and AI, finance, commercial, procurement, people and HR, communications, programme delivery or another business function.</p>
       <p className="text-sm text-slate-600">This is an expression of interest. Joining the network is subject to review and any relevant checks. Submitting this form does not guarantee acceptance or paid work.</p>
     </div>

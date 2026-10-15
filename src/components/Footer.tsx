@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
           <nav aria-label="Footer connect">
             <h2 className="text-sm font-bold text-[#f0c474] mb-3">Connect</h2>
             <ul className="text-sm text-[#dbe4ec] space-y-1">{links([
-              ['contact', 'Contact us'], ['associates', 'Become an associate'],
+              ['contact', 'Contact us'], ['associates', 'Become an associate'], ['associate-portal', 'Associate sign in'],
               ['corporate-career', 'Sponsor an employee'],
               ['career-explore', 'Tasters & adviser enquiries'],
               ['payments', 'Fees and payments'],

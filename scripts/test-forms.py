@@ -17,7 +17,7 @@ def request(route, payload=None, expected=200):
     return json.loads(body)
 
 training = dict(fullName='Test Applicant', email='test@example.invalid', mobileWhatsapp='00000000000', townCity='Test City', previousExperience='Yes, 1-3 years', careerObjective='Test objective', currentChallenge='Test challenge', successMeasure='Test measure', privacyAcknowledged=True, submissionType='SUBMIT_AND_PAY', status='AWAITING_PAYMENT')
-training.update(dict(submissionId=str(uuid.uuid4()), workStatus='Employed', rightToWorkUK='Yes', highestQualification='Undergraduate Degree', ukWorkExperience='Yes', englishFirstLanguage='Yes', weeklyAvailability='Yes - can commit weekly time', birminghamAttendance='Yes', inPersonProjectAttendance='Yes', packageSelection='WOW Career Accelerator 6-Month Programme (£1,000)', paymentPreference='Pay in full £900 by 31 October 2026', pmQualifications=['None'], developmentNeeds=['Interview skills']))
+training.update(dict(submissionId=str(uuid.uuid4()), workStatus='Employed', rightToWorkUK='Yes', highestQualification='Undergraduate Degree', ukWorkExperience='Yes', englishFirstLanguage='Yes', weeklyAvailability='Yes - can commit weekly time', birminghamAttendance='Yes', inPersonProjectAttendance='Yes', packageSelection='WOW Career Accelerator 6-Month Programme (£1,000)', paymentPreference='Pay in full £1,000 after acceptance (January dates to be agreed)', pmQualifications=['None'], developmentNeeds=['Interview skills']))
 training.update(dict(confirmationCallDate='2026-10-10', confirmationCallTime='14:00', confirmationCallTimeZone='Europe/London', confirmationCallAlternative='Next morning also possible'))
 training.update({'declaration'+str(n): True for n in range(1,8)})
 cases = {
@@ -71,6 +71,7 @@ with tempfile.TemporaryDirectory(prefix='wbd-forms-') as folder:
         del associate['cv'];associate['details']['coverNote']='x'*5001
         request('/api/associate-enquiries',associate,400)
         passed.append('Associate CV and cover note saved; both optional; invalid file and oversized note rejected')
+        stale=copy.deepcopy(training);stale['cohortDate']='14 November 2026';request('/api/registrations/submit',stale,409)
         result=request('/api/registrations/submit',training)
         assert __import__('re').fullmatch(r'WOW-CA-26-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}', result['referenceNumber'])
         assert result['success'] and not result['emailAlertSent'] and not result['delegateWelcomeSent']
@@ -79,17 +80,17 @@ with tempfile.TemporaryDirectory(prefix='wbd-forms-') as folder:
         assert repeated['referenceNumber']==result['referenceNumber']
         register=pathlib.Path(folder)/'data/registrations.json'
         records=json.loads(register.read_text()); assert len(records)==1
-        assert records[0]['status']=='APPLICATION_REVIEW_PENDING' and records[0]['submissionType']=='APPLICATION' and records[0]['cohortDate']=='14 November 2026'
+        assert records[0]['status']=='APPLICATION_REVIEW_PENDING' and records[0]['submissionType']=='APPLICATION' and records[0]['cohortDate']=='January 2027 — exact start date to be confirmed'
         assert records[0]['paymentPreference']==training['paymentPreference']
         assert records[0]['confirmationCallDate']=='2026-10-10' and records[0]['confirmationCallTime']=='14:00'
         for field,value in [('confirmationCallDate','2026-02-30'),('confirmationCallTime','25:00'),('confirmationCallTimeZone','')]:
             invalid=copy.deepcopy(training);invalid[field]=value;request('/api/registrations/submit',invalid,400)
         acknowledgement=records[0]['emailDelivery']['delegateWelcome']['previewHtml']
         assert '10-minute confirmation call' in acknowledgement and '2026-10-10' in acknowledgement and 'Private payment link' not in acknowledgement
-        assert '14 November 2026' in acknowledgement and 'No payment is required at this stage' in acknowledgement and 'October 2026 Intake' not in acknowledgement
+        assert 'January 2027 — exact start date to be confirmed' in acknowledgement and 'No payment is required at this stage' in acknowledgement and 'October 2026 Intake' not in acknowledgement
         for package, preference in [
-            ('WOW Career Accelerator 6-Month Programme (£1,000)', 'Pay in full £900 by 31 October 2026'),
-            ('WOW Career Accelerator 6-Month Programme (£1,000)', 'Two instalments £500 by 31 October 2026 and £500 by 30 November 2026'),
+            ('WOW Career Accelerator 6-Month Programme (£1,000)', 'Pay in full £1,000 after acceptance (January dates to be agreed)'),
+            ('WOW Career Accelerator 6-Month Programme (£1,000)', 'Two instalments of £500 (January dates to be agreed)'),
             ('WOW Career Accelerator 6-Month Programme (£1,000)', '£50 registration deposit after acceptance'),
             ('WOW Career Accelerator 6-Month Programme (£1,000)', 'Discuss employer sponsorship / bespoke arrangement'),
             ('Career Accelerator + 1-to-1 Executive Mentorship (£1,250)', 'Executive mentorship package £1,250 by invoice'),
@@ -114,7 +115,7 @@ with tempfile.TemporaryDirectory(prefix='wbd-forms-') as folder:
         assert status['configured'] is False and status['mode']=='test'
         with urllib.request.urlopen('http://127.0.0.1:3000/?page=pm-career-accelerator') as response:
             html=response.read().decode()
-            assert '<title>Project Management Career Accelerator | Starts 14 November 2026 | WOW</title>' in html
+            assert '<title>Project Management Career Accelerator | January 2027 Applications Open | WOW</title>' in html
             assert 'og:image' in html and 'registration deposit' in html
         with urllib.request.urlopen('http://127.0.0.1:3000/WBD_Website_Share_Image_1200x630.png') as response:
             assert response.headers['Content-Type']=='image/png' and len(response.read())>1000

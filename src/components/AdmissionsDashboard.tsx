@@ -1,3 +1,4 @@
+import { AssociateWorkspaceDirector } from './AssociateWorkspaceDirector';
 import { WebsiteEnquiriesRegister } from './WebsiteEnquiriesRegister';
 import { StaffDashboardSection } from './StaffDashboardSection';
 import { CareerEnquiriesRegister } from './CareerEnquiriesRegister';
@@ -9,8 +10,8 @@ import { Logo } from './Logo';
 const date = (value: string) => value ? new Date(value).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Not recorded';
 const emailText = (value: EmailState) => !value ? 'No send recorded' : value.sent ? 'Accepted by email provider' : 'Not sent / needs attention';
 export function AdmissionsDashboard({ api = admissionsAPI, demo = false, initial = [] }: { api?: AdmissionsAPI; demo?: boolean; initial?: Application[] }) {
- const [openSection, setOpenSection] = useState<'associates' | 'website' | 'career' | 'students' | null>(null);
- const toggleSection = (section: 'associates' | 'website' | 'career' | 'students') => setOpenSection(current => current === section ? null : section);
+ const [openSection, setOpenSection] = useState<'portal' | 'associates' | 'website' | 'career' | 'students' | null>(null);
+ const toggleSection = (section: 'portal' | 'associates' | 'website' | 'career' | 'students') => setOpenSection(current => current === section ? null : section);
  const [user, setUser] = useState<string | null>(demo ? 'Preview user' : null);
  const [loading, setLoading] = useState(!demo);
  const [applications, setApplications] = useState(initial);
@@ -46,6 +47,7 @@ export function AdmissionsDashboard({ api = admissionsAPI, demo = false, initial
    {loading ? <p role="status">Checking staff access...</p> : !user ? <section className="ad-login ad-card"><p className="ad-eyebrow">Authorised staff only</p><h2>Staff sign in</h2><p>Use the staff access details supplied by your website administrator.</p><form onSubmit={signIn}><label>Email address<input type="email" autoComplete="username" value={email} onChange={e => setEmail(e.target.value)} required /></label><label>Password<input type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} required /></label><button className="ad-primary" disabled={busy}>{busy ? 'Signing in...' : 'Sign in'}</button></form><p className="ad-small">Lost access? Contact technical support to reset your staff password. Applicant information is not available without sign-in.</p>{demo && <button onClick={async () => { setUser('Preview user'); setApplications(await api.list()); }}>Return to demo</button>}</section> : <>
     {!application ? <>
      {!demo && <>
+      <StaffDashboardSection id="associate-portal-admin" title="Associate portal administration" description="Director: invitations, induction, packages, bids and private assignments" open={openSection === 'portal'} onToggle={() => toggleSection('portal')}><AssociateWorkspaceDirector /></StaffDashboardSection>
       <StaffDashboardSection id="associate-directory" title="Associate directory" description="Search expertise, sector, location, availability and uploaded CVs" open={openSection === 'associates'} onToggle={() => toggleSection('associates')}><WebsiteEnquiriesRegister mode="associates" /></StaffDashboardSection>
       <StaffDashboardSection id="website-enquiries" title="Website enquiries" description="Business, health and social care, partnership and general enquiries" open={openSection === 'website'} onToggle={() => toggleSection('website')}><WebsiteEnquiriesRegister mode="general" /></StaffDashboardSection>
       <StaffDashboardSection id="career-enquiries" title="Tasters, adviser calls and corporate enquiries" description="Session requests and employer sponsorship enquiries" open={openSection === 'career'} onToggle={() => toggleSection('career')}><CareerEnquiriesRegister /></StaffDashboardSection>
