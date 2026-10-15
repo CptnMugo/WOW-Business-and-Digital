@@ -5,6 +5,7 @@ export const websiteLinkGroups: { title: string; links: Entry[] }[] = [
  {title:'Contact and work with WOW',links:[
   {tab:'contact',title:'Contact us / request a consultation',description:'Send a business enquiry and arrange a conversation with WOW.'},
   {tab:'associates',title:'Become an associate',description:'Register your expertise, with an optional CV and cover note.'},
+  {tab:'health-care-diagnostic',title:'Business Improvement Diagnostic for Health & Care',description:'Learn about the introductory £1,000 diagnostic and its October booking window.'},
   {tab:'health-social-care',title:'Health and social care support',description:'Explore project delivery, service improvement and transformation support.'},
   {tab:'corporate-career',title:'Sponsor an employee',description:'Discuss Career Accelerator learning aligned to workplace deliverables.'},
  ]},

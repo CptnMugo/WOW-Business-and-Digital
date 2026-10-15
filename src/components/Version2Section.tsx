@@ -57,6 +57,7 @@ export const Version2Section: React.FC<Version2Props> = ({ setActiveTab, onNavig
         </div>
       </section>
 
+      <section className="max-w-7xl mx-auto px-5 py-7" aria-label="October health and care diagnostic offer"><div className="bg-white border-2 border-[#d4a24c] rounded-2xl px-6 py-8 flex flex-wrap items-center justify-between gap-5"><div><p className="text-sm font-bold uppercase text-[#1e63f3]">Health and care • October offer</p><h2 className="text-2xl font-bold mt-2">Business Improvement Diagnostic — £1,000</h2><p className="mt-2 max-w-xl">A holistic review with a practical action plan. Three introductory places; promotional checkout closes 26 October.</p></div><button className="wbd-button wbd-button-primary" onClick={() => navigate('health-care-diagnostic')}>Explore the diagnostic <ArrowRight size={18}/></button></div></section>
       <section className="wbd-pillars max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="wbd-pillars-title">
         <div className="wbd-section-intro">
           <div><p className="wbd-eyebrow">OUR APPROACH</p><h2 id="wbd-pillars-title">Five connected ways we make change work</h2></div>

@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import { recordDiagnosticPayment } from './diagnosticPayments.js';
 import Stripe from 'stripe';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -84,6 +85,7 @@ export function installPaymentWebhook(app: Express) {
       if (['checkout.session.completed', 'checkout.session.async_payment_succeeded'].includes(event.type)) {
         const session = event.data.object as Stripe.Checkout.Session;
         if (session.metadata?.wbd_reference) recordPaidSession(session);
+        else if (session.metadata?.wbd_offer) await recordDiagnosticPayment(session);
       }
       if (event.type === 'charge.refunded') {
         const charge = event.data.object as Stripe.Charge;
