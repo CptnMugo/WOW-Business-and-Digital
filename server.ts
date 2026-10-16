@@ -1,3 +1,4 @@
+import { installAssociateWorkspace } from './server/associateWorkspace.js';
 import { validateCv, saveCv } from './server/associateCv.js';
 import { businessSender, enquiryEmail } from './server/websiteEnquiries.js';
 import { installEngagement } from './server/engagement.js';
@@ -47,7 +48,9 @@ app.post('/api/associate-enquiries', (req, res, next) => {
 }, express.json({ limit: '7mb' }), (error: any, _req: express.Request, res: express.Response, next: express.NextFunction) => {
   if (error) { res.status(error.status === 413 ? 413 : 400).json({error:'Please upload a valid CV up to 5 MB.'}); return; } next();
 });
+app.use(['/api/associate-portal/assignments/:id/file','/api/admissions-dashboard/associate-portal/assignments/:id/file'], express.json({limit:'7mb'}));
 app.use(express.json({ limit: "100kb" }));
+installAssociateWorkspace(app);
 installWorkspaceAccess(app);
 installAdmissionsDashboard(app);
 installEngagement(app);
@@ -233,6 +236,9 @@ app.post("/api/registrations/submit", async (req, res) => {
       res.json({ success: true, referenceNumber: duplicate.referenceNumber, paymentUrl: paymentLink(duplicate.referenceNumber), emailAlertSent: duplicate.emailDelivery?.staffAlert.sent ?? false, delegateWelcomeSent: duplicate.emailDelivery?.delegateWelcome.sent ?? false, sheetsSynced: duplicate.sheetsSync?.synced ?? false });
       return;
     }
+    if ((body.cohortDate && body.cohortDate !== 'January 2027 — exact start date to be confirmed') || /October 2026|November 2026/.test(body.paymentPreference)) {
+      res.status(409).json({error:'November applications are closed. Reload the application page to apply for January 2027 with the current payment preferences.'}); return;
+    }
     // Copy application fields only; ignore client-supplied workflow state and internal metadata.
     const fields = ['fullName', 'email', 'mobileWhatsapp', 'townCity', ...selectFields, 'workStatusOther', 'highestQualificationOther', 'pmQualifications', 'previousExperience', 'careerObjective', 'currentChallenge', 'developmentNeeds', 'developmentNeedsOther', 'successMeasure', 'howDidYouHear', 'promoCode', 'confirmationCallDate', 'confirmationCallTime', 'confirmationCallTimeZone', 'confirmationCallAlternative', 'privacyAcknowledged', 'marketingConsent', ...[1,2,3,4,5,6,7].map(n => 'declaration' + n)];
     const existingReferences = new Set(getAllRegistrations().map(record => record.referenceNumber));
@@ -248,7 +254,7 @@ app.post("/api/registrations/submit", async (req, res) => {
       referenceNumber,
       submittedAt: new Date().toISOString(),
       submissionType: 'APPLICATION', status: 'APPLICATION_REVIEW_PENDING',
-      cohortDate: '14 November 2026', programTitle: 'Project Management Career Accelerator (6-Month)',
+      cohortDate: 'January 2027 — exact start date to be confirmed', programTitle: 'Project Management Career Accelerator (6-Month)',
     } as RegistrationData;
 
     data.paymentUrl = paymentLink(data.referenceNumber);
@@ -394,7 +400,7 @@ async function startServer() {
     app.get('/', (req, res) => {
       let html = fs.readFileSync(path.join(distPath, 'index.html'), 'utf-8');
       if (['pm-career-accelerator', 'pm-registration'].includes(String(req.query.page))) {
-        const title = 'Project Management Career Accelerator | Starts 14 November 2026 | WOW';
+        const title = 'Project Management Career Accelerator | January 2027 Applications Open | WOW';
         const description = 'Six months of practical project management development, supervised live WOW project work and career coaching. Standard fee £1,000. Apply for review; £50 registration deposit credited against tuition.';
         html = html.replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
           .replace(/(<meta name="description" content=")[^"]*/, '$1' + description)

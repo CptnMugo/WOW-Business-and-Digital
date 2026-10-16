@@ -1,4 +1,4 @@
-export type NavTab = 'website-links'
+export type NavTab = 'associate-portal' | 'website-links'
   | 'home' 
   | 'services'
   | 'associates'
@@ -19,7 +19,7 @@ export type NavTab = 'website-links'
   | 'pm-career-accelerator'
   | 'pm-registration'
   | 'privacy'
-  | 'programme-terms' | 'project-simulation' | 'manage-applications' | 'career-explore' | 'corporate-career' | 'health-social-care';
+  | 'programme-terms' | 'project-simulation' | 'manage-applications' | 'career-explore' | 'corporate-career' | 'health-social-care' | 'associate-portal-preview';
 
 export interface ServiceItem {
   id: string;

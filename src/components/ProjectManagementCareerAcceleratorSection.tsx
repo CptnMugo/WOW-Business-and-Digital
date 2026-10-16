@@ -62,7 +62,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-black border border-amber-300/80 shadow-2xs">
               <Percent className="w-3.5 h-3.5" />
-              <span>10% Early Settlement Offer Active</span>
+              <span>January 2027 applications open</span>
             </span>
           </div>
 
@@ -80,11 +80,11 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
           </div>
 
         <div className="max-w-4xl rounded-2xl border border-navy-200 bg-white/90 p-5 text-slate-800">
-          <p className="font-bold">Starts {CAREER_ACCELERATOR.startDate} · Six months</p>
+          <p className="font-bold"><s>November 2026 intake</s> — Applications closed</p><p className="mt-2 font-bold">January 2027 intake — Applications open</p><p>Exact start date to be confirmed · Six months</p>
           <p className="mt-3"><strong>Optional executive mentorship add-on.</strong> {CAREER_ACCELERATOR.mentorshipScope} Payment options and arrangements are available; please discuss these with us during your confirmation call.</p>
-          <p className="mt-3 font-bold">November cohort starts 14 November 2026. Places are limited. No payment is taken when you apply.</p>
+          <p className="mt-3 font-bold">November 2026 applications are closed. Applications are now open for January 2027; the exact start date will be confirmed. No payment is taken when you apply.</p>
           <p className="mt-3"><a className="underline" href="?page=career-explore">Free taster or adviser call</a> | <a className="underline" href="?page=corporate-career">Employer-sponsored places and workplace projects</a></p>
-          <p className="mt-3">Apply first. Payment will be requested by email only once your application is accepted. The £900 early settlement offer applies to the standard programme.</p>
+          <p className="mt-3">Apply first. Payment will be requested by email only once your application is accepted. January payment dates and any early settlement offer will be confirmed before acceptance.</p>
         </div>
 
           <section className="max-w-4xl rounded-2xl border border-navy-200 bg-white/90 p-5 text-slate-800">
@@ -125,10 +125,10 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
             <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-navy-200 shadow-xs">
               <div className="flex items-center gap-2 text-xs font-bold text-emerald-700 mb-1">
                 <Award className="w-4 h-4" />
-                <span>Standard early settlement</span>
+                <span>Standard programme fee</span>
               </div>
-              <div className="text-sm sm:text-base font-extrabold text-slate-900">£900 Early Bird</div>
-              <div className="text-[11px] text-emerald-700 font-bold">Save £100 by 31 Oct</div>
+              <div className="text-sm sm:text-base font-extrabold text-slate-900">£1,000</div>
+              <div className="text-[11px] text-emerald-700 font-bold">Payment schedule agreed after acceptance</div>
             </div>
           </div>
 
@@ -138,7 +138,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               onClick={navigateToRegistration}
               className="bg-navy-600 hover:bg-navy-500 text-white font-black text-sm px-6 py-3.5 rounded-xl transition-all shadow-md hover:shadow-navy-500/20 flex items-center gap-2 cursor-pointer group"
             >
-              <span>Apply for the November cohort</span>
+              <span>Apply for the January cohort</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
 
@@ -503,7 +503,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 text-amber-800 text-xs font-black border border-amber-300 shadow-2xs">
                 <Percent className="w-3.5 h-3.5" />
-                <span>Early settlement option</span>
+                <span>January cohort fees</span>
               </div>
 
               <div className="space-y-3">
@@ -512,7 +512,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                   Flexible Payment Pathways
                 </h2>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  We believe in fair, accessible tuition for high-impact professional transformation. The £50 registration deposit is credited against tuition if your application is accepted and you continue. An early settlement rate is also available.
+                  We believe in fair, accessible tuition for high-impact professional transformation. The £50 registration deposit is credited against tuition if your application is accepted and you continue. Any January early settlement offer will be confirmed separately.
                 </p>
               </div>
 
@@ -522,15 +522,15 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                   <div className="space-y-1">
                     <div className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                      <span>10% Early Settlement Discount Rate</span>
+                      <span>Standard programme fee</span>
                     </div>
                     <p className="text-xs text-slate-600">
-                      Pay £900 in full by 31 October 2026 and save £100 off standard £1,000 tuition.
+                      £1,000 standard tuition. Any January early settlement offer and deadline will be confirmed before acceptance.
                     </p>
                   </div>
                   <div className="text-right shrink-0">
-                    <div className="text-2xl font-black text-emerald-600">£900</div>
-                    <div className="text-[10px] line-through text-slate-400">£1,000</div>
+                    <div className="text-2xl font-black text-emerald-600">£1,000</div>
+                    <div className="text-[10px] text-slate-500">Standard tuition</div>
                   </div>
                 </div>
 
@@ -541,7 +541,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
                       <span>2-Stage Installment Plan</span>
                     </div>
                     <p className="text-xs text-slate-600">
-                      £500 paid by 31 October 2026 + £500 paid by 30 November 2026. No interest.
+                      Two £500 instalments. January payment dates will be agreed after acceptance. No interest.
                     </p>
                   </div>
                   <div className="text-right shrink-0">
@@ -568,7 +568,7 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
               </div>
 
               <div className="text-xs text-slate-500 italic">
-                * Note: Full balance for all payment routes must be settled by 31 December.
+                January payment deadlines will be confirmed in your acceptance email. Existing accepted applicants retain their agreed payment arrangements.
               </div>
             </div>
 
@@ -721,10 +721,10 @@ export const ProjectManagementCareerAcceleratorSection: React.FC<ProjectManageme
           <div className="bg-white p-5 rounded-2xl border border-slate-200 space-y-2 shadow-2xs">
             <h4 className="font-bold text-sm text-slate-900 flex items-center gap-2">
               <HelpCircle className="w-4 h-4 text-navy-600 shrink-0" />
-              <span>How does the 10% Early Settlement Discount work?</span>
+              <span>Will there be an early settlement offer for January?</span>
             </h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              The early settlement price is £900 if paid in full by 31 October 2026. You can also discuss a £500 + £500 instalment plan.
+              Any January early settlement offer will be confirmed separately. Standard tuition is £1,000; you can discuss a £500 + £500 instalment plan after acceptance.
             </p>
           </div>
 

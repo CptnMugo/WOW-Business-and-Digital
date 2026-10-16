@@ -11,7 +11,7 @@ export const PaymentsSection = ({ setActiveTab }: { setActiveTab: (tab: NavTab) 
   const [recoveryBusy, setRecoveryBusy] = useState(false);
   const [recoveryMessage, setRecoveryMessage] = useState('');
   const [status, setStatus] = useState<{configured:boolean;mode:string} | null>(null);
-  const [account, setAccount] = useState<{paid:number;reserved:boolean;mentorship:boolean;settled?:boolean} | null>(null);
+  const [account, setAccount] = useState<{paid:number;reserved:boolean;mentorship:boolean;settled?:boolean;cohortDate?:string} | null>(null);
   const [plan, setPlan] = useState('deposit');
   const [customAmount, setCustomAmount] = useState('');
   const [accepted, setAccepted] = useState(false);
@@ -53,11 +53,12 @@ export const PaymentsSection = ({ setActiveTab }: { setActiveTab: (tab: NavTab) 
   const paid = account?.paid || 0;
   const money = (pence:number) => new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP'}).format(pence/100);
   const total = account?.mentorship ? 125000 : 100000;
+  const january = /January 2027/.test(account?.cohortDate || '');
   const options = [
     {id:'deposit',title:'Reserve your place',target:5000,description:'£50 registration deposit, credited against your programme fee. Pay this only after receiving your acceptance email.'},
     ...(!account?.mentorship ? [
-      {id:'early',title:'Early settlement',target:90000,description:'£900 total when paid in full by 31 October 2026. Any deposit already paid is deducted.'},
-      {id:'instalment',title:'Two instalments',target:paid < 50000 ? 50000 : 100000,description:'£500 by 31 October and £500 by 30 November 2026. Your deposit counts towards the first £500.'},
+      ...(!january ? [{id:'early',title:'Early settlement',target:90000,description:'£900 total when paid in full by 31 October 2026. Any deposit already paid is deducted.'}] : []),
+      {id:'instalment',title:'Two instalments',target:paid < 50000 ? 50000 : 100000,description:january ? 'Two £500 instalments, with dates agreed after acceptance. Your deposit counts towards the first £500.' : '£500 by 31 October and £500 by 30 November 2026. Your deposit counts towards the first £500.'},
     ] : []),
     ...(!account?.mentorship ? [{id:'full',title:'Standard programme',target:total,description:'£1,000 total. Previous verified payments are deducted.'}] : []),
   ];
@@ -70,9 +71,9 @@ export const PaymentsSection = ({ setActiveTab }: { setActiveTab: (tab: NavTab) 
     catch(e) {setMessage(e instanceof Error ? e.message : 'Checkout could not be opened.');setBusy(false);}
   };
   return <section className="max-w-5xl mx-auto px-5 py-12 space-y-7 text-slate-800">
-    <p className="text-sm font-semibold text-navy-700">Career Accelerator | Starts {programme.startDate}</p>
+    <p className="text-sm font-semibold text-navy-700">Career Accelerator | Payments for accepted applicants</p>
     <h1 className="text-3xl font-bold">Reserve your place and pay online</h1>
-    <p>Payment is requested only after your 10-minute confirmation call and acceptance. Your acceptance email will confirm your agreed payment schedule and payment instructions. Once accepted, you can pay £50 to reserve your place; the deposit is credited towards your total programme fee.</p>
+    <p>November applications are closed. January applications are open with dates to be confirmed. Existing accepted applicants should follow their agreed payment instructions. The October/November offers below apply only to existing November arrangements. Payment is requested only after your 10-minute confirmation call and acceptance. Your acceptance email will confirm your agreed payment schedule and payment instructions. Once accepted, you can pay £50 to reserve your place; the deposit is credited towards your total programme fee.</p>
     {status?.mode === 'test' && <div className="bg-amber-50 border border-amber-500 rounded-xl p-4 font-semibold">Stripe test mode: test cards only. No real money is collected and no place is reserved.</div>}
     {message && <p role="status" className="bg-[#f8f4ed] border border-[#d4a24c] rounded-xl p-5">{message}</p>}
     {reference && <p className="break-all">Application reference: <strong>{reference}</strong></p>}

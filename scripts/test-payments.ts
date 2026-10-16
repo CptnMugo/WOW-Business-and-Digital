@@ -63,6 +63,11 @@ try{
   assert.equal(messages.length,1); assert.deepEqual(messages[0].to,['test@example.invalid']); assert(messages[0].text.includes(paymentLink(reference))); assert(!JSON.stringify(recovery).includes(paymentToken(reference))); checks+=4;
   await call('request-payment-link',{reference,email:'test@example.invalid'},429);
  } finally {globalThis.fetch=realFetch;delete process.env.RESEND_API_KEY;}
+ const jan='WOW-JAN-TEST';
+ saveRegistration({referenceNumber:jan,email:'january@example.invalid',packageSelection:'Standard',cohortDate:'January 2027 — exact start date to be confirmed',submittedAt:new Date().toISOString(),submissionType:'APPLICATION',status:'APPLICATION_REVIEW_PENDING',firstName:'January',lastName:'Test',phone:''});
+ const janAuth={reference:jan,token:paymentToken(jan)};
+ assert.match((await call('application',janAuth)).cohortDate,/January 2027/);checks++;
+ await call('create-checkout-session',{...janAuth,termsAccepted:true,plan:'early'},400);
  const auth={reference,token:paymentToken(reference)};
  await call('application',{reference,token:'bad'},403);
  await call('application',{reference,token:'é'.repeat(64)},403);

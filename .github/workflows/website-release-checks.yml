@@ -33,3 +33,18 @@ jobs:
         run: bunx tsx scripts/test-admissions-dashboard.ts
       - name: Career enquiry checks
         run: bunx tsx scripts/test-career-enquiries.ts
+
+      - name: Associate Portal isolated domain and storage tests
+        run: |
+          bunx tsx scripts/test-associate-portal-rules.ts
+          bunx tsx scripts/test-associate-portal-access.ts
+          bunx tsx scripts/test-associate-portal-store.ts
+          bunx tsx scripts/test-associate-portal-director.ts
+          bunx tsx scripts/test-associate-portal-director-api.ts
+          bunx tsx scripts/test-associate-portal-transactions.ts
+          bunx tsx scripts/test-associate-portal-write-api.ts
+
+      - name: Integrated Associate workspace and cohort rendering
+        run: |
+          bunx tsx scripts/test-associate-workspace.ts
+          bun scripts/test-cohort-render.mjs

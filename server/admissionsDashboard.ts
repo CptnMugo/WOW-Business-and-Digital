@@ -1,3 +1,4 @@
+import { installAssociateWorkspaceDirector } from './associateWorkspace.js';
 import { installWebsiteEnquiriesDashboard } from './websiteEnquiries.js';
 import { installEngagementDashboard } from './engagement.js';
 import type { Express, Request, Response, NextFunction } from 'express';
@@ -86,6 +87,7 @@ export function installAdmissionsDashboard(app: Express) {
  });
  app.post(base + '/logout', (req, res) => { sessions.delete(digest(token(req))); cookie(res, '', 0); res.json({ success: true }); });
  app.use(base, guard);
+ installAssociateWorkspaceDirector(app);
  installEngagementDashboard(app);
  installWebsiteEnquiriesDashboard(app);
  app.get(base + '/applications', (_req, res) => { try { res.json({ applications: list() }); } catch { res.status(503).json({ error: 'Applications could not be loaded. Ask your website administrator to check the saved register.' }); } });
