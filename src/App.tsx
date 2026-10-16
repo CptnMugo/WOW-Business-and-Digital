@@ -1,5 +1,4 @@
 import { AssociateWorkspace } from './components/AssociateWorkspace';
-import { AssociatePortalPreview } from './components/AssociatePortalPreview';
 import { WebsiteLinks } from './components/WebsiteLinks';
 import { HealthSocialCare } from './components/HealthSocialCare';
 import { CareerExplore } from './components/CareerExplore';
@@ -20,7 +19,6 @@ import { ServicesSection } from './components/ServicesSection';
 import { ConsultingSection } from './components/ConsultingSection';
 import { AISolutionsSection } from './components/AISolutionsSection';
 import { AssistantPlayground } from './components/AssistantPlayground';
-import { AcademySection } from './components/AcademySection';
 import { ProductsSection } from './components/ProductsSection';
 import { CaseStudiesSection } from './components/CaseStudiesSection';
 import { InsightsSection } from './components/InsightsSection';
@@ -33,12 +31,15 @@ import { ProjectManagementRegistrationPage } from './components/ProjectManagemen
 import { ProjectSimulationPage } from './components/ProjectSimulationPage';
 import { ProgrammePolicies } from './components/ProgrammePolicies';
 
-const tabs: NavTab[] = ['associate-portal','website-links','home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','academy','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation','manage-applications','career-explore','corporate-career','health-social-care','associate-portal-preview'];
+const tabs: NavTab[] = ['associate-portal','website-links','home','services','associates','business-consultancy','staffing','training','ai-solutions','career-coaching','about','contact','consulting','wow-assistant','products','case-studies','insights','payments','pm-career-accelerator','pm-registration','privacy','programme-terms','project-simulation','manage-applications','career-explore','corporate-career','health-social-care'];
 const readTab = (): NavTab => {
  const query = new URLSearchParams(window.location.search);
  if (query.has('payment')) return 'payments';
  if (window.location.pathname.startsWith('/associate/')) return 'associate-portal';
  const page = query.get('page');
+ // Retire the public fictional preview and superseded Academy page safely.
+ if (page === 'academy') return 'pm-career-accelerator';
+ if (page === 'associate-portal-preview') return 'home';
  return tabs.includes(page as NavTab) ? page as NavTab : 'home';
 };
 
@@ -72,7 +73,6 @@ export default function App() {
     'career-coaching'
   ].includes(activeTab);
 
-  if (activeTab === 'associate-portal-preview') return <AssociatePortalPreview />;
   if (activeTab === 'associate-portal') return <AssociateWorkspace />;
   if (activeTab === 'manage-applications') return <AdmissionsDashboard />;
 
@@ -126,7 +126,6 @@ export default function App() {
             {activeTab === 'ai-solutions' && <AISolutionsSection setActiveTab={setActiveTab} />}
             {activeTab === 'consulting' && <ConsultingSection setActiveTab={setActiveTab} />}
             {activeTab === 'wow-assistant' && <AssistantPlayground />}
-            {activeTab === 'academy' && <AcademySection setActiveTab={setActiveTab} />}
             {activeTab === 'products' && <ProductsSection setActiveTab={setActiveTab} />}
             {activeTab === 'case-studies' && <CaseStudiesSection setActiveTab={setActiveTab} />}
             {activeTab === 'insights' && <InsightsSection />}
