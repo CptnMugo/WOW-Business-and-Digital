@@ -148,7 +148,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
 
   const isProgramsActive = [
     'pm-career-accelerator',
-    'academy',
     'corporate-career'
   ].includes(activeTab);
 
@@ -349,9 +348,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                             <span className="text-[10px] font-black uppercase tracking-wider text-navy-700 bg-navy-100/80 px-2 py-0.5 rounded-md">
                               6-Month Accelerator
                             </span>
-                            <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
-                              10% Early Offer
-                            </span>
                           </div>
                         </div>
                       </button>
@@ -372,18 +368,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                             Develop an employee while aligning their learning to real organisational deliverables
                           </div>
                         </div>
-                      </button>
-
-                      {/* Secondary Link: All Academy Programs */}
-                      <button
-                        onClick={() => handleNavClick('academy')}
-                        className="w-full text-left p-2.5 rounded-xl hover:bg-slate-100/80 border border-transparent transition-all flex items-center justify-between text-xs text-slate-600 hover:text-slate-900 font-bold mt-1"
-                      >
-                        <div className="flex items-center gap-2">
-                          <Award className="w-4 h-4 text-navy-600" />
-                          <span>All Academy Courses &amp; Placements</span>
-                        </div>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
                       </button>
                     </div>
                   </div>
@@ -537,13 +521,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                   </button>
 
-                  <button
-                    onClick={() => handleNavClick('academy')}
-                    className="w-full text-left p-2 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center justify-between mt-1"
-                  >
-                    <span>View All Academy Programmes</span>
-                    <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-                  </button>
                 </div>
               )}
             </div>

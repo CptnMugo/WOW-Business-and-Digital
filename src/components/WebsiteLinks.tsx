@@ -17,7 +17,6 @@ export const websiteLinkGroups: { title: string; links: Entry[] }[] = [
   {tab:'payments',title:'Fees and payments',description:'Use your payment instructions after acceptance or request payment-link recovery.'},
   {tab:'career-coaching',title:'Career coaching',description:'Explore career development support.'},
   {tab:'training',title:'Training services',description:'Explore learning and development support.'},
-  {tab:'academy',title:'WOW Academy',description:'Explore the wider academy offering.'},
  ]},
  {title:'Services and resources',links:[
   {tab:'services',title:'All services',description:'Find the right support for your organisation.'},
