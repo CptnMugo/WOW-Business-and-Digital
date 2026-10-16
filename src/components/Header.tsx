@@ -369,10 +369,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                           </div>
                         </div>
                       </button>
-
-                    </div>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-                      </button>
                     </div>
                   </div>
                 </div>
